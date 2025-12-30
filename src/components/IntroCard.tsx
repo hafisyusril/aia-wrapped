@@ -4,7 +4,7 @@ export default function IntroCard() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       {/* CARD */}
-      <div className="relative h-[700px] w-97.5 bg-white overflow-hidden">
+      <div className="relative h-175 w-97.5 bg-white overflow-hidden">
         {/* ===== TRAPEZIUM BACKGROUND ===== */}
         <img
           src="/intro/trapesium-top.svg"

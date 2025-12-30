@@ -1,5 +1,6 @@
+import FitnessChaserCard from "../components/FitnessChaserCard";
 import GymVisitCard from "../components/GymVisitCard";
-import WeeklyChallengeCard from "../components/FitnessChaserCard";
+import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import IntroCard from "../components/IntroCard";
 
 export default function Home() {
@@ -15,15 +16,18 @@ export default function Home() {
       <section className="h-svh snap-start snap-always">
         <IntroCard />
       </section>
+
+      <section className="h-svh snap-start snap-always">
+        <FitnessChaserCard />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
+        <HeartRateCard />
+      </section>
+      
       <section className="h-svh snap-start snap-always">
         <GymVisitCard />
       </section>
-      
-
-      <section className="h-svh snap-start snap-always">
-        <WeeklyChallengeCard />
-      </section>
-     
     </main>
   );
 }

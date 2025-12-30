@@ -2,7 +2,7 @@
 
 import MobileCardFrame from "./MobileCardFrame";
 
-export default function WeeklyChallengeCard() {
+export default function FitnessChaserCard() {
   return (
     <MobileCardFrame
       background="linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)"
