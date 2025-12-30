@@ -1,8 +1,8 @@
-
+import { VHCStatusCard } from "../components/VHCStatusCard"
 export default function Home() {
+  const vhcCompleted = true; // ganti dari API / state
+
   return (
-    <>
-    <h1>AIA Vitality Wrapped</h1>
-    </>
+    <VHCStatusCard status={vhcCompleted ? "checked" : "unchecked"} />
   )
 }
