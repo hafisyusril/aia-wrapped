@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import MobileCardFrame from "./MobileCardFrame";
 
 export default function GymVisitCard() {
-  const [counter] = useState(260);
+  const [counter] = useState(20);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
@@ -53,7 +53,7 @@ export default function GymVisitCard() {
       illustration={
         <img
           src="/gym-visit/gym-visit-deadlift.svg"
-          className="absolute bottom-[40px] right-0 w-[250px] h-[300px] z-10"
+          className="absolute bottom-10 right-0 w-62.5 h-75 z-10"
         />
       }
       topContent={
@@ -70,7 +70,7 @@ export default function GymVisitCard() {
           </h2>
           <p className="text-[20px] font-medium text-black">times</p>
           <p
-            className="mt-[30px] text-[15px] text-black"
+            className="mt-7.5 text-[15px] text-black"
             dangerouslySetInnerHTML={{ __html: message }}
           />
         </>
