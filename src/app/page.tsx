@@ -2,6 +2,7 @@ import FitnessChaserCard from "../components/FitnessChaserCard";
 import GymVisitCard from "../components/GymVisitCard";
 import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import IntroCard from "../components/IntroCard";
+import StepsCard from "../components/steps/StepsCard";
 
 export default function Home() {
   return (
@@ -22,9 +23,13 @@ export default function Home() {
       </section>
 
       <section className="h-svh snap-start snap-always">
+       <StepsCard />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
         <HeartRateCard />
       </section>
-      
+
       <section className="h-svh snap-start snap-always">
         <GymVisitCard />
       </section>
