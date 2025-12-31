@@ -19,17 +19,17 @@ export default function MobileCardFrame({
 }: MobileCardFrameProps) {
   return (
     <div
-      className="relative grid h-[100svh] grid-rows-[35%_65%] overflow-hidden font-sans"
+      className="relative grid h-svh grid-rows-[35%_65%] overflow-hidden font-sans"
       style={{ background }}
     >
       {/* ORNAMENTS */}
       {ornaments}
 
       {/* TOP (35%) */}
-      <div className="relative px-[30px] pt-30 z-20">{topContent}</div>
+      <div className="relative flex flex-col h-full px-7.5 justify-end pb-5 z-20">{topContent}</div>
 
       {/* BOTTOM (65%) */}
-      <div className="relative px-[30px] pt-2 z-20">{bottomContent}</div>
+      <div className="relative px-7.5 pt-2 z-20">{bottomContent}</div>
 
       {/* ILLUSTRATION */}
       {illustration}

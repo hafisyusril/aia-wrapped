@@ -6,7 +6,7 @@ interface VHCStatusCardProps {
     status: VHCStatus;
 }
 
-export function VHCStatusCard({ status }: VHCStatusCardProps) {
+export default function VHCStatusCard({ status }: VHCStatusCardProps) {
     const isChecked = status === "checked";
 
     return (
