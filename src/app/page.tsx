@@ -1,3 +1,4 @@
+import VHCStatusCard from "../components/vhc/VHCStatusCard"
 import FitnessChaserCard from "../components/FitnessChaserCard";
 import GymVisitCard from "../components/GymVisitCard";
 import HeartRateCard from "../components/heart-rates/HeartRateCard";
@@ -5,6 +6,8 @@ import IntroCard from "../components/IntroCard";
 import StepsCard from "../components/steps/StepsCard";
 
 export default function Home() {
+  const vhcCompleted = true; // ganti dari API / state
+
   return (
     <main
       className="
@@ -21,7 +24,9 @@ export default function Home() {
       <section className="h-svh snap-start snap-always">
         <FitnessChaserCard />
       </section>
-
+      <section className="h-[100svh] snap-start snap-always">
+        <VHCStatusCard status={vhcCompleted ? "checked" : "unchecked"} />
+      </section>
       <section className="h-svh snap-start snap-always">
        <StepsCard />
       </section>
@@ -34,5 +39,5 @@ export default function Home() {
         <GymVisitCard />
       </section>
     </main>
-  );
+  )
 }
