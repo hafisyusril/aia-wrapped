@@ -1,3 +1,6 @@
+import { VITALITY_RANK_THEME } from "./VitalityRankConfig";
+import { formatRank } from "./VitalityRankUtils";
+
 interface VitalityRankCardProps {
     generalRank: number;
     genderRank: number;
@@ -8,21 +11,25 @@ export default function VitalityRankCard({
     genderRank,
 }: VitalityRankCardProps) {
     return (
-        <section className="w-full min-h-screen font-sans bg-[#C6283D] relative overflow-hidden">
+        <section
+            className={`w-full min-h-screen font-sans relative overflow-hidden ${VITALITY_RANK_THEME.backgroundColor}`}
+        >
             <div className="absolute inset-0 flex justify-center items-center z-0 pointer-events-none">
                 <img
-                    src="/vitality-rank/vitality_ornament.svg"
+                    src={VITALITY_RANK_THEME.ornamentSrc}
                     alt="Vitality Ornament"
                     width={520}
                     height={900}
                     className="opacity-80 h-full"
                 />
             </div>
-            <div className="absolute inset-y-0 right-0 w-[120px] z-[1]
-                bg-[#E57373]
-                opacity-60
-                pointer-events-none
-            " />
+            <div
+                className={`
+                    absolute inset-y-0 right-0 w-[120px] z-[1]
+                    opacity-60 pointer-events-none
+                    ${VITALITY_RANK_THEME.sideAccentColor}
+                `}
+            />
             <div className="relative z-10 flex min-h-screen items-center px-6">
                 <div className="flex w-full flex-col py-12">
                     <div className="mb-6 flex items-start justify-between">
@@ -31,9 +38,8 @@ export default function VitalityRankCard({
                             <br />
                             Rank
                         </h1>
-
                         <img
-                            src="/vitality-rank/trophy.svg"
+                            src={VITALITY_RANK_THEME.trophySrc}
                             alt="Trophy"
                             width={120}
                             height={200}
@@ -47,7 +53,7 @@ export default function VitalityRankCard({
                                 General Rank
                             </p>
                             <p className="text-6xl font-extrabold text-white">
-                                #{generalRank}
+                                {formatRank(generalRank)}
                             </p>
                         </div>
                         <div>
@@ -55,7 +61,7 @@ export default function VitalityRankCard({
                                 Gender Rank
                             </p>
                             <p className="text-6xl font-extrabold text-white">
-                                #{genderRank}
+                                {formatRank(genderRank)}
                             </p>
                         </div>
                     </div>
