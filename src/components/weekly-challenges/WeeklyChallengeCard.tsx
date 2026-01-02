@@ -1,3 +1,8 @@
+import {
+  getWeeklyChallengeByVariant,
+} from "./weeklyChallengeConfig";
+import { formatCurrency } from "./weeklyChallengeUtils";
+
 interface WeeklyChallengeCardProps {
   totalReward: number;
 }
@@ -5,36 +10,50 @@ interface WeeklyChallengeCardProps {
 export default function WeeklyChallengeCard({
   totalReward,
 }: WeeklyChallengeCardProps) {
+  const {
+    background,
+    headerBackground,
+    illustrationSrc,
+    coinSrc,
+    currency,
+    title,
+    message,
+  } = getWeeklyChallengeByVariant("default");
+
   return (
-    <section className="w-full min-h-screen flex flex-col font-sans bg-[#FBEAD1]">
-      {/* Header */}
-      <div className="px-6 py-12 bg-[#F2B24C]">
+    <section
+      className={`w-full min-h-screen flex flex-col font-sans ${background}`}
+    >
+      <div className={`px-6 py-12 ${headerBackground}`}>
         <div className="text-white">
-          <p className="text-lg font-medium mb-2">Rp</p>
+          <p className="text-lg font-medium mb-2">
+            {currency}
+          </p>
           <h1 className="text-5xl font-extrabold leading-tight">
-            {totalReward.toLocaleString("id-ID")}
+            {formatCurrency(totalReward)}
           </h1>
           <p className="mt-2 text-xl font-medium">
-            rewards redeemed!
+            {title}
           </p>
         </div>
       </div>
       <div className="flex-1 flex flex-col justify-between px-6 py-8">
         <p className="text-black text-lg font-medium leading-relaxed">
-          Kamu berhasil buktiin
-          <br />
-          kalau hidup sehat
-          <br />
-          bisa bikin lebih hemat!
+          {message.map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
         </p>
         <div className="relative flex justify-center items-end mt-8">
           <img
-            src="/weekly-challenge/person_illustration.svg"
+            src={illustrationSrc}
             alt="Weekly Challenge Reward"
             className="w-[320px] h-auto"
           />
           <img
-            src="/weekly-challenge/coin.svg"
+            src={coinSrc}
             alt="Floating Coin"
             className="absolute -right-0 top-0 w-[90px] h-auto"
           />

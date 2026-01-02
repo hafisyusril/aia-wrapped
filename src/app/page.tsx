@@ -9,8 +9,6 @@ import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallenge
 import StepsCard from "../components/steps/StepsCard";
 
 export default function Home() {
-  const vhcCompleted = true; // ganti dari API / state
-
   return (
     <main
       className="
@@ -28,7 +26,10 @@ export default function Home() {
         <FitnessChaserCard />
       </section>
       <section className="h-[100svh] snap-start snap-always">
-        <VHCStatusCard status={vhcCompleted ? "checked" : "unchecked"} />
+        <VHCStatusCard status={"checked"} />
+      </section>
+      <section className="h-[100svh] snap-start snap-always">
+        <VHCStatusCard status={"unchecked"} />
       </section>
       <section className="h-svh snap-start snap-always">
         <StepsCard />
