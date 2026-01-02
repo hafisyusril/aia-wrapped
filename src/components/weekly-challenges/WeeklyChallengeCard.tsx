@@ -1,7 +1,7 @@
 import {
   getWeeklyChallengeByVariant,
-} from "./weeklyChallengeConfig";
-import { formatCurrency } from "./weeklyChallengeUtils";
+} from "./WeeklyChallengeConfig";
+import { formatCurrency } from "./WeeklyChallengeUtils";
 
 interface WeeklyChallengeCardProps {
   totalReward: number;

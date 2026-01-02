@@ -1,5 +1,5 @@
-import { CrowningType } from './crowningConfig';
-import { getCrowningByType } from './crowningUtils';
+import { CrowningType } from './CrowningConfig';
+import { getCrowningByType } from './CrowningUtils';
 
 interface CrowningCardProps {
     type: CrowningType;

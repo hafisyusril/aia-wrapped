@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { VHCStatus } from "./vhcStatusConfig";
-import { getVHCStatusContent } from "./vhcStatusUtils";
+import { VHCStatus } from "./VHCStatusConfig";
+import { getVHCStatusContent } from "./VHCStatusUtils";
 
 interface VHCStatusCardProps {
     status: VHCStatus;

@@ -1,4 +1,4 @@
-import { VHCStatus, VHCStatusLevel, vhcStatusConfig } from "./vhcStatusConfig";
+import { VHCStatus, VHCStatusLevel, vhcStatusConfig } from "./VHCStatusConfig";
 
 export function getVHCStatusContent(status: VHCStatus): VHCStatusLevel {
   const content = vhcStatusConfig.find((item) => item.status === status);

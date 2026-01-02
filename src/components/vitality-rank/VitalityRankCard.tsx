@@ -1,5 +1,5 @@
-import { getVitalityRankTheme } from "./vitalityRankConfig";
-import { formatRank } from "./vitalityRankUtils";
+import { getVitalityRankTheme } from "./VitalityRankConfig";
+import { formatRank } from "./VitalityRankUtils";
 
 interface VitalityRankCardProps {
     generalRank: number;
