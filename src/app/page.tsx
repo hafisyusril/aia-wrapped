@@ -3,6 +3,7 @@ import FitnessChaserCard from "../components/FitnessChaserCard";
 import GymVisitCard from "../components/GymVisitCard";
 import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import IntroCard from "../components/IntroCard";
+import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
 import StepsCard from "../components/steps/StepsCard";
 
@@ -42,6 +43,11 @@ export default function Home() {
 
       <section className="h-svh snap-start snap-always">
         <WeeklyChallengeCard totalReward={3650000} />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
+        <VitalityRankCard genderRank={180} generalRank={3500} />
+
       </section>
     </main>
   )
