@@ -23,39 +23,70 @@ export default function VitalityRankCard({
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <img
                     src={theme.ornamentSrc}
+                    alt="Vitality Ornament"
                     className="h-full opacity-80"
-                    alt=""
                 />
             </div>
             <div
-                className={`absolute inset-y-0 right-0 w-[120px] opacity-60 ${theme.sideAccentColor}`}
+                className={`
+                    absolute inset-y-0 right-0 w-[120px]
+                    opacity-60 pointer-events-none
+                    ${theme.sideAccentColor}
+                `}
             />
-
             <div
                 ref={ref}
                 className="relative z-10 flex min-h-screen items-center px-6"
             >
-                <div className="flex w-full flex-col py-12 gap-10">
-                    <div>
-                        <p className="text-white">General Rank</p>
-                        <p className="text-6xl font-extrabold text-white">
-                            {isInView ? (
-                                <RankCounter key="general" target={generalRank} />
-                            ) : (
-                                "#0"
-                            )}
-                        </p>
-                    </div>
+                <div className="flex w-full flex-col py-12">
+                    <div className="mb-6 flex items-start justify-between">
+                        <h1 className="text-4xl font-extrabold leading-tight text-white">
+                            Vitality
+                            <br />
+                            Rank
+                        </h1>
 
-                    <div>
-                        <p className="text-white">Gender Rank</p>
-                        <p className="text-6xl font-extrabold text-white">
-                            {isInView ? (
-                                <RankCounter key="gender" target={genderRank} />
-                            ) : (
-                                "#0"
-                            )}
-                        </p>
+                        <img
+                            src={theme.trophySrc}
+                            alt="Trophy"
+                            width={120}
+                            height={200}
+                            className="mt-2 mr-8"
+                        />
+                    </div>
+                    <div className="mb-16 h-[2px] w-24 bg-white/70" />
+                    <div className="flex flex-col gap-10">
+                        <div>
+                            <p className="text-lg font-medium text-white">
+                                General Rank
+                            </p>
+                            <p className="text-6xl font-extrabold text-white">
+                                {isInView ? (
+                                    <RankCounter
+                                        key="general-rank"
+                                        target={generalRank}
+                                    />
+                                ) : (
+                                    "#0"
+                                )}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p className="text-lg font-medium text-white">
+                                Gender Rank
+                            </p>
+                            <p className="text-6xl font-extrabold text-white">
+                                {isInView ? (
+                                    <RankCounter
+                                        key="gender-rank"
+                                        target={genderRank}
+                                    />
+                                ) : (
+                                    "#0"
+                                )}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
