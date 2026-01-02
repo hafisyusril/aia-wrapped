@@ -7,6 +7,7 @@ import CrowningCard from "../components/crowning/CrowningCard";
 import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
 import StepsCard from "../components/steps/StepsCard";
+import InputVitalityCard from "../components/input-vitality/InputVitalityCard"
 
 export default function Home() {
   return (
@@ -18,10 +19,13 @@ export default function Home() {
         snap-mandatory
       "
     >
+
+      <section className="h-svh snap-start snap-always">
+        <InputVitalityCard />
+      </section>
       <section className="h-svh snap-start snap-always">
         <IntroCard />
       </section>
-
       <section className="h-svh snap-start snap-always">
         <FitnessChaserCard />
       </section>
