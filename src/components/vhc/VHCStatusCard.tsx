@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { VHCStatus } from "./VHCStatusConfig";
-import { getVHCStatusContent } from "./VHCStatusUtils";
+import { VHCStatus } from "./vhcStatusConfig";
+import { getVHCStatusContent } from "./vhcStatusUtils";
 
 interface VHCStatusCardProps {
     status: VHCStatus;
@@ -22,7 +22,6 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
         <section
             className={`w-full min-h-screen flex flex-col font-sans ${background}`}
         >
-            {/* Header */}
             <div className={`px-6 py-12 ${headerBackground}`}>
                 <h1 className="text-white text-4xl font-extrabold leading-tight">
                     {titleLine1}
@@ -30,8 +29,6 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
                     {titleLine2}
                 </h1>
             </div>
-
-            {/* Content */}
             <div className="flex-1 flex flex-col items-center justify-center px-6 text-start gap-6">
                 <Image
                     src={illustrationSrc}

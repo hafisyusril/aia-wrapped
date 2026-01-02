@@ -1,6 +1,7 @@
 export type VHCStatus = "checked" | "unchecked";
 
-export interface VHCStatusContent {
+export interface VHCStatusLevel {
+  status: VHCStatus;
   title: string;
   background: string;
   headerBackground: string;
@@ -9,8 +10,9 @@ export interface VHCStatusContent {
   message: string;
 }
 
-export const VHC_STATUS_CONFIG: Record<VHCStatus, VHCStatusContent> = {
-  checked: {
+export const vhcStatusConfig: VHCStatusLevel[] = [
+  {
+    status: "checked",
     title: "Health\nin Check",
     background: "bg-pink-300",
     headerBackground: "bg-red-600",
@@ -18,7 +20,8 @@ export const VHC_STATUS_CONFIG: Record<VHCStatus, VHCStatusContent> = {
     textColor: "text-black",
     message: "You completed\nyour Vitality Health Check.\nGreat job!",
   },
-  unchecked: {
+  {
+    status: "unchecked",
     title: "Health\nUnchecked",
     background: "bg-gray-600",
     headerBackground: "bg-gray-800",
@@ -27,4 +30,4 @@ export const VHC_STATUS_CONFIG: Record<VHCStatus, VHCStatusContent> = {
     message:
       "You haven’t completed\nyour Vitality Health Check.\nLet’s do it in 2026!",
   },
-};
+];

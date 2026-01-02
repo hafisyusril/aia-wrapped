@@ -1,6 +1,7 @@
 export type CrowningType = "warming-up" | "rajin-gerak" | "paling-atlet";
 
-export interface CrowningContent {
+export interface CrowningLevel {
+  type: CrowningType;
   titleLine1: string;
   titleLine2: string;
   description: string;
@@ -8,8 +9,9 @@ export interface CrowningContent {
   illustrationSrc: string;
 }
 
-export const CROWNING_CONFIG: Record<CrowningType, CrowningContent> = {
-  "warming-up": {
+export const crowningConfig: CrowningLevel[] = [
+  {
+    type: "warming-up",
     titleLine1: "Si Baru",
     titleLine2: "Warming-Up",
     description:
@@ -17,7 +19,8 @@ export const CROWNING_CONFIG: Record<CrowningType, CrowningContent> = {
     themeColor: "text-[#00AEEF]",
     illustrationSrc: "/crowning/yoga_radio.svg",
   },
-  "rajin-gerak": {
+  {
+    type: "rajin-gerak",
     titleLine1: "Si Rajin",
     titleLine2: "Gerak",
     description:
@@ -25,7 +28,8 @@ export const CROWNING_CONFIG: Record<CrowningType, CrowningContent> = {
     themeColor: "text-[#FF7F00]",
     illustrationSrc: "/crowning/treadmill_run.svg",
   },
-  "paling-atlet": {
+  {
+    type: "paling-atlet",
     titleLine1: "Si Paling",
     titleLine2: "Atlet",
     description:
@@ -33,4 +37,4 @@ export const CROWNING_CONFIG: Record<CrowningType, CrowningContent> = {
     themeColor: "text-[#E60000]",
     illustrationSrc: "/crowning/barbel.svg",
   },
-};
+];

@@ -1,5 +1,5 @@
-import { CrowningType } from './CrowningConfig';
-import { getCrowningContent } from './CrowningUtils';
+import { CrowningType } from './crowningConfig';
+import { getCrowningByType } from './crowningUtils';
 
 interface CrowningCardProps {
     type: CrowningType;
@@ -12,11 +12,10 @@ export default function CrowningCard({ type }: CrowningCardProps) {
         description,
         themeColor,
         illustrationSrc,
-    } = getCrowningContent(type);
+    } = getCrowningByType(type);
 
     return (
         <div className="w-full min-h-screen bg-white font-sans flex flex-col">
-            {/* Header */}
             <div className="px-6 pt-8 pb-4 bg-gray-100">
                 <img
                     src="/crowning/aia_vitality.svg"
@@ -26,8 +25,6 @@ export default function CrowningCard({ type }: CrowningCardProps) {
                     className="object-contain w-20 sm:w-40 md:w-48"
                 />
             </div>
-
-            {/* Illustration */}
             <div className="relative flex-1 bg-gray-100 flex items-center justify-center overflow-hidden">
                 <img
                     src={illustrationSrc}
@@ -36,8 +33,6 @@ export default function CrowningCard({ type }: CrowningCardProps) {
                     height={400}
                     className="object-contain z-10 drop-shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg px-8"
                 />
-
-                {/* White curve */}
                 <div className="absolute bottom-20 left-0 right-0 h-24 sm:h-32 md:h-40">
                     <div
                         className="absolute bottom-0 w-full h-40 bg-white"
@@ -48,8 +43,6 @@ export default function CrowningCard({ type }: CrowningCardProps) {
                     />
                 </div>
             </div>
-
-            {/* Content */}
             <div className="px-6 sm:px-8 pt-10 pb-12">
                 <p className="text-sm sm:text-base text-gray-600 mb-4">
                     Your Vitality Type
@@ -62,13 +55,10 @@ export default function CrowningCard({ type }: CrowningCardProps) {
                     <br />
                     {titleLine2}
                 </h1>
-
                 <p className="mt-8 text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
                     {description}
                 </p>
             </div>
-
-            {/* Footer */}
             <div className="px-6 sm:px-8 pb-10 border-t border-gray-200 pt-6">
                 <p className="text-xs sm:text-sm text-gray-500">
                     aia-financial.co.id

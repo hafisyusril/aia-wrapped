@@ -1,5 +1,5 @@
-import { VITALITY_RANK_THEME } from "./VitalityRankConfig";
-import { formatRank } from "./VitalityRankUtils";
+import { getVitalityRankTheme } from "./vitalityRankConfig";
+import { formatRank } from "./vitalityRankUtils";
 
 interface VitalityRankCardProps {
     generalRank: number;
@@ -10,13 +10,16 @@ export default function VitalityRankCard({
     generalRank,
     genderRank,
 }: VitalityRankCardProps) {
+
+    const theme = getVitalityRankTheme("default");
+
     return (
         <section
-            className={`w-full min-h-screen font-sans relative overflow-hidden ${VITALITY_RANK_THEME.backgroundColor}`}
+            className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
         >
             <div className="absolute inset-0 flex justify-center items-center z-0 pointer-events-none">
                 <img
-                    src={VITALITY_RANK_THEME.ornamentSrc}
+                    src={theme.ornamentSrc}
                     alt="Vitality Ornament"
                     width={520}
                     height={900}
@@ -27,7 +30,7 @@ export default function VitalityRankCard({
                 className={`
                     absolute inset-y-0 right-0 w-[120px] z-[1]
                     opacity-60 pointer-events-none
-                    ${VITALITY_RANK_THEME.sideAccentColor}
+                    ${theme.sideAccentColor}
                 `}
             />
             <div className="relative z-10 flex min-h-screen items-center px-6">
@@ -39,7 +42,7 @@ export default function VitalityRankCard({
                             Rank
                         </h1>
                         <img
-                            src={VITALITY_RANK_THEME.trophySrc}
+                            src={theme.trophySrc}
                             alt="Trophy"
                             width={120}
                             height={200}
