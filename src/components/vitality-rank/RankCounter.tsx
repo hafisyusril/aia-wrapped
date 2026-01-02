@@ -11,25 +11,27 @@ export default function RankCounter({
     target,
     duration = 1000,
 }: RankCounterProps) {
-    const [value, setValue] = useState(0);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
-        let start = 0;
-        const startTime = performance.now();
+        let start: number | null = null;
+        let rafId: number;
 
-        function animate(now: number) {
-            const progress = Math.min((now - startTime) / duration, 1);
-            const current = Math.floor(progress * target);
+        const animate = (timestamp: number) => {
+            if (!start) start = timestamp;
 
-            setValue(current);
+            const progress = Math.min((timestamp - start) / duration, 1);
+            setCount(Math.floor(progress * target));
 
             if (progress < 1) {
-                requestAnimationFrame(animate);
+                rafId = requestAnimationFrame(animate);
             }
-        }
+        };
 
-        requestAnimationFrame(animate);
+        rafId = requestAnimationFrame(animate);
+
+        return () => cancelAnimationFrame(rafId);
     }, [target, duration]);
 
-    return <span>#{value.toLocaleString()}</span>;
+    return <>#{count.toLocaleString("id-ID")}</>;
 }
