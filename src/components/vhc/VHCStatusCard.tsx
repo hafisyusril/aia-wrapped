@@ -1,61 +1,54 @@
 import Image from "next/image";
-
-type VHCStatus = "checked" | "unchecked";
+import { VHCStatus } from "./VHCStatusConfig";
+import { getVHCStatusContent } from "./VHCStatusUtils";
 
 interface VHCStatusCardProps {
     status: VHCStatus;
 }
 
 export default function VHCStatusCard({ status }: VHCStatusCardProps) {
-    const isChecked = status === "checked";
+    const {
+        title,
+        background,
+        headerBackground,
+        illustrationSrc,
+        textColor,
+        message,
+    } = getVHCStatusContent(status);
+
+    const [titleLine1, titleLine2] = title.split("\n");
 
     return (
         <section
-            className={`w-full min-h-screen flex flex-col font-sans ${isChecked ? "bg-pink-300" : "bg-gray-600"
-                }`}
+            className={`w-full min-h-screen flex flex-col font-sans ${background}`}
         >
-            <div
-                className={`px-6 py-12 ${isChecked ? "bg-red-600" : "bg-gray-800"
-                    }`}
-            >
+            {/* Header */}
+            <div className={`px-6 py-12 ${headerBackground}`}>
                 <h1 className="text-white text-4xl font-extrabold leading-tight">
-                    Health
+                    {titleLine1}
                     <br />
-                    {isChecked ? "in Check" : "Unchecked"}
+                    {titleLine2}
                 </h1>
             </div>
+
+            {/* Content */}
             <div className="flex-1 flex flex-col items-center justify-center px-6 text-start gap-6">
                 <Image
-                    src={
-                        isChecked
-                            ? "/vhc/checked.svg"
-                            : "/vhc/unchecked.svg"
-                    }
+                    src={illustrationSrc}
                     alt="VHC Illustration"
                     width={220}
                     height={220}
                     priority
                 />
 
-                {isChecked ? (
-                    <p className="text-black text-lg font-medium">
-                        You completed
-                        <br />
-                        your Vitality Health Check.
-                        <br />
-                        <span className="font-bold">Great job!</span>
-                    </p>
-                ) : (
-                    <p className="text-white text-lg font-medium">
-                        You haven’t completed
-                        <br />
-                        your Vitality Health Check.
-                        <br />
-                        <span className="font-bold">
-                            Let’s do it in 2026!
+                <p className={`${textColor} text-lg font-medium`}>
+                    {message.split("\n").map((line, index) => (
+                        <span key={index}>
+                            {line}
+                            <br />
                         </span>
-                    </p>
-                )}
+                    ))}
+                </p>
             </div>
         </section>
     );
