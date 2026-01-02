@@ -3,6 +3,7 @@ import FitnessChaserCard from "../components/FitnessChaserCard";
 import GymVisitCard from "../components/GymVisitCard";
 import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import IntroCard from "../components/IntroCard";
+import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
 import StepsCard from "../components/steps/StepsCard";
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
         <VHCStatusCard status={vhcCompleted ? "checked" : "unchecked"} />
       </section>
       <section className="h-svh snap-start snap-always">
-       <StepsCard />
+        <StepsCard />
       </section>
 
       <section className="h-svh snap-start snap-always">
@@ -37,6 +38,10 @@ export default function Home() {
 
       <section className="h-svh snap-start snap-always">
         <GymVisitCard />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
+        <WeeklyChallengeCard totalReward={3650000} />
       </section>
     </main>
   )
