@@ -3,6 +3,7 @@
 import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
 import RankCounter from "./RankCounter";
+import { useState, useEffect } from "react";
 
 interface VitalityRankCardProps {
     generalRank: number;
@@ -15,6 +16,14 @@ export default function VitalityRankCard({
 }: VitalityRankCardProps) {
     const theme = getVitalityRankTheme("default");
     const { ref, isInView } = useInView({ threshold: 0.6 });
+
+    const [counterKey, setCounterKey] = useState(0);
+
+    useEffect(() => {
+        if (isInView) {
+            setCounterKey((prev) => prev + 1);
+        }
+    }, [isInView]);
 
     return (
         <section
@@ -67,7 +76,10 @@ export default function VitalityRankCard({
 
                             {isInView ? (
                                 <p className="text-6xl font-extrabold text-white">
-                                    <RankCounter target={generalRank} />
+                                    <RankCounter
+                                        key={`general-${counterKey}`}
+                                        target={generalRank}
+                                    />
                                 </p>
                             ) : (
                                 <p className="text-6xl font-extrabold text-white">
@@ -83,7 +95,10 @@ export default function VitalityRankCard({
 
                             {isInView ? (
                                 <p className="text-6xl font-extrabold text-white">
-                                    <RankCounter target={genderRank} />
+                                    <RankCounter
+                                        key={`gender-${counterKey}`}
+                                        target={genderRank}
+                                    />
                                 </p>
                             ) : (
                                 <p className="text-6xl font-extrabold text-white">
