@@ -1,55 +1,62 @@
 "use client";
 
-import { useState } from "react";
-import { inputVitalityConfig } from "./inputVitalityConfig";
-import { submitVitalityId } from "./inputVitalityUtils";
+import { useState, ReactNode } from "react";
 
-export default function InputVitalityCard() {
-    const [vitalityId, setVitalityId] = useState("");
+interface InputCardProps {
+    title: string;
+    description?: string;
+    placeholder: string;
+    buttonLabel: string;
+    onSubmit: (value: string) => void;
+    type?: string;
+    icon?: ReactNode;
+}
+
+export default function InputCard({
+    title,
+    description,
+    placeholder,
+    buttonLabel,
+    onSubmit,
+    type = "text",
+    icon,
+}: InputCardProps) {
+    const [value, setValue] = useState("");
     const [error, setError] = useState("");
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        if (!vitalityId.trim()) {
-            setError("Vitality ID cannot be empty");
+        if (!value.trim()) {
+            setError(`${title} cannot be empty`);
             return;
         }
 
         setError("");
-        submitVitalityId(vitalityId);
+        onSubmit(value);
     }
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-100">
             <div className="relative h-175 w-97.5 rounded-2xl bg-white shadow-xl overflow-hidden">
                 <div className="absolute inset-10 flex flex-col justify-center gap-8">
-                    <div className="flex justify-start">
-                        <img
-                            src="/intro/aia-vitality-wrapped.svg"
-                            alt="AIA Vitality Wrapped"
-                            className="h-8 w-auto"
-                        />
-                    </div>
+                    {icon && <div className="flex justify-start">{icon}</div>}
 
                     <div className="flex flex-col gap-2 text-left">
-                        <h1 className="text-3xl font-extrabold leading-tight text-gray-900">
-                            Your year with AIA Vitality
-                        </h1>
-                        <p className="text-sm leading-relaxed text-gray-600">
-                            Take a look back at your year and see how your healthy habits added
-                            up.
-                        </p>
+                        <h1 className="text-3xl font-extrabold leading-tight text-gray-900">{title}</h1>
+                        {description && (
+                            <p className="text-sm leading-relaxed text-gray-600">{description}</p>
+                        )}
                     </div>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                        <label className="text-xs font-medium text-gray-500">Vitality ID</label>
+                        <label className="text-xs font-medium text-gray-500">{title}</label>
 
                         <input
-                            type="text"
-                            value={vitalityId}
-                            onChange={(e) => setVitalityId(e.target.value)}
-                            placeholder={inputVitalityConfig.input.placeholder}
+                            type={type}
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder={placeholder}
                             className={`
                 h-12 rounded-xl border px-4 text-sm
                 focus:outline-none focus:ring-2 focus:ring-red-500
@@ -68,7 +75,7 @@ export default function InputVitalityCard() {
                 transition
               "
                         >
-                            {inputVitalityConfig.button.label}
+                            {buttonLabel}
                         </button>
                     </form>
                 </div>
