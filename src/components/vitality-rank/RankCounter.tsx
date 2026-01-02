@@ -5,41 +5,31 @@ import { useEffect, useState } from "react";
 interface RankCounterProps {
     target: number;
     duration?: number;
-    className?: string;
 }
 
 export default function RankCounter({
     target,
     duration = 1000,
-    className,
 }: RankCounterProps) {
-    const [count, setCount] = useState(0);
+    const [value, setValue] = useState(0);
 
     useEffect(() => {
-        let start: number | null = null;
-        setCount(0);
+        let start = 0;
+        const startTime = performance.now();
 
-        const animate = (timestamp: number) => {
-            if (!start) start = timestamp;
+        function animate(now: number) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const current = Math.floor(progress * target);
 
-            const progress = Math.min(
-                (timestamp - start) / duration,
-                1
-            );
-
-            setCount(Math.floor(progress * target));
+            setValue(current);
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
             }
-        };
+        }
 
         requestAnimationFrame(animate);
     }, [target, duration]);
 
-    return (
-        <span className={className}>
-            #{count.toLocaleString("id-ID")}
-        </span>
-    );
+    return <span>#{value.toLocaleString()}</span>;
 }
