@@ -1,5 +1,7 @@
+"use client";
+
 import { getVitalityRankTheme } from "./VitalityRankConfig";
-import { formatRank } from "./VitalityRankUtils";
+import RankCounter from "./RankCounter";
 
 interface VitalityRankCardProps {
     generalRank: number;
@@ -10,7 +12,6 @@ export default function VitalityRankCard({
     generalRank,
     genderRank,
 }: VitalityRankCardProps) {
-
     const theme = getVitalityRankTheme("default");
 
     return (
@@ -26,6 +27,7 @@ export default function VitalityRankCard({
                     className="opacity-80 h-full"
                 />
             </div>
+
             <div
                 className={`
                     absolute inset-y-0 right-0 w-[120px] z-[1]
@@ -33,6 +35,7 @@ export default function VitalityRankCard({
                     ${theme.sideAccentColor}
                 `}
             />
+
             <div className="relative z-10 flex min-h-screen items-center px-6">
                 <div className="flex w-full flex-col py-12">
                     <div className="mb-6 flex items-start justify-between">
@@ -41,6 +44,7 @@ export default function VitalityRankCard({
                             <br />
                             Rank
                         </h1>
+
                         <img
                             src={theme.trophySrc}
                             alt="Trophy"
@@ -49,22 +53,25 @@ export default function VitalityRankCard({
                             className="mt-2 mr-8"
                         />
                     </div>
+
                     <div className="mb-16 h-[2px] w-24 bg-white/70" />
+
                     <div className="flex flex-col gap-10">
                         <div>
                             <p className="text-lg font-medium text-white">
                                 General Rank
                             </p>
                             <p className="text-6xl font-extrabold text-white">
-                                {formatRank(generalRank)}
+                                <RankCounter target={generalRank} />
                             </p>
                         </div>
+
                         <div>
                             <p className="text-lg font-medium text-white">
                                 Gender Rank
                             </p>
                             <p className="text-6xl font-extrabold text-white">
-                                {formatRank(genderRank)}
+                                <RankCounter target={genderRank} />
                             </p>
                         </div>
                     </div>
