@@ -8,6 +8,7 @@ import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
 import StepsCard from "../components/steps/StepsCard";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard"
+import FavoriteRewardCard from "../components/favorite-rewards/FavoriteRewardCard";
 
 export default function Home() {
   return (
@@ -57,7 +58,14 @@ export default function Home() {
 
       <section className="h-svh snap-start snap-always">
         <CrowningCard type="paling-atlet" />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
         <WeeklyChallengeCard totalReward={3650000} />
+      </section>
+
+      <section className="h-svh snap-start snap-always">
+        <FavoriteRewardCard userName="Toni" />
       </section>
 
       <section className="h-svh snap-start snap-always">
