@@ -1,5 +1,6 @@
 "use client";
 
+import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
 import RankCounter from "./RankCounter";
 
@@ -13,9 +14,11 @@ export default function VitalityRankCard({
     genderRank,
 }: VitalityRankCardProps) {
     const theme = getVitalityRankTheme("default");
+    const { ref, isInView } = useInView({ threshold: 0.6 });
 
     return (
         <section
+            ref={ref}
             className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
         >
             <div className="absolute inset-0 flex justify-center items-center z-0 pointer-events-none">
@@ -61,18 +64,32 @@ export default function VitalityRankCard({
                             <p className="text-lg font-medium text-white">
                                 General Rank
                             </p>
-                            <p className="text-6xl font-extrabold text-white">
-                                <RankCounter target={generalRank} />
-                            </p>
+
+                            {isInView ? (
+                                <p className="text-6xl font-extrabold text-white">
+                                    <RankCounter target={generalRank} />
+                                </p>
+                            ) : (
+                                <p className="text-6xl font-extrabold text-white">
+                                    #0
+                                </p>
+                            )}
                         </div>
 
                         <div>
                             <p className="text-lg font-medium text-white">
                                 Gender Rank
                             </p>
-                            <p className="text-6xl font-extrabold text-white">
-                                <RankCounter target={genderRank} />
-                            </p>
+
+                            {isInView ? (
+                                <p className="text-6xl font-extrabold text-white">
+                                    <RankCounter target={genderRank} />
+                                </p>
+                            ) : (
+                                <p className="text-6xl font-extrabold text-white">
+                                    #0
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>
