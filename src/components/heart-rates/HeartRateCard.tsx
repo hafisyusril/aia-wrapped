@@ -4,8 +4,11 @@ import MobileCardFrame from "../MobileCardFrame";
 import { heartRateConfig } from "./heartRateConfig";
 import { getHeartRateCondition } from "./heartRateUtils";
 
-export default function HeartRateCard() {
-  const bpm = 10; // dummy data
+interface HeartRateCardProps {
+  bpm: number;
+}
+
+export default function HeartRateCard({ bpm }: HeartRateCardProps) {
   const condition = getHeartRateCondition(bpm);
   const config = heartRateConfig[condition];
 

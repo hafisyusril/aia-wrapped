@@ -3,8 +3,11 @@
 import { useEffect, useState } from "react";
 import MobileCardFrame from "./MobileCardFrame";
 
-export default function GymVisitCard() {
-  const [counter] = useState(20);
+interface GymVisitCardProps {
+  counter: number;
+}
+
+export default function GymVisitCard({ counter }: GymVisitCardProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
@@ -43,10 +46,12 @@ export default function GymVisitCard() {
           <img
             src="/gym-visit/triangle.svg"
             className="absolute top-0 left-0 w-full h-[50%] object-cover opacity-50"
+            alt=""
           />
           <img
             src="/gym-visit/triangle.svg"
             className="absolute bottom-0 left-0 w-full h-[50%] object-cover opacity-50"
+            alt=""
           />
         </div>
       }
@@ -54,6 +59,7 @@ export default function GymVisitCard() {
         <img
           src="/gym-visit/gym-visit-deadlift.svg"
           className="absolute bottom-10 right-0 w-62.5 h-75 z-10"
+          alt=""
         />
       }
       topContent={
@@ -65,9 +71,7 @@ export default function GymVisitCard() {
       bottomContent={
         <>
           <p className="text-[20px] text-black">You went to gym partner</p>
-          <h2 className="text-[50px] text-black font-bold leading-none">
-            {counter}
-          </h2>
+          <h2 className="text-[50px] text-black font-bold leading-none">{counter}</h2>
           <p className="text-[20px] font-medium text-black">times</p>
           <p
             className="mt-7.5 text-[15px] text-black"
