@@ -1,9 +1,11 @@
 "use client";
 
+import { motion, easeInOut } from "framer-motion";
 import { useInView } from "@/src/app/hooks/useInView";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "./StepsCounter";
 import { getStepsConfig } from "./stepsUtils";
+
 
 interface StepsCardProps {
   steps: number;
@@ -12,6 +14,27 @@ interface StepsCardProps {
 export default function StepsCard({ steps }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
+
+  const leftShoe = {
+    walk: {
+      x: [0, 50, 80, 40, 0],
+      y: [0, 10, 10, 10, 0],
+      rotate: [-30, -30, 0, 0, -30],
+    },
+  };
+  const rightShoe = {
+    walk: {
+      x: [0, -50, -80, -40, 0],
+      y: [0, -10, -10, -10, 0],
+      rotate: [0, 30, 30, 20, 0],
+    },
+  };
+
+  const walkTransition = {
+    duration: 1,
+    repeat: Infinity,
+    ease: "linear" as const,
+  };
 
   return (
     <div ref={ref}>
@@ -54,22 +77,33 @@ export default function StepsCard({ steps }: StepsCardProps) {
         }
         illustration={
           <>
-            <div className="pointer-events-none absolute bottom-35 left-10 right-10 inset-0 z-30">
-              <img
+            <div className="pointer-events-none absolute bottom-20 left-10 right-10 inset-0 z-30">
+              <motion.img
                 src="/steps/left-shoe.svg"
                 alt=""
-                className="absolute bottom-0 left-0 w-[45%] max-w-55 h-auto object-contain"
+                className="absolute bottom-2 left-12 w-[40%] h-auto object-contain"
+                animate="walk"
+                variants={leftShoe}
+                transition={walkTransition}
               />
+
               <img
                 src="/steps/left-line.svg"
                 alt=""
                 className="absolute bottom-0 left-15 w-[25%] max-w-55 h-auto object-contain"
               />
-              <img
+              <motion.img
                 src="/steps/right-shoe.svg"
                 alt=""
-                className="absolute bottom-0 right-0 w-[45%] max-w-55 h-auto object-contain"
+                className="absolute bottom-0 right-12 w-[45%] h-auto object-contain"
+                animate="walk"
+                variants={rightShoe}
+                transition={{
+                  ...walkTransition,
+                  delay: 2,
+                }}
               />
+
               <img
                 src="/steps/right-line.svg"
                 alt=""
