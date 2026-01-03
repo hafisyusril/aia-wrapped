@@ -30,7 +30,7 @@ export default function FitnessChaserCard({ totalChallenges }: FitnessChaserCard
         />
       }
       topContent={
-        <h1 className="text-white text-[50px] font-bold leading-tight">
+        <h1 className="text-white text-[50px] font-bold leading-none">
           Fitness <br /> Chaser
         </h1>
       }

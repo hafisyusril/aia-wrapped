@@ -64,7 +64,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
       }
       topContent={
         <h1
-          className="text-white text-[50px] font-bold leading-tight"
+          className="text-white text-[50px] font-bold leading-none"
           dangerouslySetInnerHTML={{ __html: title }}
         />
       }
