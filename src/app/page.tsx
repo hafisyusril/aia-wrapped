@@ -13,6 +13,7 @@ import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallenge
 import StepsCard from "../components/steps/StepsCard";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import FavoriteRewardCard from "../components/favorite-rewards/FavoriteRewardCard";
+import SnapSection from "../components/SnapSection";
 
 export default function Home() {
   const { userData, isDummyUser } = useUserFlow();
@@ -24,7 +25,9 @@ export default function Home() {
   const totalReward = isDummyUser ? 1_300_000 : userData?.totalReward ?? 0;
   const generalRank = isDummyUser ? 1450 : userData?.generalRank ?? 0;
   const genderRank = isDummyUser ? 673 : userData?.genderRank ?? 0;
-  const vhcStatus = isDummyUser ? "unchecked" : userData?.vhcStatus ?? "unchecked";
+  const vhcStatus = isDummyUser
+    ? "unchecked"
+    : userData?.vhcStatus ?? "unchecked";
 
   return (
     <main
@@ -35,49 +38,49 @@ export default function Home() {
         snap-mandatory
       "
     >
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <InputVitalityCard />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <IntroCard />
-      </section>
+      </SnapSection>
 
-      <section className="h-[100svh] snap-start snap-always">
+      <SnapSection>
         <VHCStatusCard status={vhcStatus} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <StepsCard steps={steps} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <HeartRateCard bpm={bpm} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <GymVisitCard counter={gymVisit} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <FitnessChaserCard totalChallenges={weeklyChallenges} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <WeeklyChallengeCard totalReward={totalReward} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <FavoriteRewardCard userName="Toni" />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <VitalityRankCard genderRank={genderRank} generalRank={generalRank} />
-      </section>
+      </SnapSection>
 
-      <section className="h-svh snap-start snap-always">
+      <SnapSection>
         <CrowningCard type="rajin-gerak" />
-      </section>
+      </SnapSection>
     </main>
   );
 }

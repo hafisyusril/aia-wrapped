@@ -1,0 +1,21 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ReactNode } from "react";
+
+export default function SnapSection({ children }: { children: ReactNode }) {
+  return (
+    <motion.section
+      className="h-svh snap-start snap-always"
+      initial={{ opacity: 0, y: 80, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.7 }}
+      transition={{
+        duration: 0.6,
+        ease: "easeOut",
+      }}
+    >
+      {children}
+    </motion.section>
+  );
+}
