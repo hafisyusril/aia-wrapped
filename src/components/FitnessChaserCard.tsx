@@ -2,7 +2,11 @@
 
 import MobileCardFrame from "./MobileCardFrame";
 
-export default function FitnessChaserCard() {
+interface FitnessChaserCardProps {
+  totalChallenges: number;
+}
+
+export default function FitnessChaserCard({ totalChallenges }: FitnessChaserCardProps) {
   return (
     <MobileCardFrame
       background="linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)"
@@ -22,6 +26,7 @@ export default function FitnessChaserCard() {
         <img
           src="/fitness-chaser/woman-red.svg"
           className="absolute bottom-10 -right-3.75 w-75 h-55 z-10"
+          alt=""
         />
       }
       topContent={
@@ -32,7 +37,7 @@ export default function FitnessChaserCard() {
       bottomContent={
         <>
           <p className="text-[20px] text-black">You finished</p>
-          <h2 className="text-[50px] text-black font-bold leading-none">27</h2>
+          <h2 className="text-[50px] text-black font-bold leading-none">{totalChallenges}</h2>
           <p className="text-[20px] text-black font-semibold">
             Weekly Challenges!
           </p>
