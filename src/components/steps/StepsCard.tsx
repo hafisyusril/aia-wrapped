@@ -1,16 +1,17 @@
 "use client";
 
 import { useInView } from "@/src/app/hooks/useInView";
-import { useState } from "react";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "./StepsCounter";
 import { getStepsConfig } from "./stepsUtils";
 
-export default function StepsCard() {
-  const [stepsCounter] = useState(25000000);  // dummy API
-  const { ref, isInView } = useInView({ threshold: 0.6 });
+interface StepsCardProps {
+  steps: number;
+}
 
-  const config = getStepsConfig(stepsCounter);
+export default function StepsCard({ steps }: StepsCardProps) {
+  const { ref, isInView } = useInView({ threshold: 0.6 });
+  const config = getStepsConfig(steps);
 
   return (
     <div ref={ref}>
@@ -37,29 +38,18 @@ export default function StepsCard() {
 
             {isInView ? (
               <AnimatedCounter
-                target={stepsCounter}
+                target={steps}
                 duration={700}
                 className="text-[50px] text-black font-bold leading-none"
               />
             ) : (
-              <h2 className="text-[50px] text-black font-bold leading-none">
-                0
-              </h2>
+              <h2 className="text-[50px] text-black font-bold leading-none">0</h2>
             )}
 
-            <p className="text-[20px] text-black font-semibold">
-              Steps this year.
-            </p>
-
-            <p className="mt-3 text-[18px] text-black font-light">
-              That’s an average of
-            </p>
-            <p className="text-[18px] text-black font-light">
-              {config.averageText}
-            </p>
-            <p className="text-[18px] text-black font-light">
-              {config.motivation}
-            </p>
+            <p className="text-[20px] text-black font-semibold">Steps this year.</p>
+            <p className="mt-3 text-[18px] text-black font-light">That’s an average of</p>
+            <p className="text-[18px] text-black font-light">{config.averageText}</p>
+            <p className="text-[18px] text-black font-light">{config.motivation}</p>
           </>
         }
         illustration={
@@ -89,9 +79,7 @@ export default function StepsCard() {
 
             <div className="absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 opacity-80">
               <img src="/steps/scroll.svg" alt="Scroll" className="w-4 h-4" />
-              <p className="text-xl text-black font-normal tracking-wide">
-                scroll
-              </p>
+              <p className="text-xl text-black font-normal tracking-wide">scroll</p>
             </div>
           </>
         }

@@ -41,45 +41,45 @@ export default function IntroCard() {
             {/* CONTENT GRID (INSIDE FRAME) */}
             <div className="grid grid-rows-[1fr_auto] h-full px-4 pt-8 pb-6">
               {/* MIDDLE */}
-                <img
-                  src="/heart-rate/red-heart.svg"
-                  className="absolute top-2 right-3 w-18 rotate-20"
-                  alt=""
-                />
+              <img
+                src="/heart-rate/red-heart.svg"
+                className="absolute top-2 right-3 w-18 rotate-20"
+                alt=""
+              />
 
-                <img
-                  src="/reward-redeem/women-gold.svg"
-                  className="absolute left-1 top-1 w-43"
-                  alt=""
-                />
+              <img
+                src="/reward-redeem/women-gold.svg"
+                className="absolute left-1 top-1 w-43"
+                alt=""
+              />
 
-                <img
-                  src="/gym-visit/gym-visit-deadlift.svg"
-                  className="absolute bottom-4 w-42 left-1"
-                  alt=""
-                />
+              <img
+                src="/gym-visit/gym-visit-deadlift.svg"
+                className="absolute bottom-4 w-42 left-1"
+                alt=""
+              />
 
-                <img
-                  src="/reward-redeem/gold-coin.svg"
-                  className="absolute bottom-15 left-1 w-17"
-                  alt=""
-                />
-                <img
-                  src="/intro/check-inside-love.svg"
-                  className="absolute top-1 right-20 w-15"
-                  alt=""
-                />
+              <img
+                src="/reward-redeem/gold-coin.svg"
+                className="absolute bottom-15 left-1 w-17"
+                alt=""
+              />
+              <img
+                src="/intro/check-inside-love.svg"
+                className="absolute top-1 right-20 w-15"
+                alt=""
+              />
 
-                <img
-                  src="/intro/wrapped-woman-red.svg"
-                  className="absolute w-42 bottom-4 right-1"
-                  alt=""
-                />
-                <img
-                  src="/intro/shoe.svg"
-                  className="absolute top-25 right-2 w-25"
-                  alt=""
-                />
+              <img
+                src="/intro/wrapped-woman-red.svg"
+                className="absolute w-42 bottom-4 right-1"
+                alt=""
+              />
+              <img
+                src="/intro/shoe.svg"
+                className="absolute top-25 right-2 w-25"
+                alt=""
+              />
             </div>
 
             {/* FRAME */}

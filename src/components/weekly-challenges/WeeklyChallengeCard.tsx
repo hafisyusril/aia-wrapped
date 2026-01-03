@@ -26,12 +26,10 @@ export default function WeeklyChallengeCard({
     >
       <div className={`px-6 py-12 ${headerBackground}`}>
         <div className="text-white">
-          <p className="text-lg font-medium mb-2">
-            {currency}
-          </p>
-          <h1 className="text-5xl font-extrabold leading-tight">
-            {formatCurrency(totalReward)}
-          </h1>
+          <div className="flex items-end space-x-2 mt-5">
+            <p className="text-lg font-medium">{currency}</p>
+            <h1 className="text-5xl font-extrabold leading-tight">{formatCurrency(totalReward)}</h1>
+          </div>
           <p className="mt-2 text-xl font-medium">
             {title}
           </p>
