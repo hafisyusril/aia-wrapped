@@ -6,7 +6,7 @@ import { useUserFlow } from "../../contexts/UserFlowContext";
 export default function InputVitalityCard() {
     const [value, setValue] = useState("");
     const [error, setError] = useState("");
-    const { userData, setVitalityId } = useUserFlow();
+    const { setVitalityId } = useUserFlow();
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();

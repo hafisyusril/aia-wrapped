@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
+type FlowStep = "input" | "intro" | "content";
+
 interface UserData {
     vhcStatus: "checked" | "unchecked"
     steps: number;
@@ -16,6 +18,7 @@ interface UserData {
 interface UserFlowContextProps {
     isDummyUser: boolean;
     userData: UserData | null;
+    flowStep: FlowStep;
     setVitalityId: (id: string) => void;
 }
 
@@ -24,6 +27,7 @@ const UserFlowContext = createContext<UserFlowContextProps | undefined>(undefine
 export function UserFlowProvider({ children }: { children: ReactNode }) {
     const [isDummyUser, setIsDummyUser] = useState(false);
     const [userData, setUserData] = useState<UserData | null>(null);
+    const [flowStep, setFlowStep] = useState<FlowStep>("input");
 
     function setVitalityId(id: string) {
         if (id === "dummyToni") {
@@ -38,6 +42,8 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
                 generalRank: 1450,
                 genderRank: 673,
             });
+
+            setFlowStep("intro");
         } else {
             setIsDummyUser(false);
             setUserData(null);
@@ -45,11 +51,14 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
     }
 
     return (
-        <UserFlowContext.Provider value={{ isDummyUser, userData, setVitalityId }}>
+        <UserFlowContext.Provider
+            value={{ isDummyUser, userData, flowStep, setVitalityId }}
+        >
             {children}
         </UserFlowContext.Provider>
     );
 }
+
 
 export function useUserFlow() {
     const context = useContext(UserFlowContext);
