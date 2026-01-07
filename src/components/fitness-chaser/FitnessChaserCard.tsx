@@ -1,6 +1,7 @@
 "use client";
 
-import MobileCardFrame from "./MobileCardFrame";
+import MobileCardFrame from "../MobileCardFrame";
+import WomanRedSvg from "./WomanRedSvg";
 
 interface FitnessChaserCardProps {
   totalChallenges: number;
@@ -23,11 +24,9 @@ export default function FitnessChaserCard({ totalChallenges }: FitnessChaserCard
         </div>
       }
       illustration={
-        <img
-          src="/fitness-chaser/woman-red.svg"
-          className="absolute bottom-10 -right-3.75 w-75 h-55 z-10"
-          alt=""
-        />
+        <div className="absolute bottom-10 -right-3.75 w-75 h-65 z-10">
+          <WomanRedSvg />
+        </div>
       }
       topContent={
         <h1 className="text-white text-[50px] font-bold leading-none">
