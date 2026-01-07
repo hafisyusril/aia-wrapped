@@ -5,7 +5,6 @@ import MobileCardFrame from "../MobileCardFrame";
 import { heartRateConfig } from "./heartRateConfig";
 import { getHeartRateCondition } from "./heartRateUtils";
 
-
 interface HeartRateCardProps {
   bpm: number;
 }
@@ -14,41 +13,83 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
   const condition = getHeartRateCondition(bpm);
   const config = heartRateConfig[condition];
 
+  const fadeScale = {
+    hidden: { opacity: 0, scale: 0.85, y: 30 },
+    show: { opacity: 1, scale: 1, y: 0 },
+  };
+
   return (
     <MobileCardFrame
       background={config.background}
       ornaments={
-        <img
+        <motion.img
           src="/heart-rate/abstract-background.svg"
-          className="absolute -top-7 w-175 h-200 opacity-50 z-0"
-          alt=""
+          className="absolute w-full h-full object-fill overflow-visible opacity-50 z-0"
+          
+          alt="ornament"
+          initial={{
+            x: -120,
+            y: 120,
+            opacity: 0.5,
+            scale: 0.1,
+            rotate: -15,
+          }}
+          whileInView={{
+            x: 0,
+            y: 0,
+            opacity: 0.5,
+            scale: 1,
+            rotate: 0,
+          }}
+          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ once: true }}
         />
+      }
+      topContent={
+        <motion.div
+          variants={fadeScale}
+          initial="hidden"
+          whileInView="show"
+          transition={{
+            duration: 1.2,
+            delay: 1.8,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          viewport={{ once: true }}
+          className="h-full flex flex-col justify-end pb-3"
+        >
+          <p className="text-white font-semibold text-lg mb-2">
+            Your exercise vibe:
+          </p>
+          <img src={config.topImage} className="w-full" alt="" />
+        </motion.div>
       }
       illustration={
         <motion.img
           src="/heart-rate/red-heart.svg"
           alt="Red Heart"
           className="absolute bottom-15 right-10 w-37.5 z-10"
-          animate={{
-            scale: [1, 1.15, 1],
-          }}
+          animate={{ scale: [0.5, 1, 0.5] }}
           transition={{
-            duration: 1,
+            duration: 1.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
       }
-      topContent={
-        <div className="h-full flex flex-col justify-end pb-3">
-          <p className="text-white font-semibold text-lg mb-2">
-            Your exercise vibe:
-          </p>
-          <img src={config.topImage} className="w-full" alt="" />
-        </div>
-      }
       bottomContent={
-        <div className="relative text-black mt-10">
+        <motion.div
+          variants={fadeScale}
+          initial="hidden"
+          whileInView="show"
+          transition={{
+            duration: 1.2,
+            delay: 2.6, // SAMA DENGAN illustration
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          viewport={{ once: true }}
+          className="relative text-black mt-10"
+        >
           <p className="text-2xl font-light">You're mostly doing</p>
           <p className="text-2xl font-medium leading-tight">
             {config.description}
@@ -56,7 +97,7 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
           {config.showExerciseText && (
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
-        </div>
+        </motion.div>
       }
     />
   );

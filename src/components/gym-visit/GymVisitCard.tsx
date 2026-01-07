@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import MobileCardFrame from "./MobileCardFrame";
+import MobileCardFrame from "../MobileCardFrame";
+import GymDeadliftSvg from "./GymDeadliftSvg";
 
 interface GymVisitCardProps {
   counter: number;
@@ -56,11 +57,9 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
         </div>
       }
       illustration={
-        <img
-          src="/gym-visit/gym-visit-deadlift.svg"
-          className="absolute bottom-10 right-0 w-62.5 h-75 z-10"
-          alt=""
-        />
+        <div className="absolute bottom-10 right-0 w-62.5 h-90 z-10 overflow-visible">
+          <GymDeadliftSvg />
+        </div>
       }
       topContent={
         <h1
@@ -71,7 +70,9 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
       bottomContent={
         <>
           <p className="text-[20px] text-black">You went to gym partner</p>
-          <h2 className="text-[50px] text-black font-bold leading-none">{counter}</h2>
+          <h2 className="text-[50px] text-black font-bold leading-none">
+            {counter}
+          </h2>
           <p className="text-[20px] font-medium text-black">times</p>
           <p
             className="mt-7.5 text-[15px] text-black"
