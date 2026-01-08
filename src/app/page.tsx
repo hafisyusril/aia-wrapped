@@ -1,20 +1,20 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useUserFlow } from "../contexts/UserFlowContext";
 
-import SnapSection from "../components/SnapSection";
+import CrowningCard from "../components/crowning/CrowningCard";
+import FitnessChaserCard from "../components/fitness-chaser/FitnessChaserCard";
+import GymVisitCard from "../components/gym-visit/GymVisitCard";
+import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
-import VHCStatusCard from "../components/vhc/VHCStatusCard";
+import SnapSection from "../components/SnapSection";
 import StepsCard from "../components/steps/StepsCard";
-import HeartRateCard from "../components/heart-rates/HeartRateCard";
-import GymVisitCard from "../components/gym-visit/GymVisitCard";
-import FitnessChaserCard from "../components/fitness-chaser/FitnessChaserCard";
+import VHCStatusCard from "../components/vhc/VHCStatusCard";
+import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
 import FavoriteRewardCard from "../components/favorite-rewards/FavoriteRewardCard";
-import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
-import CrowningCard from "../components/crowning/CrowningCard";
 
 const DUMMY_DATA = {
   steps: 3_022_500,
@@ -44,9 +44,7 @@ export default function Home() {
     generalRank: isDummyUser
       ? DUMMY_DATA.generalRank
       : userData?.generalRank ?? 0,
-    genderRank: isDummyUser
-      ? DUMMY_DATA.genderRank
-      : userData?.genderRank ?? 0,
+    genderRank: isDummyUser ? DUMMY_DATA.genderRank : userData?.genderRank ?? 0,
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
       : userData?.vhcStatus ?? "unchecked",
@@ -73,9 +71,11 @@ export default function Home() {
         </div>
       </SnapSection>
 
-      <SnapSection>
-        <VHCStatusCard status={data.vhcStatus} />
-      </SnapSection>
+      {data.vhcStatus === "checked" && (
+        <SnapSection>
+          <VHCStatusCard status={data.vhcStatus} />
+        </SnapSection>
+      )}
 
       <SnapSection>
         <StepsCard steps={data.steps} />
@@ -100,6 +100,12 @@ export default function Home() {
       <SnapSection>
         <FavoriteRewardCard userName="Toni" />
       </SnapSection>
+
+      {data.vhcStatus === "unchecked" && (
+        <SnapSection>
+          <VHCStatusCard status={data.vhcStatus} />
+        </SnapSection>
+      )}
 
       <SnapSection>
         <VitalityRankCard
