@@ -18,8 +18,8 @@ import FavoriteRewardCard from "../components/favorite-rewards/FavoriteRewardCar
 
 const DUMMY_DATA = {
   steps: 3_022_500,
-  bpm: 120,
-  gymVisit: 0,
+  level: "intense" as const,
+  gymVisit: 260,
   weeklyChallenges: 26,
   totalReward: 1_300_000,
   generalRank: 1450,
@@ -33,7 +33,7 @@ export default function Home() {
 
   const data = {
     steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
-    bpm: isDummyUser ? DUMMY_DATA.bpm : userData?.bpm ?? 10,
+    level: isDummyUser ? DUMMY_DATA.level : userData?.level ?? "light",
     gymVisit: isDummyUser ? DUMMY_DATA.gymVisit : userData?.gymVisit ?? 0,
     weeklyChallenges: isDummyUser
       ? DUMMY_DATA.weeklyChallenges
@@ -82,7 +82,7 @@ export default function Home() {
       </SnapSection>
 
       <SnapSection>
-        <HeartRateCard bpm={data.bpm} />
+        <HeartRateCard level={data.level} />
       </SnapSection>
 
       <SnapSection>
