@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
+import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
 
 type FlowStep = "input" | "intro" | "content";
 
 interface UserData {
     vhcStatus: "checked" | "unchecked"
     steps: number;
-    bpm: number;
+    level: HeartRateLevel;
     gymVisit: number;
     weeklyChallenges: number;
     totalReward: number;
@@ -35,7 +36,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
             setUserData({
                 vhcStatus: "unchecked",
                 steps: 3_022_500,
-                bpm: 120,
+                level: "light",
                 gymVisit: 0,
                 weeklyChallenges: 26,
                 totalReward: 1_300_000,
