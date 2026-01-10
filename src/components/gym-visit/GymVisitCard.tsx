@@ -15,24 +15,32 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
 
   useEffect(() => {
     if (counter <= 50) {
-      setTitle("Routines <br /> Starter");
-      setMessage("Nice Start!");
+      setTitle("Energy-Saving <br /> Mode");
+      setMessage(
+        "Sometimes leg day, sometimes abs day. <br /> Most times, rest days."
+      );
       setBackground("linear-gradient(to bottom, #9393f9 35%, #d7f5ff 35%)");
     } else if (counter <= 150) {
-      setTitle("Regular <br /> Powerlifter");
-      setMessage("Your habit <br /> is solid!");
+      setTitle("Serious <br /> Bodybuilder");
+      setMessage(
+        "Solid habit. You clearly not just hit <br /> the gym for mirror selfies."
+      );
       setBackground(
         "linear-gradient(to bottom, rgba(113,113,226,1) 35%, rgba(178,232,247,1) 35%)"
       );
     } else if (counter <= 250) {
-      setTitle("Strong <br /> Habit Builder");
-      setMessage("Love the <br /> discipline!");
+      setTitle("Gym <br /> Bunny");
+      setMessage(
+        "Admit it, you train hard <br /> so you can have pizza after."
+      );
       setBackground(
         "linear-gradient(to bottom, rgba(70,70,204,1) 35%, rgba(108,220,239,1) 35%)"
       );
     } else {
-      setTitle("Gym <br /> Crusher");
-      setMessage("You're <br /> unstoppable!");
+      setTitle("Hustle <br /> for Muscle");
+      setMessage(
+        "You give ‘No Days Off’ Energy. <br /> Be honest, the PT is your bestie!"
+      );
       setBackground(
         "linear-gradient(to bottom, rgba(41,41,155,1) 35%, rgba(23,209,229,1) 35%)"
       );

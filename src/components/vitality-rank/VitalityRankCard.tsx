@@ -41,9 +41,9 @@ export default function VitalityRankCard({
                 <div className="flex w-full flex-col py-12">
                     <div className="mb-6 flex items-start justify-between">
                         <h1 className="text-4xl font-extrabold leading-tight text-white">
-                            Vitality
+                            AIA Vitality
                             <br />
-                            Rank
+                            Member Rank
                         </h1>
 
                         <img

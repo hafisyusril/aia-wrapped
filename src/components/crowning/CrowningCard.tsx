@@ -48,13 +48,16 @@ export default function CrowningCard({ type }: CrowningCardProps) {
                     Your Vitality Type
                 </p>
 
-                <h1
-                    className={`text-5xl sm:text-6xl md:text-7xl font-bold ${themeColor} leading-none`}
+                <p
+                    className={`text-2xl sm:text-6xl md:text-7xl font-bold ${themeColor} leading-none`}
                 >
                     {titleLine1}
-                    <br />
+                </p>
+                <p
+                    className={`mt-3 text-5xl sm:text-6xl md:text-7xl font-bold ${themeColor} leading-none`}
+                >
                     {titleLine2}
-                </h1>
+                </p>
                 <p className="mt-8 text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
                     {description}
                 </p>

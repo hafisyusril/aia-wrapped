@@ -26,22 +26,35 @@ export default function WeeklyChallengeCard({
     >
       <div className={`px-6 py-12 ${headerBackground}`}>
         <div className="text-white">
-          <div className="flex items-end space-x-2 mt-5">
-            <p className="text-lg font-medium">{currency}</p>
-            <h1 className="text-5xl font-extrabold leading-tight">{formatCurrency(totalReward)}</h1>
+          <p className="text-lg font-medium mb-2">
+            Your rewards radar:
+          </p>
+          <div className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 rotate-[-4deg] text-5xl">
+            ALWAYS ON
           </div>
+
+          <div className="flex items-end space-x-2 mt-4">
+            <p className="text-lg font-medium">{currency}</p>
+            <h1 className="text-5xl font-extrabold leading-tight">
+              {formatCurrency(totalReward)}
+            </h1>
+          </div>
+
           <p className="mt-2 text-xl font-medium">
             {title}
           </p>
         </div>
       </div>
+
       <div className="flex-1 flex flex-col justify-between px-6 py-8">
         <p className="text-black text-lg font-medium leading-relaxed">
           {message.map((line, index) => (
-            <span key={index}>
-              {line}
-              <br />
-            </span>
+            <span
+              key={index}
+              dangerouslySetInnerHTML={{
+                __html: line ? `${line}<br />` : "<br />",
+              }}
+            />
           ))}
         </p>
         <div className="relative flex justify-center items-end mt-8">

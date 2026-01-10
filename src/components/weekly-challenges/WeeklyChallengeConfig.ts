@@ -21,9 +21,10 @@ export const weeklyChallengeConfig: WeeklyChallengeLevel[] = [
     currency: "Rp",
     title: "rewards redeemed!",
     message: [
-      "Kamu berhasil buktiin",
-      "kalau hidup sehat",
-      "bisa bikin lebih hemat!",
+      "Living healthier feels good",
+      "for your body and your wallet.",
+      "",
+      "Your favorite reward: <strong>Tokopedia</strong>",
     ],
   },
 ];

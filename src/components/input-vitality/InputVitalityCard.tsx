@@ -21,21 +21,13 @@ export default function InputVitalityCard() {
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-100">
             <div className="relative h-175 w-97.5 rounded-2xl bg-white shadow-xl overflow-hidden">
-                <div className="absolute inset-10 flex flex-col justify-center gap-8">
-                    <div className="flex justify-start">
+                <div className="absolute inset-10 flex flex-col justify-evenly gap-8">
+                    <div className="flex justify-center">
                         <img
                             src="/intro/aia-vitality-wrapped.svg"
                             alt="AIA Vitality"
-                            className="h-8 w-auto"
+                            className="h-14 w-auto"
                         />
-                    </div>
-                    <div className="flex flex-col gap-2 text-left">
-                        <h1 className="text-3xl font-extrabold leading-tight text-gray-900">
-                            Your year with AIA Vitality
-                        </h1>
-                        <p className="text-sm leading-relaxed text-gray-600">
-                            Take a look back at your year and see how your healthy habits added up.
-                        </p>
                     </div>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
                         <input

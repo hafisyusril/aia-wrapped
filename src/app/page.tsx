@@ -97,10 +97,6 @@ export default function Home() {
         <WeeklyChallengeCard totalReward={data.totalReward} />
       </SnapSection>
 
-      <SnapSection>
-        <FavoriteRewardCard userName="Toni" />
-      </SnapSection>
-
       {data.vhcStatus === "unchecked" && (
         <SnapSection>
           <VHCStatusCard status={data.vhcStatus} />
@@ -115,7 +111,7 @@ export default function Home() {
       </SnapSection>
 
       <SnapSection>
-        <CrowningCard type="rajin-gerak" />
+        <CrowningCard type="starter" />
       </SnapSection>
     </main>
   );

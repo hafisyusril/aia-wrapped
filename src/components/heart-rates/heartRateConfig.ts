@@ -1,4 +1,4 @@
-type HeartRateCondition = "steady" | "super" | "strong";
+type HeartRateCondition = "low_heat" | "cardio_junkie" | "on_fire";
 
 export const heartRateConfig: Record<
   HeartRateCondition,
@@ -6,24 +6,31 @@ export const heartRateConfig: Record<
     background: string;
     topImage: string;
     description: string;
+    motivation: string;
     showExerciseText?: boolean;
   }
 > = {
-  steady: {
+  low_heat: {
     background: "linear-gradient(to bottom, #F96B7D 35%, #D9D9FC 35%)",
-    topImage: "/heart-rate/steady.svg",
+    topImage: "/heart-rate/low-heat.svg",
     description: "low to moderate intensity",
+    motivation:
+      "We can see you running away \n(from your problems) on a treadmill.",
     showExerciseText: true,
   },
-  super: {
+  cardio_junkie: {
     background: "linear-gradient(to bottom, #b71c37 35%, #9090fc 35%)",
-    topImage: "/heart-rate/super.svg",
+    topImage: "/heart-rate/cardio-junkie.svg",
     description: "high intensity",
+    motivation: "You must be really really likes working out...\nand donuts.",
+    showExerciseText: true,
   },
-  strong: {
+  on_fire: {
     background: "linear-gradient(to bottom, #F93D5D 35%, #C0C0FF 35%)",
-    topImage: "/heart-rate/strong.svg",
+    topImage: "/heart-rate/on-fire.svg",
     description: "moderate to high intensity",
+    motivation:
+      "Are you human? Other people workout routine \nis just your warm-up!",
     showExerciseText: true,
   },
 };

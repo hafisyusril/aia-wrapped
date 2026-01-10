@@ -25,7 +25,7 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
         <motion.img
           src="/heart-rate/abstract-background.svg"
           className="absolute w-full h-full object-fill overflow-visible opacity-50 z-0"
-          
+
           alt="ornament"
           initial={{
             x: -120,
@@ -97,6 +97,11 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
           {config.showExerciseText && (
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
+          <div className="mt-10">
+            <p className="text-md font-medium leading-tight">
+              {config.motivation}
+            </p>
+          </div>
         </motion.div>
       }
     />
