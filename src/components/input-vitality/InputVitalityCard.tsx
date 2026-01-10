@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useUserFlow } from "../../contexts/UserFlowContext";
 
 export default function InputVitalityCard() {
@@ -20,16 +21,43 @@ export default function InputVitalityCard() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-neutral-100">
-            <div className="relative h-175 w-97.5 rounded-2xl bg-white shadow-xl overflow-hidden">
+            <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{
+                    duration: 0.5,
+                    ease: "easeOut",
+                }}
+                className="relative h-175 w-97.5 rounded-2xl bg-white shadow-xl overflow-hidden"
+            >
                 <div className="absolute inset-10 flex flex-col justify-evenly gap-8">
-                    <div className="flex justify-center">
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            delay: 0.1,
+                            ease: "easeOut",
+                        }}
+                        className="flex justify-center"
+                    >
                         <img
                             src="/intro/aia-vitality-wrapped.svg"
                             alt="AIA Vitality"
                             className="h-14 w-auto"
                         />
-                    </div>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                    </motion.div>
+                    <motion.form
+                        onSubmit={handleSubmit}
+                        initial={{ scale: 0.95, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{
+                            duration: 0.4,
+                            delay: 0.2,
+                            ease: "easeOut",
+                        }}
+                        className="flex flex-col gap-2"
+                    >
                         <input
                             type="text"
                             value={value}
@@ -41,7 +69,13 @@ export default function InputVitalityCard() {
                                 ${error ? "border-red-500" : "border-gray-300"}
                             `}
                         />
-                        {error && <p className="text-xs text-red-500">{error}</p>}
+
+                        {error && (
+                            <p className="text-xs text-red-500">
+                                {error}
+                            </p>
+                        )}
+
                         <button
                             type="submit"
                             className="
@@ -53,9 +87,9 @@ export default function InputVitalityCard() {
                         >
                             Continue
                         </button>
-                    </form>
+                    </motion.form>
                 </div>
-            </div>
+            </motion.div>
         </div>
     );
 }

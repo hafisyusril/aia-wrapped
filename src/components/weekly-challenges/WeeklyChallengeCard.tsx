@@ -1,3 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useInView } from "@/src/app/hooks/useInView";
+import AnimatedCounter from "../steps/StepsCounter";
+
 import {
   getWeeklyChallengeByVariant,
 } from "./WeeklyChallengeConfig";
@@ -10,6 +17,14 @@ interface WeeklyChallengeCardProps {
 export default function WeeklyChallengeCard({
   totalReward,
 }: WeeklyChallengeCardProps) {
+  const { ref, isInView } = useInView({ threshold: 0.6 });
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const {
     background,
     headerBackground,
@@ -22,21 +37,46 @@ export default function WeeklyChallengeCard({
 
   return (
     <section
+      ref={ref}
       className={`w-full min-h-screen flex flex-col font-sans ${background}`}
     >
+      {/* HEADER */}
       <div className={`px-6 py-12 ${headerBackground}`}>
         <div className="text-white">
           <p className="text-lg font-medium mb-2">
             Your rewards radar:
           </p>
-          <div className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 rotate-[-4deg] text-5xl">
-            ALWAYS ON
-          </div>
 
+          {/* ALWAYS ON */}
+          <motion.div
+            className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 text-5xl"
+            initial={{ scale: 0, rotate: -180, opacity: 0 }}
+            animate={
+              isInView && mounted
+                ? { scale: 1, rotate: -4, opacity: 1 }
+                : { scale: 0, rotate: -180, opacity: 0 }
+            }
+            transition={{
+              duration: 0.9,
+              ease: [0.34, 1.56, 0.64, 1],
+            }}
+          >
+            ALWAYS ON
+          </motion.div>
+
+          {/* TOTAL REWARD */}
           <div className="flex items-end space-x-2 mt-4">
             <p className="text-lg font-medium">{currency}</p>
+
             <h1 className="text-5xl font-extrabold leading-tight">
-              {formatCurrency(totalReward)}
+              {mounted && isInView ? (
+                <AnimatedCounter
+                  target={totalReward}
+                  duration={900}
+                />
+              ) : (
+                formatCurrency(0)
+              )}
             </h1>
           </div>
 
@@ -46,6 +86,7 @@ export default function WeeklyChallengeCard({
         </div>
       </div>
 
+      {/* CONTENT */}
       <div className="flex-1 flex flex-col justify-between px-6 py-8">
         <p className="text-black text-lg font-medium leading-relaxed">
           {message.map((line, index) => (
@@ -57,6 +98,7 @@ export default function WeeklyChallengeCard({
             />
           ))}
         </p>
+
         <div className="relative flex justify-center items-end mt-8">
           <img
             src={illustrationSrc}

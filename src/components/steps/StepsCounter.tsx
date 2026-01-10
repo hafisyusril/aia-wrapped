@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 interface AnimatedCounterProps {
@@ -12,24 +14,39 @@ export default function AnimatedCounter({
   className,
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    let start: number | null = null;
+    setMounted(true);
+  }, []);
 
-    const animate = (timestamp: number) => {
-      if (!start) start = timestamp;
-      const progress = Math.min((timestamp - start) / duration, 1);
-      setCount(Math.floor(progress * target));
+  useEffect(() => {
+    if (!mounted) return;
 
-      if (progress < 1) requestAnimationFrame(animate);
+    let start = 0;
+    const startTime = performance.now();
+
+    const animate = (time: number) => {
+      const progress = Math.min((time - startTime) / duration, 1);
+      const value = Math.floor(progress * target);
+
+      setCount(value);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
     };
 
     requestAnimationFrame(animate);
-  }, [target, duration]);
+  }, [mounted, target, duration]);
+
+  if (!mounted) {
+    return <span className={className}>0</span>;
+  }
 
   return (
-    <h2 className={className}>
+    <span className={className}>
       {count.toLocaleString("id-ID")}
-    </h2>
+    </span>
   );
 }

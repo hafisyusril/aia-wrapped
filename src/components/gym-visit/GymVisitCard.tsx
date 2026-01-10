@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion, easeInOut } from "framer-motion";
 import MobileCardFrame from "../MobileCardFrame";
 import GymDeadliftSvg from "./GymDeadliftSvg";
 import AnimatedCounter from "../steps/StepsCounter";
@@ -55,16 +56,38 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
       <MobileCardFrame
         background={background}
         ornaments={
-          <div className="absolute inset-0 z-0">
-            <img
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <motion.img
               src="/gym-visit/triangle.svg"
-              className="absolute top-0 left-0 w-full h-[50%] object-cover opacity-100"
               alt=""
+              className="absolute top-0 left-0 w-full h-[50%] object-cover"
+              initial={{ y: 60, opacity: 0 }}
+              animate={
+                isInView
+                  ? { y: 0, opacity: 1 }
+                  : { y: 60, opacity: 0 }
+              }
+              transition={{
+                duration: 0.7,
+                ease: easeInOut,
+              }}
             />
-            <img
+
+            <motion.img
               src="/gym-visit/triangle.svg"
-              className="absolute bottom-0 left-0 w-full h-[50%] object-cover opacity-100"
               alt=""
+              className="absolute bottom-0 left-0 w-full h-[50%] object-cover"
+              initial={{ y: 60, opacity: 0 }}
+              animate={
+                isInView
+                  ? { y: 0, opacity: 1 }
+                  : { y: 60, opacity: 0 }
+              }
+              transition={{
+                duration: 0.7,
+                delay: 0.1,
+                ease: easeInOut,
+              }}
             />
           </div>
         }
@@ -82,6 +105,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
         bottomContent={
           <>
             <p className="text-[20px] text-black">You went to gym partner</p>
+
             {isInView ? (
               <AnimatedCounter
                 target={counter}
@@ -93,7 +117,9 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
                 0
               </h2>
             )}
+
             <p className="text-[20px] font-medium text-black">times</p>
+
             <p
               className="mt-4 text-[15px] text-black"
               dangerouslySetInnerHTML={{ __html: message }}

@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
 import RankCounter from "./RankCounter";
@@ -20,20 +21,39 @@ export default function VitalityRankCard({
         <section
             className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
         >
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <img
-                    src={theme.ornamentSrc}
-                    alt="Vitality Ornament"
-                    className="h-full opacity-80"
-                />
-            </div>
+            <motion.img
+                src={theme.ornamentSrc}
+                alt="Vitality Ornament"
+                className="absolute inset-0 h-full object-cover opacity-80 pointer-events-none z-0"
+                initial={{
+                    x: -120,
+                    y: 120,
+                    scale: 0.1,
+                    rotate: -15,
+                    opacity: 0.5,
+                }}
+                whileInView={{
+                    x: 0,
+                    y: 0,
+                    scale: 1,
+                    rotate: 0,
+                    opacity: 0.8,
+                }}
+                transition={{
+                    duration: 2,
+                    ease: [0.22, 1, 0.36, 1],
+                }}
+                viewport={{ once: true }}
+            />
+
             <div
                 className={`
-                    absolute inset-y-0 right-0 w-[120px]
-                    opacity-60 pointer-events-none
-                    ${theme.sideAccentColor}
-                `}
+          absolute inset-y-0 right-0 w-[120px]
+          opacity-60 pointer-events-none z-0
+          ${theme.sideAccentColor}
+        `}
             />
+
             <div
                 ref={ref}
                 className="relative z-10 flex min-h-screen items-center px-6"
@@ -54,18 +74,15 @@ export default function VitalityRankCard({
                             className="mt-2 mr-8"
                         />
                     </div>
+
                     <div className="mb-16 h-[2px] w-24 bg-white/70" />
+
                     <div className="flex flex-col gap-10">
                         <div>
-                            <p className="text-lg font-medium text-white">
-                                General Rank
-                            </p>
+                            <p className="text-lg font-medium text-white">General Rank</p>
                             <p className="text-6xl font-extrabold text-white">
                                 {isInView ? (
-                                    <RankCounter
-                                        key="general-rank"
-                                        target={generalRank}
-                                    />
+                                    <RankCounter key="general-rank" target={generalRank} />
                                 ) : (
                                     "#0"
                                 )}
@@ -73,15 +90,10 @@ export default function VitalityRankCard({
                         </div>
 
                         <div>
-                            <p className="text-lg font-medium text-white">
-                                Gender Rank
-                            </p>
+                            <p className="text-lg font-medium text-white">Gender Rank</p>
                             <p className="text-6xl font-extrabold text-white">
                                 {isInView ? (
-                                    <RankCounter
-                                        key="gender-rank"
-                                        target={genderRank}
-                                    />
+                                    <RankCounter key="gender-rank" target={genderRank} />
                                 ) : (
                                     "#0"
                                 )}
