@@ -70,9 +70,8 @@ export default function StepsCard({ steps }: StepsCardProps) {
             )}
 
             <p className="text-[20px] text-black font-semibold">Steps this year.</p>
-            <p className="mt-3 text-[18px] text-black font-light">That’s an average of</p>
-            <p className="text-[18px] text-black font-light">{config.averageText}</p>
-            <p className="text-[18px] text-black font-light">{config.motivation}</p>
+            <p className="mt-3 text-[15px] text-black font-light leading-none">That’s an average of {config.averageText}</p>
+            <p className="text-[15px] text-black font-light leading-none">{config.motivation}</p>
           </>
         }
         illustration={

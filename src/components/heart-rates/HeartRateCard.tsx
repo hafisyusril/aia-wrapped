@@ -3,14 +3,14 @@
 import { motion } from "framer-motion";
 import MobileCardFrame from "../MobileCardFrame";
 import { heartRateConfig } from "./heartRateConfig";
-import { getHeartRateCondition } from "./heartRateUtils";
+import { getHeartRateCondition, HeartRateLevel } from "./heartRateUtils";
 
 interface HeartRateCardProps {
-  bpm: number;
+  level: HeartRateLevel;
 }
 
-export default function HeartRateCard({ bpm }: HeartRateCardProps) {
-  const condition = getHeartRateCondition(bpm);
+export default function HeartRateCard({ level }: HeartRateCardProps) {
+  const condition = getHeartRateCondition(level);
   const config = heartRateConfig[condition];
 
   const fadeScale = {
@@ -20,12 +20,14 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
 
   return (
     <MobileCardFrame
+      className="grid-rows-[35%_60%]"
+      topClassName="translate-y-10"
+      bottomClassName="translate-y-5"
       background={config.background}
       ornaments={
         <motion.img
           src="/heart-rate/abstract-background.svg"
           className="absolute w-full h-full object-fill overflow-visible opacity-50 z-0"
-
           alt="ornament"
           initial={{
             x: -120,
@@ -56,7 +58,7 @@ export default function HeartRateCard({ bpm }: HeartRateCardProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
           viewport={{ once: true }}
-          className="h-full flex flex-col justify-end pb-3"
+          className="h-full flex flex-col pt-10"
         >
           <p className="text-white font-semibold text-lg mb-2">
             Your exercise vibe:

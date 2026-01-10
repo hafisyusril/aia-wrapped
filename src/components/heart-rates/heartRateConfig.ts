@@ -1,4 +1,4 @@
-type HeartRateCondition = "low_heat" | "cardio_junkie" | "on_fire";
+import { HeartRateCondition } from "./heartRateUtils";
 
 export const heartRateConfig: Record<
   HeartRateCondition,
@@ -8,29 +8,33 @@ export const heartRateConfig: Record<
     description: string;
     motivation: string;
     showExerciseText?: boolean;
+    message?: string;
   }
 > = {
-  low_heat: {
+  "low-heat": {
     background: "linear-gradient(to bottom, #F96B7D 35%, #D9D9FC 35%)",
     topImage: "/heart-rate/low-heat.svg",
     description: "low to moderate intensity",
     motivation:
       "We can see you running away \n(from your problems) on a treadmill.",
     showExerciseText: true,
+    message:
+      "We can see you running away \n(from your problems) on a treadmill.",
   },
-  cardio_junkie: {
-    background: "linear-gradient(to bottom, #b71c37 35%, #9090fc 35%)",
-    topImage: "/heart-rate/cardio-junkie.svg",
-    description: "high intensity",
-    motivation: "You must be really really likes working out...\nand donuts.",
-    showExerciseText: true,
-  },
-  on_fire: {
+  "on-fire": {
     background: "linear-gradient(to bottom, #F93D5D 35%, #C0C0FF 35%)",
     topImage: "/heart-rate/on-fire.svg",
     description: "moderate to high intensity",
     motivation:
       "Are you human? Other people workout routine \nis just your warm-up!",
     showExerciseText: true,
+    message: "You must be really really likes working out.. \nand donuts.",
+  },
+  "cardio-junkie": {
+    background: "linear-gradient(to bottom, #b71c37 35%, #9090fc 35%)",
+    topImage: "/heart-rate/cardio-junkie.svg",
+    description: "high intensity exercise",
+    motivation:
+      "Are you human? Other people workout routine \nis just your warm-up!",
   },
 };

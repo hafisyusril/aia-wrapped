@@ -3,12 +3,15 @@
 import { useEffect, useState } from "react";
 import MobileCardFrame from "../MobileCardFrame";
 import GymDeadliftSvg from "./GymDeadliftSvg";
+import AnimatedCounter from "../steps/StepsCounter";
+import { useInView } from "@/src/app/hooks/useInView";
 
 interface GymVisitCardProps {
   counter: number;
 }
 
 export default function GymVisitCard({ counter }: GymVisitCardProps) {
+  const { ref, isInView } = useInView({ threshold: 0.6 });
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
@@ -48,46 +51,56 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
   }, [counter]);
 
   return (
-    <MobileCardFrame
-      background={background}
-      ornaments={
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/gym-visit/triangle.svg"
-            className="absolute top-0 left-0 w-full h-[50%] object-cover opacity-50"
-            alt=""
+    <div ref={ref}>
+      <MobileCardFrame
+        background={background}
+        ornaments={
+          <div className="absolute inset-0 z-0">
+            <img
+              src="/gym-visit/triangle.svg"
+              className="absolute top-0 left-0 w-full h-[50%] object-cover opacity-100"
+              alt=""
+            />
+            <img
+              src="/gym-visit/triangle.svg"
+              className="absolute bottom-0 left-0 w-full h-[50%] object-cover opacity-100"
+              alt=""
+            />
+          </div>
+        }
+        illustration={
+          <div className="absolute bottom-10 right-0 w-50 h-90 z-10 overflow-visible">
+            <GymDeadliftSvg />
+          </div>
+        }
+        topContent={
+          <h1
+            className="text-white text-[45px] font-bold leading-none"
+            dangerouslySetInnerHTML={{ __html: title }}
           />
-          <img
-            src="/gym-visit/triangle.svg"
-            className="absolute bottom-0 left-0 w-full h-[50%] object-cover opacity-50"
-            alt=""
-          />
-        </div>
-      }
-      illustration={
-        <div className="absolute bottom-10 right-0 w-62.5 h-90 z-10 overflow-visible">
-          <GymDeadliftSvg />
-        </div>
-      }
-      topContent={
-        <h1
-          className="text-white text-[50px] font-bold leading-none"
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
-      }
-      bottomContent={
-        <>
-          <p className="text-[20px] text-black">You went to gym partner</p>
-          <h2 className="text-[50px] text-black font-bold leading-none">
-            {counter}
-          </h2>
-          <p className="text-[20px] font-medium text-black">times</p>
-          <p
-            className="mt-7.5 text-[15px] text-black"
-            dangerouslySetInnerHTML={{ __html: message }}
-          />
-        </>
-      }
-    />
+        }
+        bottomContent={
+          <>
+            <p className="text-[20px] text-black">You went to gym partner</p>
+            {isInView ? (
+              <AnimatedCounter
+                target={counter}
+                duration={700}
+                className="text-[50px] text-black font-bold leading-none"
+              />
+            ) : (
+              <h2 className="text-[50px] text-black font-bold leading-none">
+                0
+              </h2>
+            )}
+            <p className="text-[20px] font-medium text-black">times</p>
+            <p
+              className="mt-4 text-[15px] text-black"
+              dangerouslySetInnerHTML={{ __html: message }}
+            />
+          </>
+        }
+      />
+    </div>
   );
 }
