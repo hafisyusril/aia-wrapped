@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 export default function SnapSection({ children }: { children: ReactNode }) {
   return (
     <motion.section
-      className="h-svh snap-start snap-always"
+      className="min-h-screen snap-start snap-always"
       initial={{ opacity: 1, y: 0, scale: 1 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: false, amount: 0.7 }}

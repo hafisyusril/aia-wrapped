@@ -97,7 +97,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
 
     return (
         <section
-            className={`relative w-full h-full flex flex-col font-sans overflow-hidden ${background}`}
+            className={`relative w-full min-h-screen flex flex-col font-sans overflow-hidden ${background}`}
         >
             <div className="pointer-events-none absolute inset-0 z-0">
                 {stars.map((star, i) => (
