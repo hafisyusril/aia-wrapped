@@ -4,104 +4,107 @@ import { motion } from "framer-motion";
 import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
 import RankCounter from "./RankCounter";
+import ShareButton from "../ShareButton";
 
 interface VitalityRankCardProps {
-    generalRank: number;
-    genderRank: number;
+  generalRank: number;
+  genderRank: number;
 }
 
 export default function VitalityRankCard({
-    generalRank,
-    genderRank,
+  generalRank,
+  genderRank,
 }: VitalityRankCardProps) {
-    const theme = getVitalityRankTheme("default");
-    const { ref, isInView } = useInView({ threshold: 0.6 });
+  const theme = getVitalityRankTheme("default");
+  const { ref, isInView } = useInView({ threshold: 0.6 });
 
-    return (
-        <section
-            className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
-        >
-            <motion.img
-                src={theme.ornamentSrc}
-                alt="Vitality Ornament"
-                className="absolute inset-0 h-full object-cover opacity-80 pointer-events-none z-0"
-                initial={{
-                    x: -120,
-                    y: 120,
-                    scale: 0.1,
-                    rotate: -15,
-                    opacity: 0.5,
-                }}
-                whileInView={{
-                    x: 0,
-                    y: 0,
-                    scale: 1,
-                    rotate: 0,
-                    opacity: 0.8,
-                }}
-                transition={{
-                    duration: 2,
-                    ease: [0.22, 1, 0.36, 1],
-                }}
-                viewport={{ once: true }}
-            />
+  return (
+    <section
+      className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
+    >
+      <motion.img
+        src={theme.ornamentSrc}
+        alt="Vitality Ornament"
+        className="absolute inset-0 h-full object-cover opacity-80 pointer-events-none z-0"
+        initial={{
+          x: -120,
+          y: 120,
+          scale: 0.1,
+          rotate: -15,
+          opacity: 0.5,
+        }}
+        whileInView={{
+          x: 0,
+          y: 0,
+          scale: 1,
+          rotate: 0,
+          opacity: 0.8,
+        }}
+        transition={{
+          duration: 2,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        viewport={{ once: true }}
+      />
 
-            <div
-                className={`
+      <div
+        className={`
           absolute inset-y-0 right-0 w-[120px]
           opacity-60 pointer-events-none z-0
           ${theme.sideAccentColor}
         `}
+      />
+
+      <ShareButton />
+
+      <div
+        ref={ref}
+        className="relative z-10 flex min-h-screen items-center px-6"
+      >
+        <div className="flex w-full flex-col py-12">
+          <div className="mb-6 flex items-start justify-between">
+            <h1 className="text-4xl font-extrabold leading-tight text-white">
+              AIA Vitality
+              <br />
+              Member Rank
+            </h1>
+
+            <img
+              src={theme.trophySrc}
+              alt="Trophy"
+              width={120}
+              height={200}
+              className="mt-2 mr-8"
             />
+          </div>
 
-            <div
-                ref={ref}
-                className="relative z-10 flex min-h-screen items-center px-6"
-            >
-                <div className="flex w-full flex-col py-12">
-                    <div className="mb-6 flex items-start justify-between">
-                        <h1 className="text-4xl font-extrabold leading-tight text-white">
-                            AIA Vitality
-                            <br />
-                            Member Rank
-                        </h1>
+          <div className="mb-16 h-[2px] w-24 bg-white/70" />
 
-                        <img
-                            src={theme.trophySrc}
-                            alt="Trophy"
-                            width={120}
-                            height={200}
-                            className="mt-2 mr-8"
-                        />
-                    </div>
-
-                    <div className="mb-16 h-[2px] w-24 bg-white/70" />
-
-                    <div className="flex flex-col gap-10">
-                        <div>
-                            <p className="text-lg font-medium text-white">General Rank</p>
-                            <p className="text-6xl font-extrabold text-white">
-                                {isInView ? (
-                                    <RankCounter key="general-rank" target={generalRank} />
-                                ) : (
-                                    "#0"
-                                )}
-                            </p>
-                        </div>
-
-                        <div>
-                            <p className="text-lg font-medium text-white">Gender Rank</p>
-                            <p className="text-6xl font-extrabold text-white">
-                                {isInView ? (
-                                    <RankCounter key="gender-rank" target={genderRank} />
-                                ) : (
-                                    "#0"
-                                )}
-                            </p>
-                        </div>
-                    </div>
-                </div>
+          <div className="flex flex-col gap-10">
+            <div>
+              <p className="text-lg font-medium text-white">General Rank</p>
+              <p className="text-6xl font-extrabold text-white">
+                {isInView ? (
+                  <RankCounter key="general-rank" target={generalRank} />
+                ) : (
+                  "#0"
+                )}
+              </p>
             </div>
-        </section>
-    );
+
+            <div>
+              <p className="text-lg font-medium text-white">Gender Rank</p>
+              <p className="text-6xl font-extrabold text-white">
+                {isInView ? (
+                  <RankCounter key="gender-rank" target={genderRank} />
+                ) : (
+                  "#0"
+                )}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

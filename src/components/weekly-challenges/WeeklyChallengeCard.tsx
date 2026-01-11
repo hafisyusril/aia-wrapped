@@ -6,6 +6,7 @@ import { useInView } from "@/src/app/hooks/useInView";
 import AnimatedCounter from "../steps/StepsCounter";
 import { getWeeklyChallengeByVariant } from "./WeeklyChallengeConfig";
 import { formatCurrency } from "./WeeklyChallengeUtils";
+import ShareButton from "../ShareButton";
 
 interface WeeklyChallengeCardProps {
   totalReward: number;
@@ -82,6 +83,7 @@ export default function WeeklyChallengeCard({
           <p className="text-lg font-medium mb-2">
             Your rewards radar:
           </p>
+          <ShareButton  />
 
           <motion.div
             className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 text-5xl"

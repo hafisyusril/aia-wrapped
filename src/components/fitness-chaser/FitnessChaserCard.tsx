@@ -5,6 +5,7 @@ import { useInView } from "@/src/app/hooks/useInView";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "../steps/StepsCounter";
 import WomanRedSvg from "./WomanRedSvg";
+import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
 
 interface FitnessChaserCardProps {
   totalChallenges: number;
@@ -14,11 +15,12 @@ export default function FitnessChaserCard({
   totalChallenges,
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
+  const config = getFitnessChaserConfig(totalChallenges);
 
   return (
     <div ref={ref}>
       <MobileCardFrame
-        background="linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)"
+        background={config.background}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">
             {[...Array(4)].map((_, i) => {
@@ -29,7 +31,9 @@ export default function FitnessChaserCard({
                   key={i}
                   src="/fitness-chaser/oval.svg"
                   alt=""
-                  className={`flex-1 w-full object-cover transform-gpu ${fromRight ? "origin-right" : "origin-left"}`}
+                  className={`flex-1 w-full object-cover transform-gpu ${
+                    fromRight ? "origin-right" : "origin-left"
+                  }`}
                   initial={{
                     scaleX: 0,
                     opacity: 0,
@@ -45,7 +49,6 @@ export default function FitnessChaserCard({
                     ease: [0.4, 0, 0.2, 1],
                   }}
                 />
-
               );
             })}
           </div>
@@ -57,7 +60,7 @@ export default function FitnessChaserCard({
         }
         topContent={
           <h1 className="text-white text-[50px] font-bold leading-none">
-            Fitness <br /> Chaser
+            {config.title}
           </h1>
         }
         bottomContent={
@@ -76,12 +79,15 @@ export default function FitnessChaserCard({
               </h2>
             )}
 
-            <p className="text-[20px] text-black font-semibold">
+            <p className="text-[25px] text-black font-semibold">
               Weekly Challenges!
             </p>
 
-            <p className="mt-2 text-[18px] text-black font-light">
+            {/* <p className="mt-2 text-[18px] text-black font-light">
               Your superpower = consistency!
+            </p>  */}
+            <p className="mt-2 text-[15px] text-black font-light whitespace-pre-line leading-tight">
+              {config.description}
             </p>
           </>
         }
