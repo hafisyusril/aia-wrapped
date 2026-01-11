@@ -20,7 +20,7 @@ export default function InputVitalityCard() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-neutral-100">
+        <div className="flex min-h-screen items-center justify-center bg-white">
             <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -28,7 +28,7 @@ export default function InputVitalityCard() {
                     duration: 0.5,
                     ease: "easeOut",
                 }}
-                className="relative h-175 w-97.5 rounded-2xl bg-white shadow-xl overflow-hidden"
+                className="relative h-175 w-97.5 bg-white overflow-hidden"
             >
                 <div className="absolute inset-10 flex flex-col justify-evenly gap-8">
                     <motion.div
