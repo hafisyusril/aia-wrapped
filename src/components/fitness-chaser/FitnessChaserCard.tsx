@@ -6,7 +6,6 @@ import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "../steps/StepsCounter";
 import WomanRedSvg from "./WomanRedSvg";
 import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
-
 interface FitnessChaserCardProps {
   totalChallenges: number;
 }
@@ -18,7 +17,7 @@ export default function FitnessChaserCard({
   const config = getFitnessChaserConfig(totalChallenges);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} >
       <MobileCardFrame
         background={config.background}
         ornaments={
@@ -59,9 +58,9 @@ export default function FitnessChaserCard({
           </div>
         }
         topContent={
-          <h1 className="text-white text-[50px] font-bold leading-none">
-            {config.title}
-          </h1>
+            <h1 className="font-source text-white text-[48px] whitespace-pre-line leading-none">
+              {config.title}
+            </h1>
         }
         bottomContent={
           <>
