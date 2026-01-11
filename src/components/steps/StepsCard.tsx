@@ -5,6 +5,7 @@ import { useInView } from "@/src/app/hooks/useInView";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "./StepsCounter";
 import { getStepsConfig } from "./stepsUtils";
+import { useShare } from "@/src/app/hooks/useShare";
 
 interface StepsCardProps {
   steps: number;
@@ -13,6 +14,7 @@ interface StepsCardProps {
 export default function StepsCard({ steps }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
+  const share = useShare();
 
   const leftShoe = {
     walk: {
@@ -40,6 +42,12 @@ export default function StepsCard({ steps }: StepsCardProps) {
     <div ref={ref}>
       <MobileCardFrame
         background={config.background}
+        onShare={() =>
+          share({
+            title: "Steps result",
+            text: `My steps ${steps} times 💪`,
+          })
+        }
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img
@@ -48,9 +56,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
               className="absolute top-[5%] left-0 w-full h-full object-cover"
               initial={{ x: -60, opacity: 0 }}
               animate={
-                isInView
-                  ? { x: 0, opacity: 0.5 }
-                  : { x: -60, opacity: 0 }
+                isInView ? { x: 0, opacity: 0.5 } : { x: -60, opacity: 0 }
               }
               transition={{
                 duration: 0.6,
@@ -76,7 +82,9 @@ export default function StepsCard({ steps }: StepsCardProps) {
                 className="text-[50px] text-black font-bold leading-none"
               />
             ) : (
-              <h2 className="text-[50px] text-black font-bold leading-none">0</h2>
+              <h2 className="text-[50px] text-black font-bold leading-none">
+                0
+              </h2>
             )}
 
             <p className="text-[20px] text-black font-semibold">
@@ -118,7 +126,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
                 variants={rightShoe}
                 transition={{
                   ...walkTransition,
-                  delay: 0.2,
+                  
                 }}
               />
 

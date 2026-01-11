@@ -58,7 +58,7 @@ export default function HeartRateCard({ level }: HeartRateCardProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
           viewport={{ once: true }}
-          className="h-full flex flex-col pt-10"
+          className="h-full flex flex-col pt-5"
         >
           <p className="text-white font-semibold text-lg mb-2">
             Your exercise vibe:
@@ -99,8 +99,8 @@ export default function HeartRateCard({ level }: HeartRateCardProps) {
           {config.showExerciseText && (
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
-          <div className="mt-10">
-            <p className="text-md font-medium leading-tight">
+          <div className="mt-5">
+            <p className="text-md font-medium leading-tight whitespace-pre-line">
               {config.motivation}
             </p>
           </div>
