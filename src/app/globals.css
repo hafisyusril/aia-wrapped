@@ -2,7 +2,9 @@
 
 :root {
   --font-inter: 'Inter', sans-serif;
+  --font-source-sans: 'Source Sans 3', sans-serif;
   --font-sans: var(--font-inter);
+  
   --background: #ffffff;
   --foreground: #171717;
 }

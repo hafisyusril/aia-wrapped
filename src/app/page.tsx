@@ -18,8 +18,8 @@ import CrowningCard from "../components/crowning/CrowningCard";
 const DUMMY_DATA = {
   steps: 3_022_500,
   level: "moderate" as const,
-  gymVisit: 260,
-  weeklyChallenges: 25,
+  gymVisit: 20,
+  weeklyChallenges: 20,
   totalReward: 1_300_000,
   generalRank: 1450,
   genderRank: 673,

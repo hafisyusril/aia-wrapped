@@ -65,9 +65,9 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img
-              src="/gym-visit/triangle.svg"
+              src="/gym-visit/triangle-1.svg"
               alt=""
-              className="absolute top-0 left-0 w-full h-[50%] object-cover"
+              className="absolute top-0 left-0 w-full  h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
               animate={isInView ? { y: 0, opacity: 1 } : { y: 60, opacity: 0 }}
               transition={{
@@ -77,7 +77,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
             />
 
             <motion.img
-              src="/gym-visit/triangle.svg"
+              src="/gym-visit/triangle-1.svg"
               alt=""
               className="absolute bottom-0 left-0 w-full h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
