@@ -3,18 +3,17 @@
 import { useEffect, useRef } from "react";
 import { useUserFlow } from "../contexts/UserFlowContext";
 
-import CrowningCard from "../components/crowning/CrowningCard";
-import FitnessChaserCard from "../components/fitness-chaser/FitnessChaserCard";
-import GymVisitCard from "../components/gym-visit/GymVisitCard";
-import HeartRateCard from "../components/heart-rates/HeartRateCard";
+import SnapSection from "../components/SnapSection";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
-import SnapSection from "../components/SnapSection";
 import StepsCard from "../components/steps/StepsCard";
-import VHCStatusCard from "../components/vhc/VHCStatusCard";
-import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
+import HeartRateCard from "../components/heart-rates/HeartRateCard";
+import GymVisitCard from "../components/gym-visit/GymVisitCard";
+import FitnessChaserCard from "../components/fitness-chaser/FitnessChaserCard";
 import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallengeCard";
-import FavoriteRewardCard from "../components/favorite-rewards/FavoriteRewardCard";
+import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
+import VHCStatusCard from "../components/vhc/VHCStatusCard";
+import CrowningCard from "../components/crowning/CrowningCard";
 
 const DUMMY_DATA = {
   steps: 3_022_500,
@@ -50,69 +49,51 @@ export default function Home() {
       : userData?.vhcStatus ?? "unchecked",
   };
 
+  const sectionRefs = useRef<HTMLDivElement[]>([]);
+
   useEffect(() => {
     if (flowStep === "intro") {
-      introRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [flowStep]);
 
+  const scrollPrev = (currentIndex: number) => {
+    if (currentIndex <= 0) return;
+    sectionRefs.current[currentIndex - 1]?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const sections: { content: React.ReactNode }[] = [
+    { content: <InputVitalityCard /> },
+    { content: <div ref={introRef}><IntroCard /></div> },
+    data.vhcStatus === "checked" ? { content: <VHCStatusCard status={data.vhcStatus} /> } : null,
+    { content: <StepsCard steps={data.steps} /> },
+    { content: <HeartRateCard level={data.level} /> },
+    { content: <GymVisitCard counter={data.gymVisit} /> },
+    { content: <FitnessChaserCard totalChallenges={data.weeklyChallenges} /> },
+    { content: <WeeklyChallengeCard totalReward={data.totalReward} /> },
+    data.vhcStatus === "unchecked" ? { content: <VHCStatusCard status={data.vhcStatus} /> } : null,
+    { content: <VitalityRankCard genderRank={data.genderRank} generalRank={data.generalRank} /> },
+    { content: <CrowningCard type="starter" /> },
+  ].filter(Boolean) as { content: React.ReactNode }[];
+
   return (
-    <main className="h-svh overflow-y-scroll snap-y snap-mandatory">
-      <SnapSection>
-        <InputVitalityCard />
-      </SnapSection>
+    <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
+      {sections.map((section, idx) => {
+        const disableScroll = idx === 0 || idx === 1 || idx === sections.length - 1;
 
-      <SnapSection>
-        <div ref={introRef}>
-          <IntroCard />
-        </div>
-      </SnapSection>
-
-      {data.vhcStatus === "checked" && (
-        <SnapSection>
-          <VHCStatusCard status={data.vhcStatus} />
-        </SnapSection>
-      )}
-
-      <SnapSection>
-        <StepsCard steps={data.steps} />
-      </SnapSection>
-
-      <SnapSection>
-        <HeartRateCard level={data.level} />
-      </SnapSection>
-
-      <SnapSection>
-        <GymVisitCard counter={data.gymVisit} />
-      </SnapSection>
-
-      <SnapSection>
-        <FitnessChaserCard totalChallenges={data.weeklyChallenges} />
-      </SnapSection>
-
-      <SnapSection>
-        <WeeklyChallengeCard totalReward={data.totalReward} />
-      </SnapSection>
-
-      {data.vhcStatus === "unchecked" && (
-        <SnapSection>
-          <VHCStatusCard status={data.vhcStatus} />
-        </SnapSection>
-      )}
-
-      <SnapSection>
-        <VitalityRankCard
-          genderRank={data.genderRank}
-          generalRank={data.generalRank}
-        />
-      </SnapSection>
-
-      <SnapSection>
-        <CrowningCard type="starter" />
-      </SnapSection>
+        return (
+          <SnapSection
+            key={idx}
+            innerRef={(el) => {
+              sectionRefs.current[idx] = el!;
+            }}
+            showScrollUp={!disableScroll}
+            onScrollUp={() => scrollPrev(idx)}
+          >
+            {section.content}
+          </SnapSection>
+        );
+      })}
     </main>
   );
 }

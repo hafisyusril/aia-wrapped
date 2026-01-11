@@ -1,12 +1,25 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, Ref } from "react";
 
-export default function SnapSection({ children }: { children: ReactNode }) {
+interface SnapSectionProps {
+  children: ReactNode;
+  innerRef?: Ref<HTMLDivElement>;
+  showScrollUp?: boolean;
+  onScrollUp?: () => void;
+}
+
+export default function SnapSection({
+  children,
+  innerRef,
+  showScrollUp = false,
+  onScrollUp,
+}: SnapSectionProps) {
   return (
     <motion.section
-      className="min-h-svh snap-start snap-always"
+      ref={innerRef}
+      className="min-h-svh snap-start snap-always w-full relative"
       initial={{ opacity: 1, y: 0, scale: 1 }}
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: false, amount: 0.7 }}
@@ -16,6 +29,16 @@ export default function SnapSection({ children }: { children: ReactNode }) {
       }}
     >
       {children}
+
+      {showScrollUp && onScrollUp && (
+        <div
+          onClick={onScrollUp}
+          className="absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 opacity-80 cursor-pointer"
+        >
+          <img src="/steps/scroll.svg" alt="Scroll" className="w-4 h-4" />
+          <p className="text-xl text-black font-normal tracking-wide">scroll</p>
+        </div>
+      )}
     </motion.section>
   );
 }
