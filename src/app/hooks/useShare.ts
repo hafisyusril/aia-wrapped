@@ -1,20 +1,28 @@
-// hooks/useShare.ts
-export function useShare() {
-  return async (payload: { title: string; text: string }) => {
-    const url = window.location.href;
+import { downloadNodeAsImage } from "../utils/downloadNodeAsImage";
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: payload.title,
-          text: payload.text,
-          url,
-        });
-        return;
-      } catch (error) {
-        console.log("Share cancelled", error);
-      }
+interface SharePayload {
+  title: string;
+  text: string;
+}
+
+export function useShare() {
+  const share = async (payload: SharePayload) => {
+    if (!navigator.share) {
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied to clipboard!");
+      return;
     }
+
+    try {
+      await navigator.share({
+        ...payload,
+        url: window.location.href,
+      });
+    } catch (err: any) {
+      // user cancel → NORMAL
+      if (err?.name === "AbortError") return;
+      console.error("Share failed:", err);
+  
 
     // Fallback copy link
     try {
@@ -29,6 +37,21 @@ export function useShare() {
     } catch (err) {
       alert("Failed to copy link");
     }
+  };
+
+  const downloadStory = async (elementId: string) => {
+    const node = document.getElementById(elementId);
+    if (!node) {
+      console.error("Story element not found");
+      return;
+    }
+
+    await downloadNodeAsImage(node, "aia-vitality-story.png");
+  };
+
+  return {
+    share,
+    downloadStory,
   };
 }
 
