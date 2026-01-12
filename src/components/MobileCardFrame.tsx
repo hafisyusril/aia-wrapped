@@ -35,7 +35,7 @@ export default function MobileCardFrame({
 }: MobileCardFrameProps) {
   return (
     <div
-      className={`relative grid min-h-svh grid-rows-[35%_65%] overflow-hidden font-sans ${
+      className={`relative grid min-h-svh grid-rows-[35%_65%] w-full max-w-[430px] mx-auto overflow-hidden font-sans ${
         className ?? ""
       }`}
       style={{ background }}
