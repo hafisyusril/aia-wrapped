@@ -7,34 +7,33 @@ interface SharePayload {
 
 export function useShare() {
   const share = async (payload: SharePayload) => {
-    if (!navigator.share) {
-      await navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
-      return;
+    const url = window.location.href;
+
+    // Primary: Web Share API
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: payload.title,
+          text: payload.text,
+          url,
+        });
+        return;
+      } catch (err: any) {
+        // user cancel → NORMAL
+        if (err?.name === "AbortError") return;
+        console.error("Share failed:", err);
+      }
     }
 
-    try {
-      await navigator.share({
-        ...payload,
-        url: window.location.href,
-      });
-    } catch (err: any) {
-      // user cancel → NORMAL
-      if (err?.name === "AbortError") return;
-      console.error("Share failed:", err);
-  
-
-    // Fallback copy link
+    // Fallback: Copy link
     try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(url);
-        alert("Link copied to clipboard!");
       } else {
-        // Ultimate fallback (old browsers)
         fallbackCopyText(url);
-        alert("Link copied to clipboard!");
       }
-    } catch (err) {
+      alert("Link copied to clipboard!");
+    } catch {
       alert("Failed to copy link");
     }
   };
