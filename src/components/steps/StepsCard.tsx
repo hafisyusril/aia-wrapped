@@ -126,7 +126,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
                 variants={rightShoe}
                 transition={{
                   ...walkTransition,
-                  
+
                 }}
               />
 
