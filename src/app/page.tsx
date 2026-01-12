@@ -26,7 +26,7 @@ const DUMMY_DATA = {
   vhcStatus: "unchecked" as const,
 };
 
-const ENABLE_SNAP_ANIMATION = false;
+const ENABLE_SNAP_ANIMATION = true;
 
 export default function Home() {
   const { userData, isDummyUser, flowStep } = useUserFlow();
