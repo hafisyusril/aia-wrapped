@@ -80,7 +80,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
   } = getVHCStatusContent(status);
 
   const [stars, setStars] = useState<StarConfig[]>([]);
-  const share = useShare();
+  const {share} = useShare();
 
   useEffect(() => {
     const generatedStars: StarConfig[] = Array.from(

@@ -14,7 +14,7 @@ interface StepsCardProps {
 export default function StepsCard({ steps }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
-  const share = useShare();
+  const {share} = useShare();
 
   const leftShoe = {
     walk: {

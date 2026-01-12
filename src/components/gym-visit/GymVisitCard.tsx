@@ -17,7 +17,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
-  const share = useShare();
+  const {share, downloadStory} = useShare();
   useEffect(() => {
     if (counter <= 50) {
       setTitle("Energy-Saving <br /> Mode");
@@ -91,8 +91,12 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
           </div>
         }
         illustration={
-          <div className="absolute bottom-10 right-0 w-50 h-90 z-10 overflow-visible">
-            <GymDeadliftSvg />
+          <div className="absolute bottom-12 right-0 w-50 h-auto z-10 pointer-events-none">
+            <img
+              src="/gym-visit/deadlift.gif"
+              alt=""
+              className="w-full h-auto"
+            />
           </div>
         }
         topContent={
