@@ -26,6 +26,8 @@ const DUMMY_DATA = {
   vhcStatus: "unchecked" as const,
 };
 
+const ENABLE_SNAP_ANIMATION = false;
+
 export default function Home() {
   const { userData, isDummyUser, flowStep } = useUserFlow();
   const introRef = useRef<HTMLDivElement>(null);
@@ -59,31 +61,53 @@ export default function Home() {
 
   const scrollPrev = (currentIndex: number) => {
     if (currentIndex <= 0) return;
-    sectionRefs.current[currentIndex - 1]?.scrollIntoView({ behavior: "smooth", block: "start" });
+    sectionRefs.current[currentIndex - 1]?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   const sections: { content: React.ReactNode }[] = [
     { content: <InputVitalityCard /> },
-    { content: <div ref={introRef}><IntroCard /></div> },
-    data.vhcStatus === "checked" ? { content: <VHCStatusCard status={data.vhcStatus} /> } : null,
+    {
+      content: (
+        <div ref={introRef}>
+          <IntroCard />
+        </div>
+      ),
+    },
+    data.vhcStatus === "checked"
+      ? { content: <VHCStatusCard status={data.vhcStatus} /> }
+      : null,
     { content: <StepsCard steps={data.steps} /> },
     { content: <HeartRateCard level={data.level} /> },
     { content: <GymVisitCard counter={data.gymVisit} /> },
     { content: <FitnessChaserCard totalChallenges={data.weeklyChallenges} /> },
     { content: <WeeklyChallengeCard totalReward={data.totalReward} /> },
-    data.vhcStatus === "unchecked" ? { content: <VHCStatusCard status={data.vhcStatus} /> } : null,
-    { content: <VitalityRankCard genderRank={data.genderRank} generalRank={data.generalRank} /> },
+    data.vhcStatus === "unchecked"
+      ? { content: <VHCStatusCard status={data.vhcStatus} /> }
+      : null,
+    {
+      content: (
+        <VitalityRankCard
+          genderRank={data.genderRank}
+          generalRank={data.generalRank}
+        />
+      ),
+    },
     { content: <CrowningCard type="starter" /> },
   ].filter(Boolean) as { content: React.ReactNode }[];
 
   return (
     <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
       {sections.map((section, idx) => {
-        const disableScroll = idx === 0 || idx === 1 || idx === sections.length - 1;
+        const disableScroll =
+          idx === 0 || idx === 1 || idx === sections.length - 1;
 
         return (
           <SnapSection
             key={idx}
+            enableAnimation={ENABLE_SNAP_ANIMATION}
             innerRef={(el) => {
               sectionRefs.current[idx] = el!;
             }}
