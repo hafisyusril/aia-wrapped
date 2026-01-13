@@ -5,21 +5,18 @@ type ShareButtonProps = {
   className?: string;
 };
 
-export default function ShareButton({
-  onClick,
-  className,
-}: ShareButtonProps) {
+export default function ShareButton({ onClick, className }: ShareButtonProps) {
   return (
     <button
       onClick={onClick}
       aria-label="Share"
       className={`
-        absolute top-4 right-4 z-30
+        absolute  top-4 right-4 z-30
         flex items-center gap-2
         rounded-full
-        border border-white/50
-        px-3 py-1.5
-        text-white text-sm font-medium
+        border border-none bg-white/20 
+        px-4 py-1.5
+        text-white text-sm font-normal
         hover:border-white
         hover:opacity-90
         active:scale-95
@@ -28,14 +25,16 @@ export default function ShareButton({
       `}
     >
       <svg
-        viewBox="0 0 42 41"
-        className="w-4 h-4"
-        fill="currentColor"
+        width="15"
+        height="15"
+        viewBox="0 0 45 45"
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <path d="M32.6996 15.35C32.2996 15.35 31.7996 15.15 31.4996 14.85L20.6996 4.05L9.89957 14.85C9.19957 15.55 8.19961 15.55 7.49961 14.85C6.79961 14.15 6.79961 13.15 7.49961 12.45L19.4996 0.45C20.0996 -0.15 21.1996 -0.15 21.8996 0.45L33.8996 12.45C34.5996 13.15 34.5996 14.15 33.8996 14.85C33.5996 15.15 33.0996 15.35 32.6996 15.35Z" />
-        <path d="M20.7 32.75C19.8 32.75 19 32.05 19 31.05V1.75005C19 0.850046 19.7 0.0500488 20.7 0.0500488C21.7 0.0500488 22.4 0.750046 22.4 1.75005V31.05C22.4 31.95 21.7 32.75 20.7 32.75Z" />
-        <path d="M33.5 40.65H8.09998C3.59998 40.65 0 37.05 0 32.55V24.95C0 24.05 0.699951 23.25 1.69995 23.25C2.69995 23.25 3.39996 23.95 3.39996 24.95V32.55C3.39996 35.15 5.49998 37.25 8.09998 37.25H33.5C36.1 37.25 38.2 35.15 38.2 32.55V24.95C38.2 24.05 38.9 23.25 39.9 23.25C40.9 23.25 41.6 23.95 41.6 24.95V32.55C41.6 37.05 38 40.65 33.5 40.65Z" />
+        <path
+          d="M43.7 0.280504C43.9 0.480504 44 0.680502 44 0.880502C44.1 1.1805 44.2 1.4805 44.1 1.7805C44.1 1.8805 30.6 44.3805 30.6 44.3805L18 25.8805L0 13.5805L42.4 0.080507C42.9 -0.119493 43.4 0.0805024 43.8 0.380502L43.7 0.280504ZM40.4 5.3805L20.5 25.2805L29.7 38.7805L40.3 5.3805H40.4ZM38.8 3.58051L5.39996 14.1805L18.9 23.3805L38.8 3.48051V3.58051Z"
+          fill="white"
+        />
       </svg>
 
       <span>Share</span>
