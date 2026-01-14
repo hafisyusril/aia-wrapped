@@ -1,8 +1,9 @@
 "use client";
 
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import ShareButton from "./ShareButton";
 import { captureWithWatermark } from "../app/utils/captureWithWatermark";
+import ShareBottomSheet from "./ShareBottomSheet";
 
 type MobileCardFrameProps = {
   background: string;
@@ -39,16 +40,43 @@ export default function MobileCardFrame({
 }: MobileCardFrameProps) {
   const captureRef = useRef<HTMLDivElement>(null);
 
-  const handleShare = async () => {
+  const [showSharePopup, setShowSharePopup] = useState(false);
+  const [capturedFile, setCapturedFile] = useState<string | null>(null);
+  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+
+  // Step 1: user klik share → tampilkan bottom sheet
+  const handleShareClick = () => {
+    setShowSharePopup(true);
+  };
+
+  // Step 2: user pilih platform → capture element, simpan file, tapi jangan download langsung
+  const handlePlatformSelect = async (_platform: string) => {
     if (!captureRef.current) return;
 
-    await captureWithWatermark({
+    // langsung tutup popup
+    setShowSharePopup(false);
+
+    // capture element
+    const fileUrl = await captureWithWatermark({
       element: captureRef.current,
       fileName,
     });
 
-    onShare?.(); // analytics / callback
+    // opsional callback
+    onShare?.();
+
+    // trigger download
+    const a = document.createElement("a");
+    a.href = fileUrl as any;
+    a.download = fileName;
+    // a.click();
+
+    // selesai → popup sudah tertutup
   };
+
+
+
+
 
   return (
     <div
@@ -62,7 +90,7 @@ export default function MobileCardFrame({
       `}
       style={{ background }}
     >
-      {showShareButton && <ShareButton onClick={handleShare} />}
+      {showShareButton && <ShareButton onClick={handleShareClick} />}
 
       {ornaments}
 
@@ -86,6 +114,13 @@ export default function MobileCardFrame({
       </div>
 
       {illustration}
+
+      {/* Bottom sheet platform */}
+      <ShareBottomSheet
+        visible={showSharePopup}
+        onClose={() => setShowSharePopup(false)}
+        onSelect={handlePlatformSelect}
+      />
     </div>
   );
 }

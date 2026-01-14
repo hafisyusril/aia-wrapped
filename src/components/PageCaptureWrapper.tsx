@@ -1,12 +1,13 @@
 "use client";
 
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { captureWithWatermark } from "../app/utils/captureWithWatermark";
+import ShareBottomSheet from "./ShareBottomSheet";
 
 type PageCaptureWrapperProps = {
     children: (props: { onShare: () => void }) => ReactNode;
     fileName?: string;
-    disableWatermark?: boolean; // <--- baru
+    disableWatermark?: boolean;
 };
 
 export default function PageCaptureWrapper({
@@ -15,18 +16,44 @@ export default function PageCaptureWrapper({
     disableWatermark = false,
 }: PageCaptureWrapperProps) {
     const captureRef = useRef<HTMLDivElement>(null);
+    const [showSharePopup, setShowSharePopup] = useState(false);
+    const [capturedFile, setCapturedFile] = useState<string | null>(null);
+    const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
 
-    const handleShare = async () => {
+    // Step 1: tampilkan popup platform
+    const handleShare = () => {
+        setShowSharePopup(true);
+    };
+
+    // Step 2: user pilih platform → capture element
+    const handlePlatformSelect = async (_platform: string) => {
         if (!captureRef.current) return;
 
-        await new Promise((r) => requestAnimationFrame(r));
-        await new Promise((r) => setTimeout(r, 0));
+        setShowSharePopup(false);
 
-        await captureWithWatermark({
+        // capture element baru
+        const fileUrl = await captureWithWatermark({
             element: captureRef.current,
             fileName,
-            disableWatermark, // <--- oper flag ke fungsi capture
+            disableWatermark,
         });
+
+        setCapturedFile(fileUrl as any);
+        setShowDownloadPrompt(true); // munculkan permission download
+    };
+
+    // Step 3: user klik tombol download → trigger download
+    const handleDownload = () => {
+        if (!capturedFile) return;
+
+        const a = document.createElement("a");
+        a.href = capturedFile;
+        a.download = fileName;
+        a.click();
+
+        // reset state
+        setCapturedFile(null);
+        setShowDownloadPrompt(false);
     };
 
     return (
@@ -34,6 +61,37 @@ export default function PageCaptureWrapper({
             <div ref={captureRef} data-capture-root className="transform-none">
                 {children({ onShare: handleShare })}
             </div>
+
+            {/* Bottom sheet platform */}
+            <ShareBottomSheet
+                visible={showSharePopup}
+                onClose={() => setShowSharePopup(false)}
+                onSelect={handlePlatformSelect}
+            />
+
+            {/* Download permission */}
+            {showDownloadPrompt && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center"
+                    onClick={() => setShowDownloadPrompt(false)}
+                >
+                    <div
+                        className="bg-white p-4 rounded shadow-md flex flex-col gap-3"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <p className="text-center font-medium">Download image to share?</p>
+                        <button onClick={handleDownload} className="btn">
+                            Download
+                        </button>
+                        <button
+                            onClick={() => setShowDownloadPrompt(false)}
+                            className="btn mt-2 text-red-500"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
