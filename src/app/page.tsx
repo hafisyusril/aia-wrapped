@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useUserFlow } from "../contexts/UserFlowContext";
 import { useBackgroundMusic } from "./hooks/useBackgroundMusic";
 import { MusicProvider } from "../contexts/MusicContext";
+import PageCaptureWrapper from "../components/PageCaptureWrapper";
 
 import SnapSection from "../components/SnapSection";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
@@ -71,36 +72,94 @@ export default function Home() {
     });
   };
 
-  const sections: { content: React.ReactNode }[] = [
-    { content: <InputVitalityCard /> },
-    {
-      content: (
-        <div ref={introRef}>
-          <IntroCard />
-        </div>
-      ),
-    },
-    data.vhcStatus === "checked"
-      ? { content: <VHCStatusCard status={data.vhcStatus} /> }
-      : null,
-    { content: <StepsCard steps={data.steps} /> },
-    { content: <HeartRateCard level={data.level} /> },
-    { content: <GymVisitCard counter={data.gymVisit} /> },
-    { content: <FitnessChaserCard totalChallenges={data.weeklyChallenges} /> },
-    { content: <WeeklyChallengeCard totalReward={data.totalReward} /> },
-    data.vhcStatus === "unchecked"
-      ? { content: <VHCStatusCard status={data.vhcStatus} /> }
-      : null,
-    {
-      content: (
-        <VitalityRankCard
-          genderRank={data.genderRank}
-          generalRank={data.generalRank}
-        />
-      ),
-    },
-    { content: <CrowningCard type="starter" /> },
-  ].filter(Boolean) as { content: React.ReactNode }[];
+ const sections: { content: React.ReactNode }[] = [
+  { content: <InputVitalityCard /> },
+
+  {
+    content: (
+      <div ref={introRef}>
+        <IntroCard />
+      </div>
+    ),
+  },
+
+  data.vhcStatus === "checked"
+    ? {
+        content: (
+          <PageCaptureWrapper fileName="vhc-status.png">
+            {({ onShare }) => (
+              <VHCStatusCard
+                status={data.vhcStatus}
+                onShare={onShare}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+    : null,
+
+  { content: <StepsCard steps={data.steps} /> },
+  { content: <HeartRateCard level={data.level} /> },
+  { content: <GymVisitCard counter={data.gymVisit} /> },
+  { content: <FitnessChaserCard totalChallenges={data.weeklyChallenges} /> },
+
+  {
+    content: (
+      <PageCaptureWrapper fileName="weekly-challenge.png">
+        {({ onShare }) => (
+          <WeeklyChallengeCard
+            totalReward={data.totalReward}
+            onShare={onShare}
+          />
+        )}
+      </PageCaptureWrapper>
+    ),
+  },
+
+  data.vhcStatus === "unchecked"
+    ? {
+        content: (
+          <PageCaptureWrapper fileName="vhc-status.png">
+            {({ onShare }) => (
+              <VHCStatusCard
+                status={data.vhcStatus}
+                onShare={onShare}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+    : null,
+
+  {
+    content: (
+      <PageCaptureWrapper fileName="vitality-rank.png">
+        {({ onShare }) => (
+          <VitalityRankCard
+            genderRank={data.genderRank}
+            generalRank={data.generalRank}
+            onShare={onShare}
+          />
+        )}
+      </PageCaptureWrapper>
+    ),
+  },
+
+  {
+    content: (
+      <PageCaptureWrapper fileName="crowning.png">
+        {({ onShare }) => (
+          <CrowningCard
+            type="starter"
+            onShare={onShare}
+          />
+        )}
+      </PageCaptureWrapper>
+    ),
+  },
+].filter(Boolean) as { content: React.ReactNode }[];
+
+
 
   return (
     <MusicProvider playMusic={play}>

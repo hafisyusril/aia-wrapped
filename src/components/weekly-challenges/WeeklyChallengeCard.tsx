@@ -10,6 +10,7 @@ import ShareButton from "../ShareButton";
 
 interface WeeklyChallengeCardProps {
   totalReward: number;
+  onShare?: () => void;
 }
 
 const coinVariants = {
@@ -26,7 +27,7 @@ const coinVariants = {
 };
 
 export default function WeeklyChallengeCard({
-  totalReward,
+  totalReward, onShare
 }: WeeklyChallengeCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [mounted, setMounted] = useState(false);
@@ -50,7 +51,6 @@ export default function WeeklyChallengeCard({
       ref={ref}
       className={`relative w-full min-h-screen flex flex-col font-sans ${background}`}
     >
-      {/* COIN RAIN – GLOBAL */}
       {mounted && isInView && (
         <div className="fixed inset-0 pointer-events-none z-20">
           {Array.from({ length: 10 }).map((_, i) => (
@@ -76,17 +76,15 @@ export default function WeeklyChallengeCard({
           ))}
         </div>
       )}
-
-      {/* HEADER */}
       <div className={`px-6 py-12 ${headerBackground} relative z-30`}>
         <div className="text-white">
           <p className="text-lg font-medium mb-2">
             Your rewards radar:
           </p>
-          <ShareButton  />
+          <ShareButton onClick={onShare} />
 
           <motion.div
-            className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 text-5xl"
+            className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 text-4xl"
             initial={{ scale: 0, rotate: -180, opacity: 0 }}
             animate={
               mounted && isInView
@@ -100,7 +98,6 @@ export default function WeeklyChallengeCard({
           >
             ALWAYS ON
           </motion.div>
-
           <div className="flex items-end space-x-2 mt-4">
             <p className="text-lg font-medium">{currency}</p>
             <h1 className="text-5xl font-extrabold leading-tight">
@@ -117,8 +114,6 @@ export default function WeeklyChallengeCard({
           </p>
         </div>
       </div>
-
-      {/* CONTENT */}
       <div className="flex-1 flex flex-col justify-between px-6 py-8 relative z-30">
         <p className="text-black text-lg font-medium leading-relaxed">
           {message.map((line, index) => (

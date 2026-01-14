@@ -9,11 +9,13 @@ import ShareButton from "../ShareButton";
 interface VitalityRankCardProps {
   generalRank: number;
   genderRank: number;
+  onShare?: () => void;
 }
 
 export default function VitalityRankCard({
   generalRank,
   genderRank,
+  onShare
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
@@ -55,7 +57,7 @@ export default function VitalityRankCard({
         `}
       />
 
-      <ShareButton />
+      <ShareButton onClick={onShare} />
 
       <div
         ref={ref}
