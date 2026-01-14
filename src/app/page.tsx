@@ -17,6 +17,7 @@ import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallenge
 import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import VHCStatusCard from "../components/vhc/VHCStatusCard";
 import CrowningCard from "../components/crowning/CrowningCard";
+import EndCard from "../components/end-card/EndCard";
 
 const DUMMY_DATA = {
   steps: 3_022_500,
@@ -156,6 +157,10 @@ export default function Home() {
         )}
       </PageCaptureWrapper>
     ),
+  },
+
+  {
+    content: <EndCard />,
   },
 ].filter(Boolean) as { content: React.ReactNode }[];
 
