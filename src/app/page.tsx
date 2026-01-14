@@ -17,6 +17,7 @@ import WeeklyChallengeCard from "../components/weekly-challenges/WeeklyChallenge
 import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import VHCStatusCard from "../components/vhc/VHCStatusCard";
 import CrowningCard from "../components/crowning/CrowningCard";
+import EndCard from "../components/end-card/EndCard";
 
 const DUMMY_DATA = {
   steps: 3_022_500,
@@ -129,35 +130,39 @@ export default function Home() {
           </PageCaptureWrapper>
         ),
       }
-      : null,
+    : null,
 
-    {
-      content: (
-        <PageCaptureWrapper fileName="vitality-rank.png">
-          {({ onShare }) => (
-            <VitalityRankCard
-              genderRank={data.genderRank}
-              generalRank={data.generalRank}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+  {
+    content: (
+      <PageCaptureWrapper fileName="vitality-rank.png">
+        {({ onShare }) => (
+          <VitalityRankCard
+            genderRank={data.genderRank}
+            generalRank={data.generalRank}
+            onShare={onShare}
+          />
+        )}
+      </PageCaptureWrapper>
+    ),
+  },
 
-    {
-      content: (
-        <PageCaptureWrapper disableWatermark fileName="crowning.png">
-          {({ onShare }) => (
-            <CrowningCard
-              type="starter"
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-  ].filter(Boolean) as { content: React.ReactNode }[];
+  {
+    content: (
+      <PageCaptureWrapper fileName="crowning.png">
+        {({ onShare }) => (
+          <CrowningCard
+            type="starter"
+            onShare={onShare}
+          />
+        )}
+      </PageCaptureWrapper>
+    ),
+  },
+
+  {
+    content: <EndCard />,
+  },
+].filter(Boolean) as { content: React.ReactNode }[];
 
 
 

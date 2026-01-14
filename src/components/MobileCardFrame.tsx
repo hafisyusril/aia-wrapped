@@ -86,6 +86,7 @@ export default function MobileCardFrame({
       </div>
 
       {illustration}
+      
     </div>
   );
 }
