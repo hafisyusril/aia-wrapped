@@ -1,5 +1,7 @@
 "use client";
 
+import { SiWhatsapp, SiFacebook, SiInstagram, SiTiktok } from "react-icons/si";
+
 type Platform = "whatsapp" | "facebook" | "instagram" | "tiktok";
 
 type ShareBottomSheetProps = {
@@ -8,11 +10,31 @@ type ShareBottomSheetProps = {
     onSelect: (platform: Platform) => void;
 };
 
-const PLATFORM_DATA: { platform: Platform; label: string; color?: string }[] = [
-    { platform: "whatsapp", label: "WhatsApp", color: "text-green-500" },
-    { platform: "facebook", label: "Facebook", color: "text-blue-600" },
-    { platform: "instagram", label: "Instagram", color: "text-pink-500" },
-    { platform: "tiktok", label: "TikTok", color: "text-black" },
+const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: JSX.Element }[] = [
+    {
+        platform: "whatsapp",
+        label: "WhatsApp",
+        color: "text-green-500",
+        icon: <SiWhatsapp className="w-6 h-6" />,
+    },
+    {
+        platform: "facebook",
+        label: "Facebook",
+        color: "text-blue-600",
+        icon: <SiFacebook className="w-6 h-6" />,
+    },
+    {
+        platform: "instagram",
+        label: "Instagram",
+        color: "text-pink-500",
+        icon: <SiInstagram className="w-6 h-6" />,
+    },
+    {
+        platform: "tiktok",
+        label: "TikTok",
+        color: "text-black",
+        icon: <SiTiktok className="w-6 h-6" />,
+    },
 ];
 
 export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBottomSheetProps) {
@@ -30,14 +52,13 @@ export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBo
                 <h3 className="text-center font-bold">Share to</h3>
 
                 <div className="flex justify-around mt-2">
-                    {PLATFORM_DATA.map(({ platform, label, color }) => (
+                    {PLATFORM_DATA.map(({ platform, label, color, icon }) => (
                         <button
                             key={platform}
                             onClick={() => onSelect(platform)}
                             className={`flex flex-col items-center gap-1 btn ${color ?? ""}`}
                         >
-                            {/* bisa diganti icon */}
-                            <span className="text-2xl">{label[0]}</span>
+                            {icon}
                             <span className="text-sm">{label}</span>
                         </button>
                     ))}
