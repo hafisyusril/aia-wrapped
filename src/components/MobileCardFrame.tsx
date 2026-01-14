@@ -1,7 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useRef } from "react";
 import ShareButton from "./ShareButton";
+import { captureWithWatermark } from "../app/utils/captureWithWatermark";
 
 type MobileCardFrameProps = {
   background: string;
@@ -10,13 +11,15 @@ type MobileCardFrameProps = {
   ornaments?: ReactNode;
   illustration?: ReactNode;
 
-  /** layout overrides */
   className?: string;
   topClassName?: string;
   bottomClassName?: string;
 
-  // Share button
   showShareButton?: boolean;
+  watermarkSrc?: string;
+  fileName?: string;
+
+  /** optional hook for analytics / override */
   onShare?: () => void;
 };
 
@@ -29,38 +32,59 @@ export default function MobileCardFrame({
   className,
   topClassName,
   bottomClassName,
-
   showShareButton = true,
+  watermarkSrc = "/crowning/aia_vitality.svg",
+  fileName = "shared-image.png",
   onShare,
 }: MobileCardFrameProps) {
+  const captureRef = useRef<HTMLDivElement>(null);
+
+  const handleShare = async () => {
+    if (!captureRef.current) return;
+
+    await captureWithWatermark({
+      element: captureRef.current,
+      fileName,
+    });
+
+    onShare?.(); // analytics / callback
+  };
+
   return (
     <div
-      className={`relative grid min-h-svh grid-rows-[35%_65%] w-full max-w-[430px] mx-auto overflow-hidden font-sans ${
-        className ?? ""
-      }`}
+      ref={captureRef}
+      id="mobile-frame-capture"
+      className={`
+        relative grid min-h-svh grid-rows-[35%_65%]
+        w-full max-w-[430px] mx-auto
+        overflow-hidden font-sans
+        ${className ?? ""}
+      `}
       style={{ background }}
     >
-      {/* SHARE BUTTON */}
-      {showShareButton && <ShareButton onClick={onShare} />}
+      {showShareButton && <ShareButton onClick={handleShare} />}
 
-      {/* ORNAMENTS */}
       {ornaments}
 
-      {/* TOP (35%) */}
       <div
-        className={`relative flex flex-col h-full px-7.5 justify-end pb-5 z-20 ${
-          topClassName ?? ""
-        }`}
+        className={`
+          relative flex flex-col h-full
+          px-7.5 justify-end pb-5 z-20
+          ${topClassName ?? ""}
+        `}
       >
         {topContent}
       </div>
 
-      {/* BOTTOM (65%) */}
-      <div className={`relative px-7.5 pt-2 z-20 ${bottomClassName ?? ""}`}>
+      <div
+        className={`
+          relative px-7.5 pt-2 z-20
+          ${bottomClassName ?? ""}
+        `}
+      >
         {bottomContent}
       </div>
 
-      {/* ILLUSTRATION */}
       {illustration}
     </div>
   );

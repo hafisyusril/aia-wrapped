@@ -14,7 +14,7 @@ interface StepsCardProps {
 export default function StepsCard({ steps }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
-  const {share} = useShare();
+  const { share } = useShare();
 
   const leftShoe = {
     walk: {
@@ -48,6 +48,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
             text: `My steps ${steps} times 💪`,
           })
         }
+        fileName="steps.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img

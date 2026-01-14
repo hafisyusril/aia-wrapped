@@ -17,7 +17,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
-  const {share, downloadStory} = useShare();
+  const { share, downloadStory } = useShare();
   useEffect(() => {
     if (counter <= 50) {
       setTitle("Energy-Saving <br /> Mode");
@@ -62,6 +62,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
             text: `I went to the gym ${counter} times 💪`,
           })
         }
+        fileName="gym-visit.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img
