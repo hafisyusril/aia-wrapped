@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { VHCStatus } from "./VHCStatusConfig";
 import { getVHCStatusContent } from "./VHCStatusUtils";
 import ShareButton from "../ShareButton";
-import { useShare } from "@/src/app/hooks/useShare";
 
 interface SparkleStarProps {
   size: number;
@@ -81,7 +80,6 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
   } = getVHCStatusContent(status);
 
   const [stars, setStars] = useState<StarConfig[]>([]);
-  const { share } = useShare();
 
   useEffect(() => {
     const generatedStars: StarConfig[] = Array.from(
