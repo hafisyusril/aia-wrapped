@@ -151,7 +151,7 @@ export default function Home() {
       <PageCaptureWrapper fileName="crowning.png">
         {({ onShare }) => (
           <CrowningCard
-            type="starter"
+            type="athlete"
             onShare={onShare}
           />
         )}
