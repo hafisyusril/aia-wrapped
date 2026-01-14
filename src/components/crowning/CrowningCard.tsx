@@ -30,7 +30,8 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
                     className="object-contain w-20 sm:w-40 md:w-48"
                 />
 
-                {onShare && <ShareButton onClick={onShare} />}
+                {/* PASANG isBrightBg={true} karena bg utama section putih */}
+                {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
             </div>
 
             {/* ILLUSTRATION */}
@@ -78,9 +79,7 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
 
             {/* FOOTER */}
             <div className="px-6 sm:px-8 pb-10 border-t border-gray-200 pt-6">
-                <p className="text-xs sm:text-sm text-gray-500">
-                    aia-financial.co.id
-                </p>
+                <p className="text-xs sm:text-sm text-gray-500">aia-financial.co.id</p>
                 <p className="text-xs sm:text-sm text-gray-500 mt-2">
                     PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan
                 </p>
@@ -88,3 +87,4 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
         </div>
     );
 }
+

@@ -4,11 +4,13 @@ import { toPng } from "html-to-image";
 type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
+  disableWatermark?: boolean; // <--- baru
 };
 
 export async function captureWithWatermark({
   element,
   fileName = "shared-image.png",
+  disableWatermark = false, // <--- default false
 }: CaptureOptions) {
   if (!element) return;
 
@@ -32,29 +34,30 @@ export async function captureWithWatermark({
   canvas.height = img.height;
   ctx.drawImage(img, 0, 0);
 
-  // ===== WATERMARK AUTO COLOR =====
-  const padding = 24;
+  // ===== WATERMARK =====
+  if (!disableWatermark) {
+    const padding = 24;
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.14;
+    const watermarkWidth = Math.max(72, Math.min(baseSize, 160));
 
-  const baseSize = Math.min(canvas.width, canvas.height) * 0.14;
-  const watermarkWidth = Math.max(72, Math.min(baseSize, 160));
+    const isBright = isBrightBackground(ctx, padding, padding);
 
-  const isBright = isBrightBackground(ctx, padding, padding);
+    const watermark = new Image();
+    watermark.src = isBright
+      ? "/aia_vitality_red.svg"
+      : "/aia_vitality_white.svg";
 
-  const watermark = new Image();
-  watermark.src = isBright
-    ? "/aia_vitality_red.svg"
-    : "/aia_vitality_white.svg";
+    await new Promise((res) => (watermark.onload = res));
 
-  await new Promise((res) => (watermark.onload = res));
+    const ratio = watermark.width / watermark.height;
+    const watermarkHeight = watermarkWidth / ratio;
 
-  const ratio = watermark.width / watermark.height;
-  const watermarkHeight = watermarkWidth / ratio;
+    ctx.globalAlpha = 0.9;
+    ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
+    ctx.globalAlpha = 1;
+  }
 
-  ctx.globalAlpha = 0.9;
-  ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
-  ctx.globalAlpha = 1;
-
-  // 5. Download (FIXED)
+  // 5. Download
   const finalImage = canvas.toDataURL("image/png");
 
   const link = document.createElement("a");
@@ -66,6 +69,7 @@ export async function captureWithWatermark({
   document.body.removeChild(link);
 }
 
+// tetap sama
 function isBrightBackground(
   ctx: CanvasRenderingContext2D,
   x: number,
