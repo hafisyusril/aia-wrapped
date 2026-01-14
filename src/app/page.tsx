@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import { useUserFlow } from "../contexts/UserFlowContext";
+import { useBackgroundMusic } from "./hooks/useBackgroundMusic";
+import { MusicProvider } from "../contexts/MusicContext";
 
 import SnapSection from "../components/SnapSection";
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
@@ -30,6 +32,8 @@ const ENABLE_SNAP_ANIMATION = true;
 
 export default function Home() {
   const { userData, isDummyUser, flowStep } = useUserFlow();
+  const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
+
   const introRef = useRef<HTMLDivElement>(null);
 
   const data = {
@@ -99,25 +103,28 @@ export default function Home() {
   ].filter(Boolean) as { content: React.ReactNode }[];
 
   return (
-    <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
-      {sections.map((section, idx) => {
-        const disableScroll =
-          idx === 0 || idx === 1 || idx === sections.length - 1;
+    <MusicProvider playMusic={play}>
+      <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
+        {sections.map((section, idx) => {
+          const disableScroll =
+            idx === 0 || idx === 1 || idx === sections.length - 1;
 
-        return (
-          <SnapSection
-            key={idx}
-            enableAnimation={ENABLE_SNAP_ANIMATION}
-            innerRef={(el) => {
-              sectionRefs.current[idx] = el!;
-            }}
-            showScrollUp={!disableScroll}
-            onScrollUp={() => scrollPrev(idx)}
-          >
-            {section.content}
-          </SnapSection>
-        );
-      })}
-    </main>
+          return (
+            <SnapSection
+              key={idx}
+              enableAnimation={ENABLE_SNAP_ANIMATION}
+              innerRef={(el) => {
+                sectionRefs.current[idx] = el!;
+              }}
+              showScrollUp={!disableScroll}
+              onScrollUp={() => scrollPrev(idx)}
+            >
+              {section.content}
+            </SnapSection>
+          );
+        })}
+      </main>
+    </MusicProvider>
+
   );
 }
