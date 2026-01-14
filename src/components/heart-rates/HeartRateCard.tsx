@@ -24,6 +24,7 @@ export default function HeartRateCard({ level }: HeartRateCardProps) {
       topClassName="translate-y-10"
       bottomClassName="translate-y-5"
       background={config.background}
+      fileName="heart-rate.png"
       ornaments={
         <motion.img
           src="/heart-rate/abstract-background.svg"

@@ -9,6 +9,7 @@ export default function ShareButton({ onClick, className }: ShareButtonProps) {
   return (
     <button
       onClick={onClick}
+      type="button"
       aria-label="Share"
       className={`
         absolute  top-4 right-4 z-30

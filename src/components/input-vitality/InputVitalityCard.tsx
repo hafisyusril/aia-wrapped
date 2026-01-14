@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useUserFlow } from "../../contexts/UserFlowContext";
+import { useMusic } from "@/src/contexts/MusicContext";
 
 export default function InputVitalityCard() {
     const [value, setValue] = useState("");
     const [error, setError] = useState("");
     const { setVitalityId } = useUserFlow();
+    const { playMusic } = useMusic()
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -16,6 +18,7 @@ export default function InputVitalityCard() {
             return;
         }
         setError("");
+        playMusic();
         setVitalityId(value);
     }
 

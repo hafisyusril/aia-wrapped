@@ -58,6 +58,7 @@ const SparkleStar = ({ size, top, left, delay }: SparkleStarProps) => (
 
 interface VHCStatusCardProps {
   status: VHCStatus;
+  onShare?: () => void
 }
 
 const STAR_COUNT = 14;
@@ -69,7 +70,7 @@ interface StarConfig {
   delay: number;
 }
 
-export default function VHCStatusCard({ status }: VHCStatusCardProps) {
+export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
   const {
     title,
     background,
@@ -80,7 +81,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
   } = getVHCStatusContent(status);
 
   const [stars, setStars] = useState<StarConfig[]>([]);
-  const {share} = useShare();
+  const { share } = useShare();
 
   useEffect(() => {
     const generatedStars: StarConfig[] = Array.from(
@@ -109,12 +110,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
       </div>
 
       <ShareButton
-        onClick={() => {
-          share({
-            title: "My VHC status",
-            text: "Check out my VHC status",
-          });
-        }}
+        onClick={onShare}
         className="z-20"
       />
 
