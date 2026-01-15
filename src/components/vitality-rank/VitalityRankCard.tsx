@@ -22,7 +22,7 @@ export default function VitalityRankCard({
 
   return (
     <section
-      className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
+      className={`w-full max-w-[430px] mx-auto min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
     >
       <motion.img
         src={theme.ornamentSrc}

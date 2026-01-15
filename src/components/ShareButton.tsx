@@ -18,9 +18,9 @@ export default function ShareButton({
         absolute top-4 right-4 z-30
         flex items-center gap-2
         rounded-full
-        border ${isBrightBg ? "border-black" : "border-white"}
-        bg-white/20
-        px-4 py-1.5
+        
+         ${isBrightBg ? "bg-[#989898]/20" : "bg-white/20"}
+        px-4 py-2
         text-sm font-normal
         hover:opacity-90
         active:scale-95

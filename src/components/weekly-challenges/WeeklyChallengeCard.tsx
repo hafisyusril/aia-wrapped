@@ -49,7 +49,7 @@ export default function WeeklyChallengeCard({
   return (
     <section
       ref={ref}
-      className={`relative w-full min-h-screen flex flex-col font-sans ${background}`}
+      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col font-sans ${background}`}
     >
       {mounted && isInView && (
         <div className="fixed inset-0 pointer-events-none z-20">
