@@ -7,9 +7,10 @@ import { getHeartRateCondition, HeartRateLevel } from "./heartRateUtils";
 
 interface HeartRateCardProps {
   level: HeartRateLevel;
+  onShare?: () => void
 }
 
-export default function HeartRateCard({ level }: HeartRateCardProps) {
+export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
   const condition = getHeartRateCondition(level);
   const config = heartRateConfig[condition];
 
@@ -24,6 +25,7 @@ export default function HeartRateCard({ level }: HeartRateCardProps) {
       topClassName="translate-y-10"
       bottomClassName="translate-y-5"
       background={config.background}
+      onShare={onShare}
       fileName="heart-rate.png"
       ornaments={
         <motion.img

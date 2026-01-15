@@ -9,9 +9,10 @@ import { useInView } from "@/src/app/hooks/useInView";
 
 interface GymVisitCardProps {
   counter: number;
+  onShare: () => void
 }
 
-export default function GymVisitCard({ counter }: GymVisitCardProps) {
+export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -54,6 +55,7 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
     <div ref={ref}>
       <MobileCardFrame
         background={background}
+        onShare={onShare}
         fileName="gym-visit.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">

@@ -8,9 +8,10 @@ import { getStepsConfig } from "./stepsUtils";
 
 interface StepsCardProps {
   steps: number;
+  onShare?: () => void
 }
 
-export default function StepsCard({ steps }: StepsCardProps) {
+export default function StepsCard({ steps, onShare }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
 
@@ -40,6 +41,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
     <div ref={ref}>
       <MobileCardFrame
         background={config.background}
+        onShare={onShare}
         fileName="steps.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">

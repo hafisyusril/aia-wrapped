@@ -6,12 +6,14 @@ import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "../steps/StepsCounter";
 import WomanRedSvg from "./WomanRedSvg";
 import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
+
 interface FitnessChaserCardProps {
   totalChallenges: number;
+  onShare?: () => void
 }
 
 export default function FitnessChaserCard({
-  totalChallenges,
+  totalChallenges, onShare
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getFitnessChaserConfig(totalChallenges);
@@ -21,6 +23,7 @@ export default function FitnessChaserCard({
       <MobileCardFrame
         background={config.background}
         fileName="fitness-chaser.png"
+        onShare={onShare}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">
             {[...Array(4)].map((_, i) => {

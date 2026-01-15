@@ -83,35 +83,50 @@ export default function Home() {
         </div>
       ),
     },
-
-    data.vhcStatus === "checked"
-      ? {
-        content: (
-          <PageCaptureWrapper fileName="vhc-status.png">
-            {({ onShare }) => (
-              <VHCStatusCard
-                status={data.vhcStatus}
-                onShare={onShare}
-              />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
-
-    { content: <StepsCard steps={data.steps} /> },
-    { content: <HeartRateCard level={data.level} /> },
-    { content: <GymVisitCard counter={data.gymVisit} /> },
-    { content: <FitnessChaserCard totalChallenges={data.weeklyChallenges} /> },
-
+    {
+      content: (
+        <PageCaptureWrapper fileName="vhc-status.png">
+          {({ onShare }) => (
+            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      content: (
+        <PageCaptureWrapper fileName="steps-card.png">
+          {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      content: (
+        <PageCaptureWrapper fileName="heart-rate-card.png">
+          {({ onShare }) => <HeartRateCard level={data.level} onShare={onShare} />}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png">
+          {({ onShare }) => <GymVisitCard counter={data.gymVisit} onShare={onShare} />}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      content: (
+        <PageCaptureWrapper fileName="fitness-chaser-card.png">
+          {({ onShare }) => (
+            <FitnessChaserCard totalChallenges={data.weeklyChallenges} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
     {
       content: (
         <PageCaptureWrapper fileName="weekly-challenge.png">
           {({ onShare }) => (
-            <WeeklyChallengeCard
-              totalReward={data.totalReward}
-              onShare={onShare}
-            />
+            <WeeklyChallengeCard totalReward={data.totalReward} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
