@@ -55,7 +55,7 @@ export default function MobileCardFrame({
       ref={captureRef}
       id="mobile-frame-capture"
       className={`
-        relative grid min-h-svh grid-rows-[35%_65%]
+        relative grid min-h-dvh grid-rows-[35%_65%]
         w-full max-w-[430px] mx-auto
         overflow-hidden font-sans
         ${className ?? ""}
