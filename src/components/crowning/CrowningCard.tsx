@@ -22,7 +22,7 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
   } = getCrowningByType(type);
 
   return (
-    <div className="w-full min-h-screen bg-white font-sans flex flex-col">
+    <div className="w-full max-w-[430px] mx-auto min-h-screen bg-white font-sans flex flex-col">
       {/* HEADER */}
       <div className="px-6 pt-8 pb-4 bg-gray-100 flex items-center justify-between">
         <img
