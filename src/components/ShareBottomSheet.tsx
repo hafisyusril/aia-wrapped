@@ -10,7 +10,7 @@ type ShareBottomSheetProps = {
     onSelect: (platform: Platform) => void;
 };
 
-const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: JSX.Element }[] = [
+const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: any }[] = [
     {
         platform: "whatsapp",
         label: "WhatsApp",
