@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
 
 type FlowStep = "input" | "intro" | "content";
@@ -20,7 +20,11 @@ interface UserFlowContextProps {
   isDummyUser: boolean;
   userData: UserData | null;
   flowStep: FlowStep;
-  setVitalityId: (id: string) => void;
+  setVitalityId: (id: string) => Promise<void>;
+  vitalityId: string | null;
+  isLoading: boolean;
+  error: string | null;
+  setError: (error: string | null) => void;
 }
 
 const UserFlowContext = createContext<UserFlowContextProps | undefined>(
@@ -31,44 +35,69 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [isDummyUser, setIsDummyUser] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [flowStep, setFlowStep] = useState<FlowStep>("input");
+  const [vitalityId, setVitalityIdState] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function setVitalityId(id: string) {
-    if (id === "dummyToni") {
-      setIsDummyUser(true);
-      setUserData({
-        vhcStatus: "unchecked",
-        steps: 3_022_500,
-        level: "light",
-        gymVisit: 0,
-        weeklyChallenges: 26,
-        totalReward: 1_300_000,
-        generalRank: 1450,
-        genderRank: 673,
-      });
+  useEffect(() => {
+    const storedId = localStorage.getItem("aia-vitality-id");
+    if (storedId) {
+      setVitalityId(storedId);
+    }
+  }, []);
 
-      setFlowStep("intro");
-    } else if (id === "dummySylfi") {
-      setUserData({
-        vhcStatus: "checked",
-        steps: 4_512_300,
-        level: "intense",
-        gymVisit: 32,
-        weeklyChallenges: 41,
-        totalReward: 2_450_000,
-        generalRank: 420,
-        genderRank: 87,
-      });
+  async function setVitalityId(id: string) {
+    console.log("Fetching API for ID:", id);
+    setVitalityIdState(id);
+    setIsLoading(true);
+    setError(null);
 
-      setFlowStep("intro")
-    } else {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+      const response = await fetch(`${baseUrl}/api/v1/vitality/${id}`);
+
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error("Vitality ID not found. Please check your ID and try again.");
+        }
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `API Error: ${response.statusText}`);
+      }
+
+      const jsonResponse = await response.json();
+      const apiData = jsonResponse.data;
+
+      // Map API response to UserData
+      const userData: UserData = {
+        vhcStatus: apiData.vhc === "Yes" ? "checked" : "unchecked",
+        steps: Number(apiData.steps || 0),
+        level: (apiData.heart_rate ? apiData.heart_rate.toLowerCase() : "light") as HeartRateLevel,
+        gymVisit: Number(apiData.gym_visit || 0),
+        weeklyChallenges: Number(apiData.weekly_challenge_completion || 0),
+        totalReward: Number(apiData.total_rewards_earned || 0),
+        generalRank: Number(apiData.rank || 0),
+        genderRank: Number(apiData.rank_by_gender || 0),
+      };
+
+      setUserData(userData);
       setIsDummyUser(false);
+      setFlowStep("intro");
+      localStorage.setItem("aia-vitality-id", id);
+    } catch (err: any) {
+      console.error("Failed to fetch vitality data:", err);
+      // Use the specific error message if available, otherwise a generic fallback
+      setError(err.message || "Unable to retrieve data. Please try again later.");
       setUserData(null);
+      setIsDummyUser(false);
+      localStorage.removeItem("aia-vitality-id");
+    } finally {
+      setIsLoading(false);
     }
   }
 
   return (
     <UserFlowContext.Provider
-      value={{ isDummyUser, userData, flowStep, setVitalityId }}
+      value={{ isDummyUser, userData, flowStep, setVitalityId, vitalityId, isLoading, error, setError }}
     >
       {children}
     </UserFlowContext.Provider>

@@ -7,6 +7,7 @@ import { MusicProvider } from "../contexts/MusicContext";
 import PageCaptureWrapper from "../components/PageCaptureWrapper";
 
 import SnapSection from "../components/SnapSection";
+import { logAudit } from "./utils/auditLogger"; // Import audit logger
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
 import StepsCard from "../components/steps/StepsCard";
@@ -37,6 +38,17 @@ export default function Home() {
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
   const introRef = useRef<HTMLDivElement>(null);
+
+  // @ts-ignore
+  const { vitalityId } = useUserFlow();
+
+  const handleSectionVisible = (sectionName: string) => {
+    const id = vitalityId || localStorage.getItem("aia-vitality-id");
+    if (id) {
+      console.log(`[Audit] Viewing: ${sectionName} by ${id}`);
+      logAudit(id, sectionName);
+    }
+  };
 
   const data = {
     steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
@@ -73,49 +85,60 @@ export default function Home() {
     });
   };
 
-  const sections: { content: React.ReactNode }[] = [
-    { content: <InputVitalityCard /> },
+  // Tentukan Sections dengan Nama Halaman untuk Audit Log
+  type SectionItem = { name: string; content: React.ReactNode };
+
+  const sections: SectionItem[] = [
+    { name: "Input ID", content: <InputVitalityCard /> },
 
     {
+      name: "Intro",
       content: (
         <div ref={introRef}>
           <IntroCard />
         </div>
       ),
     },
+    data.vhcStatus === "checked"
+      ? {
+        name: "VHC Status",
+        content: (
+          <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
+            {({ onShare }) => (
+              <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
     {
+      name: "Steps",
       content: (
-        <PageCaptureWrapper fileName="vhc-status.png">
-          {({ onShare }) => (
-            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      content: (
-        <PageCaptureWrapper fileName="steps-card.png">
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
           {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
         </PageCaptureWrapper>
       ),
     },
     {
+      name: "Heart Rate",
       content: (
-        <PageCaptureWrapper fileName="heart-rate-card.png">
+        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
           {({ onShare }) => <HeartRateCard level={data.level} onShare={onShare} />}
         </PageCaptureWrapper>
       ),
     },
     {
+      name: "Gym Visit",
       content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png">
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare }) => <GymVisitCard counter={data.gymVisit} onShare={onShare} />}
         </PageCaptureWrapper>
       ),
     },
     {
+      name: "Fitness Chaser",
       content: (
-        <PageCaptureWrapper fileName="fitness-chaser-card.png">
+        <PageCaptureWrapper fileName="fitness-chaser-card.png" pageName="Fitness Chaser">
           {({ onShare }) => (
             <FitnessChaserCard totalChallenges={data.weeklyChallenges} onShare={onShare} />
           )}
@@ -123,8 +146,9 @@ export default function Home() {
       ),
     },
     {
+      name: "Weekly Challenge",
       content: (
-        <PageCaptureWrapper fileName="weekly-challenge.png">
+        <PageCaptureWrapper fileName="weekly-challenge.png" pageName="Weekly Challenge">
           {({ onShare }) => (
             <WeeklyChallengeCard totalReward={data.totalReward} onShare={onShare} />
           )}
@@ -134,59 +158,62 @@ export default function Home() {
 
     data.vhcStatus === "unchecked"
       ? {
+        name: "VHC Status",
         content: (
-          <PageCaptureWrapper fileName="vhc-status.png">
+          <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
             {({ onShare }) => (
-              <VHCStatusCard
-                status={data.vhcStatus}
-                onShare={onShare}
-              />
+              <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
             )}
           </PageCaptureWrapper>
         ),
       }
-    : null,
+      : null,
 
-  {
-    content: (
-      <PageCaptureWrapper fileName="vitality-rank.png">
-        {({ onShare }) => (
-          <VitalityRankCard
-            genderRank={data.genderRank}
-            generalRank={data.generalRank}
-            onShare={onShare}
-          />
-        )}
-      </PageCaptureWrapper>
-    ),
-  },
+    {
+      name: "Vitality Rank",
+      content: (
+        <PageCaptureWrapper fileName="vitality-rank.png" pageName="Vitality Rank">
+          {({ onShare }) => (
+            <VitalityRankCard
+              genderRank={data.genderRank}
+              generalRank={data.generalRank}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-  {
-    content: (
-      <PageCaptureWrapper fileName="crowning.png">
-        {({ onShare }) => (
-          <CrowningCard
-            type="athlete"
-            onShare={onShare}
-          />
-        )}
-      </PageCaptureWrapper>
-    ),
-  },
+    {
+      name: "Crowning",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="athlete"
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-  {
-    content: <EndCard />,
-  },
-].filter(Boolean) as { content: React.ReactNode }[];
+    {
+      name: "End Card",
+      content: <EndCard />,
+    },
+  ].filter(Boolean) as SectionItem[];
+
+  const displayedSections = (userData || isDummyUser) ? sections : [sections[0]];
 
 
 
   return (
     <MusicProvider playMusic={play}>
       <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
-        {sections.map((section, idx) => {
+        {displayedSections.map((section, idx) => {
           const disableScroll =
-            idx === 0 || idx === 1 || idx === sections.length - 1;
+            idx === 0 || idx === 1 || idx === displayedSections.length - 1;
 
           return (
             <SnapSection
@@ -197,6 +224,7 @@ export default function Home() {
               }}
               showScrollUp={!disableScroll}
               onScrollUp={() => scrollPrev(idx)}
+              onVisible={() => handleSectionVisible(section.name)}
             >
               {section.content}
             </SnapSection>

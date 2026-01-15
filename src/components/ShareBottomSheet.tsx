@@ -40,16 +40,7 @@ const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: 
 export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBottomSheetProps) {
     if (!visible) return null;
 
-    const handleSelect = (platform: Platform) => {
-        onSelect(platform);
 
-        const platformLabel =
-            PLATFORM_DATA.find(p => p.platform === platform)?.label ?? platform;
-
-        alert(`Your image has been downloaded and is ready to be shared on ${platformLabel}.`);
-
-        onClose();
-    };
 
 
     return (
@@ -67,7 +58,19 @@ export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBo
                     {PLATFORM_DATA.map(({ platform, label, color, icon }) => (
                         <button
                             key={platform}
-                            onClick={() => handleSelect(platform)}
+                            type="button"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                console.log("Platform button clicked:", platform);
+
+                                if (typeof onSelect === 'function') {
+                                    console.log("Calling onSelect prop...");
+                                    onSelect(platform);
+                                } else {
+                                    console.error("onSelect prop is invalid:", onSelect);
+                                }
+                            }}
                             className={`flex flex-col items-center gap-1 btn ${color ?? ""}`}
                         >
                             {icon}
