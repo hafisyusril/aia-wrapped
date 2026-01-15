@@ -40,9 +40,21 @@ const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: 
 export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBottomSheetProps) {
     if (!visible) return null;
 
+    const handleSelect = (platform: Platform) => {
+        onSelect(platform);
+
+        const platformLabel =
+            PLATFORM_DATA.find(p => p.platform === platform)?.label ?? platform;
+
+        alert(`Your image has been downloaded and is ready to be shared on ${platformLabel}.`);
+
+        onClose();
+    };
+
+
     return (
         <div
-            className="fixed inset-0 z-50 flex justify-center items-end bg-black bg-opacity-40"
+            className="fixed inset-0 z-50 flex justify-center items-end bg-gray-800/20"
             onClick={onClose}
         >
             <div
@@ -55,7 +67,7 @@ export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBo
                     {PLATFORM_DATA.map(({ platform, label, color, icon }) => (
                         <button
                             key={platform}
-                            onClick={() => onSelect(platform)}
+                            onClick={() => handleSelect(platform)}
                             className={`flex flex-col items-center gap-1 btn ${color ?? ""}`}
                         >
                             {icon}
@@ -64,13 +76,11 @@ export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBo
                     ))}
                 </div>
 
-                <button
-                    onClick={onClose}
-                    className="btn mt-2 text-red-500 w-full"
-                >
+                <button onClick={onClose} className="btn mt-2 text-red-500 w-full">
                     Cancel
                 </button>
             </div>
         </div>
     );
 }
+
