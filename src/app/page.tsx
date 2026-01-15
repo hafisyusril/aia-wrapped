@@ -85,15 +85,6 @@ export default function Home() {
     },
     {
       content: (
-        <PageCaptureWrapper fileName="vhc-status.png">
-          {({ onShare }) => (
-            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      content: (
         <PageCaptureWrapper fileName="steps-card.png">
           {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
         </PageCaptureWrapper>
@@ -145,39 +136,39 @@ export default function Home() {
           </PageCaptureWrapper>
         ),
       }
-    : null,
+      : null,
 
-  {
-    content: (
-      <PageCaptureWrapper fileName="vitality-rank.png">
-        {({ onShare }) => (
-          <VitalityRankCard
-            genderRank={data.genderRank}
-            generalRank={data.generalRank}
-            onShare={onShare}
-          />
-        )}
-      </PageCaptureWrapper>
-    ),
-  },
+    {
+      content: (
+        <PageCaptureWrapper fileName="vitality-rank.png">
+          {({ onShare }) => (
+            <VitalityRankCard
+              genderRank={data.genderRank}
+              generalRank={data.generalRank}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-  {
-    content: (
-      <PageCaptureWrapper fileName="crowning.png">
-        {({ onShare }) => (
-          <CrowningCard
-            type="athlete"
-            onShare={onShare}
-          />
-        )}
-      </PageCaptureWrapper>
-    ),
-  },
+    {
+      content: (
+        <PageCaptureWrapper fileName="crowning.png">
+          {({ onShare }) => (
+            <CrowningCard
+              type="athlete"
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-  {
-    content: <EndCard />,
-  },
-].filter(Boolean) as { content: React.ReactNode }[];
+    {
+      content: <EndCard />,
+    },
+  ].filter(Boolean) as { content: React.ReactNode }[];
 
 
 
