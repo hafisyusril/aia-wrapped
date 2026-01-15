@@ -6,18 +6,17 @@ import MobileCardFrame from "../MobileCardFrame";
 import GymDeadliftSvg from "./GymDeadliftSvg";
 import AnimatedCounter from "../steps/StepsCounter";
 import { useInView } from "@/src/app/hooks/useInView";
-import { useShare } from "@/src/app/hooks/useShare";
 
 interface GymVisitCardProps {
   counter: number;
+  onShare: () => void
 }
 
-export default function GymVisitCard({ counter }: GymVisitCardProps) {
+export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
-  const share = useShare();
   useEffect(() => {
     if (counter <= 50) {
       setTitle("Energy-Saving <br /> Mode");
@@ -56,12 +55,8 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
     <div ref={ref}>
       <MobileCardFrame
         background={background}
-        onShare={() =>
-          share({
-            title: "Gym Visit Result",
-            text: `I went to the gym ${counter} times 💪`,
-          })
-        }
+        onShare={onShare}
+        fileName="gym-visit.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img
@@ -91,8 +86,12 @@ export default function GymVisitCard({ counter }: GymVisitCardProps) {
           </div>
         }
         illustration={
-          <div className="absolute bottom-10 right-0 w-50 h-90 z-10 overflow-visible">
-            <GymDeadliftSvg />
+          <div className="absolute bottom-12 right-0 w-50 h-auto z-10 pointer-events-none">
+            <img
+              src="/gym-visit/deadlift.gif"
+              alt=""
+              className="w-full h-auto"
+            />
           </div>
         }
         topContent={

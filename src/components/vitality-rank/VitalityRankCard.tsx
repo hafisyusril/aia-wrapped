@@ -9,18 +9,20 @@ import ShareButton from "../ShareButton";
 interface VitalityRankCardProps {
   generalRank: number;
   genderRank: number;
+  onShare?: () => void;
 }
 
 export default function VitalityRankCard({
   generalRank,
   genderRank,
+  onShare
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
 
   return (
     <section
-      className={`w-full min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
+      className={`w-full max-w-[430px] mx-auto min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
     >
       <motion.img
         src={theme.ornamentSrc}
@@ -55,7 +57,7 @@ export default function VitalityRankCard({
         `}
       />
 
-      <ShareButton />
+      <ShareButton onClick={onShare} />
 
       <div
         ref={ref}

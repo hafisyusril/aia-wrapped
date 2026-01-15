@@ -6,12 +6,14 @@ import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "../steps/StepsCounter";
 import WomanRedSvg from "./WomanRedSvg";
 import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
+
 interface FitnessChaserCardProps {
   totalChallenges: number;
+  onShare?: () => void
 }
 
 export default function FitnessChaserCard({
-  totalChallenges,
+  totalChallenges, onShare
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getFitnessChaserConfig(totalChallenges);
@@ -20,6 +22,8 @@ export default function FitnessChaserCard({
     <div ref={ref} >
       <MobileCardFrame
         background={config.background}
+        fileName="fitness-chaser.png"
+        onShare={onShare}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">
             {[...Array(4)].map((_, i) => {
@@ -30,9 +34,8 @@ export default function FitnessChaserCard({
                   key={i}
                   src="/fitness-chaser/oval.svg"
                   alt=""
-                  className={`flex-1 w-full object-cover transform-gpu ${
-                    fromRight ? "origin-right" : "origin-left"
-                  }`}
+                  className={`flex-1 w-full object-cover transform-gpu ${fromRight ? "origin-right" : "origin-left"
+                    }`}
                   initial={{
                     scaleX: 0,
                     opacity: 0,
@@ -58,9 +61,9 @@ export default function FitnessChaserCard({
           </div>
         }
         topContent={
-            <h1 className="font-source text-white text-[48px] whitespace-pre-line leading-none">
-              {config.title}
-            </h1>
+          <h1 className="font-source text-white text-[48px] whitespace-pre-line leading-none">
+            {config.title}
+          </h1>
         }
         bottomContent={
           <>

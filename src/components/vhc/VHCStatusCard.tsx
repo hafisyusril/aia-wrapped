@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { VHCStatus } from "./VHCStatusConfig";
 import { getVHCStatusContent } from "./VHCStatusUtils";
 import ShareButton from "../ShareButton";
-import { useShare } from "@/src/app/hooks/useShare";
 
 interface SparkleStarProps {
   size: number;
@@ -58,6 +57,7 @@ const SparkleStar = ({ size, top, left, delay }: SparkleStarProps) => (
 
 interface VHCStatusCardProps {
   status: VHCStatus;
+  onShare?: () => void
 }
 
 const STAR_COUNT = 14;
@@ -69,7 +69,7 @@ interface StarConfig {
   delay: number;
 }
 
-export default function VHCStatusCard({ status }: VHCStatusCardProps) {
+export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
   const {
     title,
     background,
@@ -80,7 +80,6 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
   } = getVHCStatusContent(status);
 
   const [stars, setStars] = useState<StarConfig[]>([]);
-  const share = useShare();
 
   useEffect(() => {
     const generatedStars: StarConfig[] = Array.from(
@@ -100,7 +99,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
 
   return (
     <section
-      className={`relative w-full min-h-screen flex flex-col font-sans overflow-hidden ${background}`}
+      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col font-sans overflow-hidden ${background}`}
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         {stars.map((star, i) => (
@@ -109,12 +108,7 @@ export default function VHCStatusCard({ status }: VHCStatusCardProps) {
       </div>
 
       <ShareButton
-        onClick={() => {
-          share({
-            title: "My VHC status",
-            text: "Check out my VHC status",
-          });
-        }}
+        onClick={onShare}
         className="z-20"
       />
 

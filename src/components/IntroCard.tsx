@@ -4,99 +4,115 @@ import { motion } from "framer-motion";
 
 export default function IntroCard() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <motion.div
-        className="relative h-175 w-97.5 bg-white overflow-hidden"
-        initial={{ scale: 0.9, opacity: 0 }}
-        whileInView={{ scale: 1, opacity: 1 }}
-        viewport={{ once: true, amount: 0.6 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-      >
-        <img
-          src="/intro/trapesium-top.svg"
-          className="absolute top-0 left-0 w-full h-56 object-cover"
-          alt=""
-        />
-        <img
-          src="/intro/trapesium-bot.svg"
-          className="absolute bottom-0 left-0 w-full h-35 object-cover"
-          alt=""
-        />
-        <img
-          src="/intro/trapesium-left.svg"
-          className="absolute inset-y-0 left-0 w-17.5 h-full object-cover"
-          alt=""
-        />
-        <img
-          src="/intro/trapesium-right.svg"
-          className="absolute inset-y-0 right-0 w-17.5 h-full object-cover"
-          alt=""
+    <div className="w-full max-w-107.5 min-h-svh mx-auto relative overflow-hidden">
+      <img
+        src="/intro/trapesium-top.svg"
+        className="absolute top-0 left-0 w-full h-56 object-cover"
+        alt=""
+      />
+      <img
+        src="/intro/trapesium-bot.svg"
+        className="absolute bottom-0 left-0 w-full h-35 object-cover"
+        alt=""
+      />
+      <img
+        src="/intro/trapesium-left.svg"
+        className="absolute 
+    left-0 
+    top-[-5.5%] 
+    h-[108%] 
+    w-17.5 
+    object-cover"
+        alt=""
+      />
+      <img
+        src="/intro/trapesium-right.svg"
+        className="absolute 
+    right-0 
+    top-[-5.5%] 
+    h-[108%] 
+    w-17.5 
+    object-cover"
+        alt=""
+      />
+
+      <div className="absolute inset-15 flex flex-col items-center justify-start gap-6">
+        <motion.img
+          src="/intro/aia-vitality-wrapped.svg"
+          className="w-55"
+          alt="AIA Vitality Wrapped"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
         />
 
-        <div className="absolute inset-15 flex flex-col items-center justify-center gap-6">
-          <motion.img
-            src="/intro/aia-vitality-wrapped.svg"
-            className="w-55"
-            alt="AIA Vitality Wrapped"
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-          />
-
+        {/* Center Content group */}
+        <div className="relative w-full max-w-72 aspect-3/5 h-[60svh]  flex justify-center mt-10">
           <motion.div
-            className="relative w-66.25 h-90 overflow-hidden"
-            initial={{ scale: 0.95, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
+            className="relative w-full h-full"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
           >
-            <div className="grid grid-rows-[1fr_auto] h-full px-4 pt-8 pb-6">
-              <img
-                src="/heart-rate/red-heart.svg"
-                className="absolute top-2 right-3 w-18 rotate-20"
-                alt=""
-              />
-              <img
-                src="/reward-redeem/women-gold.svg"
-                className="absolute left-1 top-1 w-43"
-                alt=""
-              />
-              <img
-                src="/gym-visit/gym-visit-deadlift.svg"
-                className="absolute bottom-4 w-42 left-1"
-                alt=""
-              />
-              <img
-                src="/reward-redeem/gold-coin.svg"
-                className="absolute bottom-15 left-1 w-17"
-                alt=""
-              />
-              <img
-                src="/intro/check-inside-love.svg"
-                className="absolute top-1 right-20 w-15"
-                alt=""
-              />
-              <img
-                src="/intro/wrapped-woman-red.svg"
-                className="absolute w-42 bottom-4 right-1"
-                alt=""
-              />
-              <img
-                src="/intro/shoe.svg"
-                className="absolute top-25 right-2 w-25"
-                alt=""
-              />
-            </div>
+            {/* FRAME */}
+            <div className="relative w-full h-full rounded-none border border-[rgba(211,17,69,1)]">
+              {/* DOTS */}
+              <span className="dot -top-2 -left-2" />
+              <span className="dot -top-2 -right-2" />
+              <span className="dot -bottom-2 -left-2" />
+              <span className="dot -bottom-2 -right-2" />
 
-            <img
-              src="/intro/intro-content.svg"
-              className="pointer-events-none absolute inset-0 z-10"
-              alt="Frame"
-            />
+              {/* CONTENT */}
+              <div className="relative w-full h-full px-4 pt-10 pb-10 overflow-hidden">
+                {/* semua image kamu taruh DI SINI */}
+                <img
+                  src="/heart-rate/red-heart.svg"
+                  className="absolute top-2 right-3  w-25 sm:w-25 rotate-20"
+                  alt=""
+                />
+                <img
+                  src="/reward-redeem/women-gold.svg"
+                  className="absolute left-1 top-1 w-50 h-60"
+                  alt=""
+                />
+                <img
+                  src="/gym-visit/gym-visit-deadlift.svg"
+                  className="absolute bottom-4 w-50 left-1"
+                  alt=""
+                />
+                <img
+                  src="/reward-redeem/gold-coin.svg"
+                  className="absolute bottom-15 left-1 w-23"
+                  alt=""
+                />
+                <img
+                  src="/intro/check-inside-love.svg"
+                  className="absolute top-1 right-30 w-20"
+                  alt=""
+                />
+                <img
+                  src="/intro/wrapped-woman-red.svg"
+                  className="absolute w-42 bottom-4 right-1"
+                  alt=""
+                />
+                <img
+                  src="/intro/shoe.svg"
+                  className="absolute top-40 right-0 w-35"
+                  alt=""
+                />
+              </div>
+            </div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
+}
+
+{
+  {
+    /* Center Content group */
+  }
 }

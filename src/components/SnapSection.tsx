@@ -8,6 +8,7 @@ interface SnapSectionProps {
   innerRef?: Ref<HTMLDivElement>;
   showScrollUp?: boolean;
   onScrollUp?: () => void;
+  enableAnimation?: boolean;
 }
 
 export default function SnapSection({
@@ -15,22 +16,27 @@ export default function SnapSection({
   innerRef,
   showScrollUp = false,
   onScrollUp,
+  enableAnimation = true,
 }: SnapSectionProps) {
   return (
     <motion.section
       ref={innerRef}
       className="min-h-svh snap-start snap-always w-full relative"
-      initial={{ opacity: 1, y: 0, scale: 1 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: false, amount: 0.7 }}
-      transition={{
-        duration: 0.6,
-        ease: "easeOut",
-      }}
+      {...(enableAnimation
+        ? {
+            initial: { opacity: 1, y: 0 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: false, amount: 0.7 },
+            transition: { duration: 0.6, ease: "easeOut" },
+          }
+        : {
+            initial: false,
+            animate: false,
+          })}
     >
       {children}
 
-      {showScrollUp && onScrollUp && (
+      {enableAnimation && showScrollUp && onScrollUp && (
         <div
           onClick={onScrollUp}
           className="absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 opacity-80 cursor-pointer"

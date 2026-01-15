@@ -5,16 +5,15 @@ import { useInView } from "@/src/app/hooks/useInView";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "./StepsCounter";
 import { getStepsConfig } from "./stepsUtils";
-import { useShare } from "@/src/app/hooks/useShare";
 
 interface StepsCardProps {
   steps: number;
+  onShare?: () => void
 }
 
-export default function StepsCard({ steps }: StepsCardProps) {
+export default function StepsCard({ steps, onShare }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
-  const share = useShare();
 
   const leftShoe = {
     walk: {
@@ -42,12 +41,8 @@ export default function StepsCard({ steps }: StepsCardProps) {
     <div ref={ref}>
       <MobileCardFrame
         background={config.background}
-        onShare={() =>
-          share({
-            title: "Steps result",
-            text: `My steps ${steps} times 💪`,
-          })
-        }
+        onShare={onShare}
+        fileName="steps.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">
             <motion.img
@@ -126,7 +121,7 @@ export default function StepsCard({ steps }: StepsCardProps) {
                 variants={rightShoe}
                 transition={{
                   ...walkTransition,
-                  
+
                 }}
               />
 
