@@ -121,8 +121,6 @@ export default function PageCaptureWrapper({
             <div ref={captureRef} data-capture-root className="transform-none">
                 {children({ onShare: handleShare })}
             </div>
-
-            {/* Bottom sheet platform */}
             <ShareBottomSheet
                 visible={showSharePopup}
                 onClose={() => setShowSharePopup(false)}
@@ -131,30 +129,6 @@ export default function PageCaptureWrapper({
                     handlePlatformSelect(p);
                 }}
             />
-
-            {/* Download permission */}
-            {showDownloadPrompt && (
-                <div
-                    className="fixed inset-0 bg-black bg-opacity-40 z-50 flex justify-center items-center"
-                    onClick={() => setShowDownloadPrompt(false)}
-                >
-                    <div
-                        className="bg-white p-4 rounded shadow-md flex flex-col gap-3"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <p className="text-center font-medium">Download image to share?</p>
-                        <button onClick={handleDownload} className="btn">
-                            Download
-                        </button>
-                        <button
-                            onClick={() => setShowDownloadPrompt(false)}
-                            className="btn mt-2 text-red-500"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }
