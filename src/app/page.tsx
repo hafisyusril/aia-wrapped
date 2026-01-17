@@ -7,7 +7,8 @@ import { MusicProvider } from "../contexts/MusicContext";
 import PageCaptureWrapper from "../components/PageCaptureWrapper";
 
 import SnapSection from "../components/SnapSection";
-import { logAudit } from "./utils/auditLogger"; // Import audit logger
+import { logAudit } from "./utils/auditLogger";
+
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
 import StepsCard from "../components/steps/StepsCard";
@@ -33,23 +34,27 @@ const DUMMY_DATA = {
 
 const ENABLE_SNAP_ANIMATION = true;
 
+type SectionItem = {
+  name: string;
+  content: React.ReactNode;
+};
+
 export default function Home() {
-  const { userData, isDummyUser, flowStep } = useUserFlow();
+  const {
+    userData,
+    isDummyUser,
+    flowStep,
+    vitalityId,
+  } = useUserFlow();
+
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
   const introRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<HTMLDivElement[]>([]);
 
-  // @ts-ignore
-  const { vitalityId } = useUserFlow();
-
-  const handleSectionVisible = (sectionName: string) => {
-    const id = vitalityId || localStorage.getItem("aia-vitality-id");
-    if (id) {
-      console.log(`[Audit] Viewing: ${sectionName} by ${id}`);
-      logAudit(id, sectionName);
-    }
-  };
-
+  /* =========================
+     DATA NORMALIZATION
+  ========================== */
   const data = {
     steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
     level: isDummyUser ? DUMMY_DATA.level : userData?.level ?? "light",
@@ -63,20 +68,39 @@ export default function Home() {
     generalRank: isDummyUser
       ? DUMMY_DATA.generalRank
       : userData?.generalRank ?? 0,
-    genderRank: isDummyUser ? DUMMY_DATA.genderRank : userData?.genderRank ?? 0,
+    genderRank: isDummyUser
+      ? DUMMY_DATA.genderRank
+      : userData?.genderRank ?? 0,
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
       : userData?.vhcStatus ?? "unchecked",
   };
 
-  const sectionRefs = useRef<HTMLDivElement[]>([]);
-
+  /* =========================
+     AUTO SCROLL TO INTRO
+  ========================== */
   useEffect(() => {
     if (flowStep === "intro") {
-      introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      introRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   }, [flowStep]);
 
+  /* =========================
+     AUDIT LOG
+  ========================== */
+  const handleSectionVisible = (sectionName: string) => {
+    const id = vitalityId || localStorage.getItem("aia-vitality-id");
+    if (id) {
+      logAudit(id, sectionName);
+    }
+  };
+
+  /* =========================
+     SCROLL UP HANDLER
+  ========================== */
   const scrollPrev = (currentIndex: number) => {
     if (currentIndex <= 0) return;
     sectionRefs.current[currentIndex - 1]?.scrollIntoView({
@@ -85,11 +109,19 @@ export default function Home() {
     });
   };
 
-  // Tentukan Sections dengan Nama Halaman untuk Audit Log
-  type SectionItem = { name: string; content: React.ReactNode };
-
+  /* =========================
+     SECTIONS (INPUT TERKUNCI)
+  ========================== */
   const sections: SectionItem[] = [
-    { name: "Input ID", content: <InputVitalityCard /> },
+    // 🔒 INPUT HANYA MUNCUL SAAT flowStep === "input"
+    ...(flowStep === "input"
+      ? [
+        {
+          name: "Input ID",
+          content: <InputVitalityCard />,
+        },
+      ]
+      : []),
 
     {
       name: "Intro",
@@ -99,6 +131,7 @@ export default function Home() {
         </div>
       ),
     },
+
     data.vhcStatus === "checked"
       ? {
         name: "VHC Status",
@@ -111,46 +144,69 @@ export default function Home() {
         ),
       }
       : null,
+
     {
       name: "Steps",
       content: (
         <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
-          {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Heart Rate",
-      content: (
-        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
-          {({ onShare }) => <HeartRateCard level={data.level} onShare={onShare} />}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Gym Visit",
-      content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => <GymVisitCard counter={data.gymVisit} onShare={onShare} />}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Fitness Chaser",
-      content: (
-        <PageCaptureWrapper fileName="fitness-chaser-card.png" pageName="Fitness Chaser">
           {({ onShare }) => (
-            <FitnessChaserCard totalChallenges={data.weeklyChallenges} onShare={onShare} />
+            <StepsCard steps={data.steps} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
+
+    {
+      name: "Heart Rate",
+      content: (
+        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
+          {({ onShare }) => (
+            <HeartRateCard level={data.level} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    {
+      name: "Gym Visit",
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
+          {({ onShare }) => (
+            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    {
+      name: "Fitness Chaser",
+      content: (
+        <PageCaptureWrapper
+          fileName="fitness-chaser-card.png"
+          pageName="Fitness Chaser"
+        >
+          {({ onShare }) => (
+            <FitnessChaserCard
+              totalChallenges={data.weeklyChallenges}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
     {
       name: "Weekly Challenge",
       content: (
-        <PageCaptureWrapper fileName="weekly-challenge.png" pageName="Weekly Challenge">
+        <PageCaptureWrapper
+          fileName="weekly-challenge.png"
+          pageName="Weekly Challenge"
+        >
           {({ onShare }) => (
-            <WeeklyChallengeCard totalReward={data.totalReward} onShare={onShare} />
+            <WeeklyChallengeCard
+              totalReward={data.totalReward}
+              onShare={onShare}
+            />
           )}
         </PageCaptureWrapper>
       ),
@@ -189,10 +245,7 @@ export default function Home() {
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
-            <CrowningCard
-              type="athlete"
-              onShare={onShare}
-            />
+            <CrowningCard type="athlete" onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
@@ -204,23 +257,24 @@ export default function Home() {
     },
   ].filter(Boolean) as SectionItem[];
 
-  const displayedSections = (userData || isDummyUser) ? sections : [sections[0]];
-
+  /* =========================
+     RENDER
+  ========================== */
   return (
     <MusicProvider playMusic={play}>
       <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
-        {displayedSections.map((section, idx) => {
-          const disableScroll =
-            idx === 0 || idx === 1 || idx === displayedSections.length - 1;
+        {sections.map((section, idx) => {
+          const disableScrollUp =
+            idx === 0 || idx === sections.length - 1;
 
           return (
             <SnapSection
-              key={idx}
+              key={section.name}
               enableAnimation={ENABLE_SNAP_ANIMATION}
               innerRef={(el) => {
-                sectionRefs.current[idx] = el!;
+                if (el) sectionRefs.current[idx] = el;
               }}
-              showScrollUp={!disableScroll}
+              showScrollUp={!disableScrollUp}
               onScrollUp={() => scrollPrev(idx)}
               onVisible={() => handleSectionVisible(section.name)}
             >
@@ -230,6 +284,5 @@ export default function Home() {
         })}
       </main>
     </MusicProvider>
-
   );
 }
