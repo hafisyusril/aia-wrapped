@@ -7,11 +7,11 @@ export async function POST(req: Request) {
     if (!body?.user_id || !body?.action) {
       return NextResponse.json(
         { error: "Invalid audit payload" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+    const baseUrl = "https://api.aiavitalitywrapped.id";
 
     const res = await fetch(`${baseUrl}/api/v1/audit-logs`, {
       method: "POST",
