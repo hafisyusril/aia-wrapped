@@ -23,6 +23,7 @@ export default function FitnessChaserCard({
       <MobileCardFrame
         background={config.background}
         fileName="fitness-chaser.png"
+        pageName={"fitness"}
         onShare={onShare}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">

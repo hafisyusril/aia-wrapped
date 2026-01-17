@@ -19,6 +19,7 @@ type MobileCardFrameProps = {
   showShareButton?: boolean;
   watermarkSrc?: string;
   fileName?: string;
+  pageName: string;
 
   /** optional hook for analytics / override */
   onShare?: () => void;
@@ -34,8 +35,8 @@ export default function MobileCardFrame({
   topClassName,
   bottomClassName,
   showShareButton = true,
-  watermarkSrc = "/crowning/aia_vitality.svg",
   fileName = "shared-image.png",
+  pageName,
   onShare,
 }: MobileCardFrameProps) {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -115,6 +116,7 @@ export default function MobileCardFrame({
 
       {illustration}
       <ShareBottomSheet
+        pageName={pageName}
         visible={showSharePopup}
         onClose={() => setShowSharePopup(false)}
         onSelect={handlePlatformSelect}

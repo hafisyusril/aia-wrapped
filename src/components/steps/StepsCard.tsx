@@ -42,6 +42,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
       <MobileCardFrame
         background={config.background}
         onShare={onShare}
+        pageName="steps"
         fileName="steps.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">

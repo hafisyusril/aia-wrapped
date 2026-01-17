@@ -56,6 +56,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
       <MobileCardFrame
         background={background}
         onShare={onShare}
+        pageName={"gym-visit"}
         fileName="gym-visit.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">

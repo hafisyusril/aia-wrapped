@@ -26,6 +26,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
       bottomClassName="translate-y-5"
       background={config.background}
       onShare={onShare}
+      pageName="heart-rate"
       fileName="heart-rate.png"
       ornaments={
         <motion.img
