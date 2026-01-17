@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     const body = await req.json();
 
     const baseUrl = "https://api.aiavitalitywrapped.id";

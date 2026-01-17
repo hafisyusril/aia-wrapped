@@ -5,6 +5,8 @@ export async function GET(
   context: { params: Promise<{ id: string }> },
 ) {
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     const { id } = await context.params;
 
     if (!id) {
