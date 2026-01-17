@@ -39,10 +39,6 @@ const PLATFORM_DATA: { platform: Platform; label: string; color?: string; icon: 
 
 export default function ShareBottomSheet({ visible, onClose, onSelect }: ShareBottomSheetProps) {
     if (!visible) return null;
-
-
-
-
     return (
         <div
             className="fixed inset-0 z-50 flex justify-center items-end bg-gray-800/20"

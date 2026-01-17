@@ -20,8 +20,6 @@ export default function PageCaptureWrapper({
 }: PageCaptureWrapperProps) {
     const captureRef = useRef<HTMLDivElement>(null);
     const [showSharePopup, setShowSharePopup] = useState(false);
-    const [capturedFile, setCapturedFile] = useState<string | null>(null);
-    const [showDownloadPrompt, setShowDownloadPrompt] = useState(false);
 
     // We need vitalityId to track sharing
     // Ideally we should store it in context when fetching user data.
@@ -66,10 +64,9 @@ export default function PageCaptureWrapper({
         const effectiveVitalityId = vitalityId || localStorage.getItem("aia-vitality-id");
 
         if (effectiveVitalityId) {
-            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-            console.log("Sending share request to:", `${baseUrl}/api/v1/vitality/share`); // DEBUG LOG
+            console.log("Sending share request to:", `/api/v1/vitality/share`); // DEBUG LOG
 
-            fetch(`${baseUrl}/api/v1/vitality/share`, {
+            fetch(`/api/v1/vitality/share`, {
                 method: 'POST',
                 keepalive: true,
                 headers: {
@@ -92,29 +89,12 @@ export default function PageCaptureWrapper({
         await new Promise(resolve => setTimeout(resolve, 300));
 
         // capture element baru
-        const fileUrl = await captureWithWatermark({
+        await captureWithWatermark({
             element: captureRef.current,
             fileName,
             disableWatermark,
         });
-
-        setCapturedFile(fileUrl as any);
-        setShowDownloadPrompt(true); // munculkan permission download
     }, [vitalityId, pageName, disableWatermark, fileName]);
-
-    // Step 3: user klik tombol download → trigger download
-    const handleDownload = () => {
-        if (!capturedFile) return;
-
-        const a = document.createElement("a");
-        a.href = capturedFile;
-        a.download = fileName;
-        a.click();
-
-        // reset state
-        setCapturedFile(null);
-        setShowDownloadPrompt(false);
-    };
 
     return (
         <div className="relative">

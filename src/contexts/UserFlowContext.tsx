@@ -53,8 +53,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
     setError(null);
 
     try {
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
-      const response = await fetch(`${baseUrl}/api/v1/vitality/${id}`);
+      const response = await fetch(`/api/v1/vitality/${id}`);
 
       if (!response.ok) {
         if (response.status === 404) {
