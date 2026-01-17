@@ -8,7 +8,7 @@ import { useMusic } from "@/src/contexts/MusicContext";
 export default function InputVitalityCard() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
-  const { setVitalityId } = useUserFlow();
+  const { setVitalityId, isLoading, error: apiError } = useUserFlow();
   const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -79,22 +79,24 @@ export default function InputVitalityCard() {
               className={`
                                 h-12 rounded-xl border px-4 text-base
                                 focus:outline-none focus:ring-2 focus:ring-red-500
-                                ${error ? "border-red-500" : "border-gray-300"}
+                                ${(error || apiError) ? "border-red-500" : "border-gray-300"}
                             `}
             />
 
-            {error && <p className="text-xs text-red-500">{error}</p>}
+            {(error || apiError) && <p className="text-xs text-red-500">{error || apiError}</p>}
 
             <button
               type="submit"
-              className="
+              disabled={isLoading}
+              className={`
                                 mt-2 h-12 rounded-xl
                                 bg-red-600 text-white font-semibold
                                 active:scale-[0.98]
                                 transition
-                            "
+                                ${isLoading ? "opacity-50 cursor-not-allowed" : ""}
+                            `}
             >
-              Continue
+              {isLoading ? "Loading..." : "Continue"}
             </button>
           </motion.form>
         </div>

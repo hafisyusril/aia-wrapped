@@ -9,6 +9,7 @@ interface SnapSectionProps {
   showScrollUp?: boolean;
   onScrollUp?: () => void;
   enableAnimation?: boolean;
+  onVisible?: () => void;
 }
 
 export default function SnapSection({
@@ -17,22 +18,26 @@ export default function SnapSection({
   showScrollUp = false,
   onScrollUp,
   enableAnimation = true,
+  onVisible,
 }: SnapSectionProps) {
   return (
     <motion.section
+      onViewportEnter={() => {
+        if (onVisible) onVisible();
+      }}
       ref={innerRef}
       className="min-h-svh snap-start snap-always w-full relative"
       {...(enableAnimation
         ? {
-            initial: { opacity: 1, y: 0 },
-            whileInView: { opacity: 1, y: 0 },
-            viewport: { once: false, amount: 0.7 },
-            transition: { duration: 0.6, ease: "easeOut" },
-          }
+          initial: { opacity: 1, y: 0 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: false, amount: 0.7 },
+          transition: { duration: 0.6, ease: "easeOut" },
+        }
         : {
-            initial: false,
-            animate: false,
-          })}
+          initial: false,
+          animate: false,
+        })}
     >
       {children}
 
