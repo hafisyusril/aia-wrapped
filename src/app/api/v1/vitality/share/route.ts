@@ -17,12 +17,14 @@ export async function POST(req: Request) {
       keepalive: true,
     });
 
-    let data: any = null;
-    try {
-      data = await res.json();
-    } catch {}
+    const contentType = res.headers.get("content-type");
+    const data = contentType?.includes("application/json")
+      ? await res.json()
+      : null;
 
-    return NextResponse.json(data ?? { success: true }, { status: res.status });
+    return NextResponse.json(data ?? { success: true }, {
+      status: res.status,
+    });
   } catch (err) {
     console.error("Share proxy error:", err);
     return NextResponse.json(

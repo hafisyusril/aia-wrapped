@@ -206,8 +206,6 @@ export default function Home() {
 
   const displayedSections = (userData || isDummyUser) ? sections : [sections[0]];
 
-
-
   return (
     <MusicProvider playMusic={play}>
       <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
