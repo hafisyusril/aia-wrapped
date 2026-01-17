@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, context: { params?: { id?: string } }) {
+export async function GET(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = (await context.params) as { id: string };
+    const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
@@ -25,7 +28,7 @@ export async function GET(req: Request, context: { params?: { id?: string } }) {
       let errorBody: any = null;
       try {
         errorBody = await res.json();
-      } catch {}
+      } catch { }
 
       return NextResponse.json(
         {
