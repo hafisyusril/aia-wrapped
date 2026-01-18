@@ -79,7 +79,7 @@ export default function WeeklyChallengeCard({
       <div className={`px-6 py-12 ${headerBackground} relative z-30`}>
         <div className="text-white">
           <p className="text-lg font-medium mb-2">
-            Your rewards radar:
+            Total rewards redeemed:
           </p>
           <ShareButton onClick={onShare} />
 

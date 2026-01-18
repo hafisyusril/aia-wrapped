@@ -112,11 +112,11 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
         className="z-20"
       />
 
-      <div className={`relative z-10 px-6 py-12 ${headerBackground}`}>
-        <h1 className="text-white text-4xl font-extrabold leading-tight">
+      <div className={`relative z-10 px-6 py-10  ${headerBackground}`}>
+        <h1 className="text-white text-3xl pt-15 leading-tight">
           {titleLine1}
           <br />
-          {titleLine2}
+          <p className="font-extrabold"> {titleLine2}</p>
         </h1>
       </div>
 

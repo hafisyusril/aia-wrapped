@@ -63,7 +63,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         }
         topContent={
           <h1
-            className="text-white text-[50px] font-bold leading-none"
+            className="text-white text-[50px]  font-bold leading-none"
             dangerouslySetInnerHTML={{ __html: config.title }}
           />
         }
@@ -91,7 +91,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               That’s an average of {config.averageText}
             </p>
 
-            <p className="text-[15px] text-black font-light leading-none">
+            <p className="text-[15px] text-black font-light whitespace-pre-line leading-none">
               {config.motivation}
             </p>
           </>
@@ -133,12 +133,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               />
             </div>
 
-            <div className="absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 opacity-80">
-              <img src="/steps/scroll.svg" alt="Scroll" className="w-4 h-4" />
-              <p className="text-xl text-black font-normal tracking-wide">
-                scroll
-              </p>
-            </div>
+          
           </>
         }
       />

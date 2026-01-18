@@ -19,13 +19,13 @@ export const stepsConfig: StepsLevel[] = [
     background: "linear-gradient(to bottom, #0090F2 35%, #FFCFE0 35%)",
     title: "Consistent <br /> Walker",
     averageText: "5.003-7.000 steps each day.",
-    motivation: "Did you walk around the park or walk around the office for meetings?",
+    motivation: "Did you walk around the park or walk around\n the office for meetings?",
   },
   {
     max: 4_600_000,
     background: "linear-gradient(to bottom, #0061EF 35%, #FFA6CA 35%)",
-    title: "Non-Stops <br /> Mover",
+    title: "Non-Stops <br /> Wanderer",
     averageText: "7.003-12.500 steps each day.",
-    motivation: "Do you ever sit down? Your legs deserves a nice massage",
+    motivation: "Do you ever sit down?\n Your legs deserves a nice massage",
   },
 ];
