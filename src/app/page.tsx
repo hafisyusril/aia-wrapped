@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useParams } from "next/navigation";
+
 import { useUserFlow } from "../contexts/UserFlowContext";
 import { useBackgroundMusic } from "./hooks/useBackgroundMusic";
 import { MusicProvider } from "../contexts/MusicContext";
 import PageCaptureWrapper from "../components/PageCaptureWrapper";
-
 import SnapSection from "../components/SnapSection";
 import { logAudit } from "./utils/auditLogger";
+import { decodeVitalityId } from "./utils/vitalityUrl";
 
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
@@ -45,7 +47,11 @@ export default function Home() {
     isDummyUser,
     flowStep,
     vitalityId,
+    setVitalityId,
   } = useUserFlow();
+
+  const params = useParams();
+  const encodedId = params?.slug as string | undefined;
 
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
@@ -75,6 +81,16 @@ export default function Home() {
       ? DUMMY_DATA.vhcStatus
       : userData?.vhcStatus ?? "unchecked",
   };
+
+  useEffect(() => {
+    if (!encodedId) return;
+
+    const decoded = decodeVitalityId(encodedId);
+    if (!decoded) return;
+
+    setVitalityId(decoded);
+    localStorage.setItem("aia-vitality-id", decoded);
+  }, [encodedId, setVitalityId]);
 
   /* =========================
      AUTO SCROLL TO INTRO
