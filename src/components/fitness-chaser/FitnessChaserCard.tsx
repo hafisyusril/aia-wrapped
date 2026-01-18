@@ -62,7 +62,7 @@ export default function FitnessChaserCard({
           </div>
         }
         topContent={
-          <h1 className="font-source text-white text-[48px] whitespace-pre-line leading-none">
+          <h1 className=" font-bold text-white text-[48px] whitespace-pre-line leading-none">
             {config.title}
           </h1>
         }

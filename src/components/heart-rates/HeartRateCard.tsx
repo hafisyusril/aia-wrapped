@@ -30,7 +30,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
       fileName="heart-rate.png"
       ornaments={
         <motion.img
-          src="/heart-rate/abstract-background.svg"
+          src="/heart-rate/abstract-bg.svg"
           className="absolute w-full h-full object-fill overflow-visible opacity-50 z-0"
           alt="ornament"
           initial={{

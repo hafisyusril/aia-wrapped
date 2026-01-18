@@ -9,7 +9,7 @@ export interface FitnessChaserConfig {
 export const FITNESS_CHASER_CONFIG = {
   WARMING_UP: {
     background: "linear-gradient(to bottom, #FC7449 35%, #E1F9E6 35%)",
-    title: "Still\n Warming Up",
+    title: "Casual\nChallenger",
     description:
       "It depends on the week and the mood.\nBut your efforts still counts!",
   },

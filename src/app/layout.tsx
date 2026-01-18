@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Source_Sans_3 } from "next/font/google";
+import { Inter, Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
 import { UserFlowProvider } from "../contexts/UserFlowContext";
@@ -9,6 +9,12 @@ const inter = Inter({
   weight: ['400', '500', '600'],
   variable: "--font-inter",
   display: "swap",
+});
+
+const sourceCode = Source_Code_Pro({
+  subsets: ["latin"],
+  variable: "--font-source-code-pro",
+  weight: ["400", "500", "600"],
 });
 
 const sourceSans = Source_Sans_3({
@@ -48,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${sourceSans.variable} antialiased`}>
+      <body className={`${inter.variable} ${sourceSans.variable} ${sourceCode.variable} antialiased`}>
         <UserFlowProvider>
           {children}
         </UserFlowProvider>
