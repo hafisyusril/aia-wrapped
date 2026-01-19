@@ -63,20 +63,23 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         }
         topContent={
           <h1
-            className="text-white text-[50px] font-source  font-bold leading-none"
+            className="text-white text-[54px] font-source  font-bold leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: config.title }}
           />
         }
         bottomContent={
           <>
-            <p className="text-[20px] text-black">You walked</p>
+            <p className="text-[20px] font-bold font-everest text-black">You walked</p>
 
             {isInView ? (
               <AnimatedCounter
                 target={steps}
                 duration={700}
-                className="text-[50px] text-black font-bold leading-none"
+                className="text-[54px] text-black font-black font-source leading-none"
+                style={{ fontFamily: "var(--font-source-sans)" }}
+
+                
               />
             ) : (
               <h2 className="text-[50px] text-black font-bold leading-none">
@@ -84,15 +87,15 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               </h2>
             )}
 
-            <p className="text-[20px] text-black font-semibold">
+            <p className="text-[24px] text-black mt-5 font-everest font-bold">
               Steps this year.
             </p>
 
-            <p className="mt-3 text-[15px] text-black font-light leading-none">
+            <p className="mt-3 text-[20px] text-black font-light leading-none">
               That’s an average of {config.averageText}
             </p>
 
-            <p className="text-[15px] text-black font-light whitespace-pre-line leading-none">
+            <p className="text-[20px] text-black font-light whitespace-pre-line leading-none">
               {config.motivation}
             </p>
           </>

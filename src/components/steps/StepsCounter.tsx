@@ -6,12 +6,14 @@ interface AnimatedCounterProps {
   target: number;
   duration?: number;
   className?: string;
+  style?: React.CSSProperties; 
 }
 
 export default function AnimatedCounter({
   target,
   duration = 1000,
   className,
+  style,
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -45,7 +47,7 @@ export default function AnimatedCounter({
   }
 
   return (
-    <span className={className}>
+    <span className={className} style={style}>
       {count.toLocaleString("id-ID")}
     </span>
   );

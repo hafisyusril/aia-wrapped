@@ -64,7 +64,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
           viewport={{ once: true }}
           className="h-full flex flex-col pt-5 translate-y-12"
         >
-          <p className="text-white font-semibold text-lg mb-2">
+          <p className="text-white font-semibold text-[20px] mb-2">
             Your exercise vibe:
           </p>
           <img src={config.topImage} className="w-full" alt="" />
@@ -74,7 +74,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
         <motion.img
           src="/heart-rate/red-heart.svg"
           alt="Red Heart"
-          className="absolute bottom-15 right-10 w-37.5 z-10"
+          className="absolute bottom-10 right-10 w-37.5 z-10"
           animate={{ scale: [0.5, 0.8, 0.5] }}
           transition={{
             duration: 1.5,
@@ -94,9 +94,9 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
           viewport={{ once: true }}
-          className="relative text-black translate-y-15"
+          className="relative text-black translate-y-20"
         >
-          <p className="text-2xl font-light">You're mostly doing</p>
+          <p className="text-2xl font-everest font-light">You're mostly doing</p>
           <p className="text-2xl font-medium leading-tight">
             {config.description}
           </p>
@@ -104,7 +104,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
           <div className="mt-10">
-            <p className="text-sm font-medium leading-tight whitespace-pre-line">
+            <p className="text-[20px] font-medium leading-tight whitespace-pre-line">
               {config.motivation}
             </p>
           </div>

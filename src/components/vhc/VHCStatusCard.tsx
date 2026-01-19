@@ -114,22 +114,23 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
           className="text-white font-bold text-3xl pt-15 leading-tight"
           style={{ fontFamily: "var(--font-source-sans)" }}
         >
-          {titleLine1}
-          <br />
-          {titleLine2}
+          <p className="font-medium ">{titleLine1} </p>
+          
+          <p className="font-extrabold text-[54px]">{titleLine2} </p>
         </h1>
       </div>
 
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 gap-6">
+      <div className="relative z-10 flex-1 flex flex-col  justify-center px-6 gap-6">
         <Image
           src={illustrationSrc}
           alt="VHC Illustration"
           width={220}
           height={220}
           priority
+          className="ml-10 "
         />
 
-        <p className={`${textColor} text-lg font-medium `}>
+        <p className={`${textColor} text-2xl font-medium `}>
           {message.split("\n").map((line, index) => (
             <span key={index}>
               {line}

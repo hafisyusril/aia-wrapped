@@ -64,22 +64,24 @@ export default function VitalityRankCard({
         className="relative z-10 flex min-h-screen items-center px-6"
       >
         <div className="flex w-full flex-col py-12">
-          <div className="mb-6 flex items-start justify-between">
-            <h1
-              className="text-4xl font-extrabold font-source leading-tight text-white"
-              style={{ fontFamily: "var(--font-source-sans)" }}
-            >
-              AIA Vitality
-              <br />
-              Member Rank
-            </h1>
+          <div className="mb- flex items-start justify-between">
+            <div className="pt-20">
+              <h1
+                className="text-[32px] font-extrabold font-source leading-tight text-white"
+                style={{ fontFamily: "var(--font-source-sans)" }}
+              >
+                AIA Vitality
+                <br />
+                Member Rank
+              </h1>
+            </div>
 
             <img
               src={theme.trophySrc}
               alt="Trophy"
-              width={120}
+              width={180}
               height={200}
-              className="mt-2 mr-8"
+              className="mt-2 "
             />
           </div>
 
@@ -87,8 +89,9 @@ export default function VitalityRankCard({
 
           <div className="flex flex-col gap-10">
             <div>
-              <p className="text-lg font-medium text-white">General Rank</p>
-              <p className="text-6xl font-extrabold text-white">
+              <p className="text-[20px] font-medium text-white">General Rank</p>
+              <p className="text-[32px] font-extrabold text-white">
+                {/* HASTAG dipisah jadi 32px, ANIMASI ANGKA menjadi 60px */}
                 {isInView ? (
                   <RankCounter key="general-rank" target={generalRank} />
                 ) : (
@@ -98,8 +101,8 @@ export default function VitalityRankCard({
             </div>
 
             <div>
-              <p className="text-lg font-medium text-white">Gender Rank</p>
-              <p className="text-6xl font-extrabold text-white">
+              <p className="text-[20px] font-medium text-white">Gender Rank</p>
+              <p className="text-[58px] font-extrabold text-white">
                 {isInView ? (
                   <RankCounter key="gender-rank" target={genderRank} />
                 ) : (

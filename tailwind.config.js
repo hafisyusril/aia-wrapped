@@ -1,4 +1,3 @@
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -11,6 +10,7 @@ module.exports = {
         sans: ["var(--font-inter)", "sans-serif"],
         source: ["var(--font-source-sans)", "sans-serif"],
         code: ["var(--font-source-code-pro)", "monospace"],
+        everest: ["var(--font-aia-everest)", "sans-serif"],
       },
     },
   },

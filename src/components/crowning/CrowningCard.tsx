@@ -88,34 +88,34 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
       </div>
 
       {/* CONTENT */}
-      <div className="px-6 sm:px-8 pt-10 pb-12">
-        <p className="text-sm sm:text-base text-gray-600 mb-4">
+      <div className="px-6 -translate-y-15 sm:px-8 pt-10 pb-12">
+        <p className="text-[24px] sm:text-base text-gray-600 mb-4">
           Your AIA Vitality Type
         </p>
 
         <p
-          className={`text-2xl sm:text-6xl md:text-7xl font-semibold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }} 
+          className={`text-[50px] sm:text-6xl md:text-7xl font-extrabold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }} 
         >
           {titleLine1}
         </p>
         <p
-          className={`text-5xl sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }}
+          className={`text-[50px] sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }}
         >
           {titleLine2}
         </p>
 
-        <p className="mt-8 text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
+        <p className="mb-10 translate-y-10 text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed whitespace-pre-line">
           {description}
         </p>
       </div>
 
       {/* FOOTER */}
-      <div className="px-6 sm:px-8 pb-10 border-t border-gray-200 pt-6">
+      {/* <div className="px-6 sm:px-8 pb-10 border-t border-gray-200 pt-6">
         <p className="text-xs sm:text-sm text-gray-500">aia-financial.co.id</p>
         <p className="text-xs sm:text-sm text-gray-500 mt-2">
           PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }

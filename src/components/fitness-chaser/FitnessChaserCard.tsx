@@ -65,7 +65,7 @@ export default function FitnessChaserCard({
         }
         topContent={
           <h1
-            className=" font-bold text-white text-[48px] font-source whitespace-pre-line leading-none"
+            className=" font-bold text-white text-[50px] font-source whitespace-pre-line leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {config.title}
@@ -79,7 +79,9 @@ export default function FitnessChaserCard({
               <AnimatedCounter
                 target={totalChallenges}
                 duration={700}
-                className="text-[50px] text-black font-bold leading-none"
+                className="text-[50px] text-black font-bold font-source leading-none"
+                style={{ fontFamily: "var(--font-source-sans)" }}
+
               />
             ) : (
               <h2 className="text-[50px] text-black font-bold leading-none">
@@ -87,7 +89,7 @@ export default function FitnessChaserCard({
               </h2>
             )}
 
-            <p className="text-[25px] text-black font-semibold">
+            <p className="text-[25px] text-black font-everest font-semibold">
               Weekly Challenges!
             </p>
 
