@@ -62,7 +62,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
           viewport={{ once: true }}
-          className="h-full flex flex-col pt-5"
+          className="h-full flex flex-col pt-5 translate-y-12"
         >
           <p className="text-white font-semibold text-lg mb-2">
             Your exercise vibe:
@@ -75,7 +75,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
           src="/heart-rate/red-heart.svg"
           alt="Red Heart"
           className="absolute bottom-15 right-10 w-37.5 z-10"
-          animate={{ scale: [0.5, 1, 0.5] }}
+          animate={{ scale: [0.5, 0.8, 0.5] }}
           transition={{
             duration: 1.5,
             repeat: Infinity,
@@ -94,7 +94,7 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
             ease: [0.22, 1, 0.36, 1],
           }}
           viewport={{ once: true }}
-          className="relative text-black mt-10"
+          className="relative text-black translate-y-15"
         >
           <p className="text-2xl font-light">You're mostly doing</p>
           <p className="text-2xl font-medium leading-tight">
@@ -103,8 +103,8 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
           {config.showExerciseText && (
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
-          <div className="mt-5">
-            <p className="text-md font-medium leading-tight whitespace-pre-line">
+          <div className="mt-10">
+            <p className="text-sm font-medium leading-tight whitespace-pre-line">
               {config.motivation}
             </p>
           </div>
