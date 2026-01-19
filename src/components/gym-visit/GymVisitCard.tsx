@@ -9,7 +9,7 @@ import { useInView } from "@/src/app/hooks/useInView";
 
 interface GymVisitCardProps {
   counter: number;
-  onShare: () => void
+  onShare: () => void;
 }
 
 export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
@@ -98,6 +98,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         topContent={
           <h1
             className="text-white text-[45px] font-bold leading-none"
+            style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: title }}
           />
         }

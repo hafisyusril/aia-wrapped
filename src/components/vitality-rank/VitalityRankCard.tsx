@@ -15,7 +15,7 @@ interface VitalityRankCardProps {
 export default function VitalityRankCard({
   generalRank,
   genderRank,
-  onShare
+  onShare,
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
@@ -65,7 +65,10 @@ export default function VitalityRankCard({
       >
         <div className="flex w-full flex-col py-12">
           <div className="mb-6 flex items-start justify-between">
-            <h1 className="text-4xl font-extrabold leading-tight text-white">
+            <h1
+              className="text-4xl font-extrabold font-source leading-tight text-white"
+              style={{ fontFamily: "var(--font-source-sans)" }}
+            >
               AIA Vitality
               <br />
               Member Rank

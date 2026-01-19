@@ -57,7 +57,7 @@ const SparkleStar = ({ size, top, left, delay }: SparkleStarProps) => (
 
 interface VHCStatusCardProps {
   status: VHCStatus;
-  onShare?: () => void
+  onShare?: () => void;
 }
 
 const STAR_COUNT = 14;
@@ -107,16 +107,16 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
         ))}
       </div>
 
-      <ShareButton
-        onClick={onShare}
-        className="z-20"
-      />
+      <ShareButton onClick={onShare} className="z-20" />
 
       <div className={`relative z-10 px-6 py-10  ${headerBackground}`}>
-        <h1 className="text-white text-3xl pt-15 leading-tight">
+        <h1
+          className="text-white font-bold text-3xl pt-15 leading-tight"
+          style={{ fontFamily: "var(--font-source-sans)" }}
+        >
           {titleLine1}
           <br />
-          <p className="font-extrabold"> {titleLine2}</p>
+          {titleLine2}
         </h1>
       </div>
 
@@ -129,7 +129,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
           priority
         />
 
-        <p className={`${textColor} text-lg font-medium text-center`}>
+        <p className={`${textColor} text-lg font-medium `}>
           {message.split("\n").map((line, index) => (
             <span key={index}>
               {line}

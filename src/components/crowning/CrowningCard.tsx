@@ -94,12 +94,12 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
         </p>
 
         <p
-          className={`text-2xl sm:text-6xl md:text-7xl font-bold ${themeColor} leading-none`}
+          className={`text-2xl sm:text-6xl md:text-7xl font-semibold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }} 
         >
           {titleLine1}
         </p>
         <p
-          className={`mt-3 text-5xl sm:text-6xl md:text-7xl font-bold ${themeColor} leading-none`}
+          className={`text-5xl sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none`} style={{ fontFamily: "var(--font-source-sans)" }}
         >
           {titleLine2}
         </p>

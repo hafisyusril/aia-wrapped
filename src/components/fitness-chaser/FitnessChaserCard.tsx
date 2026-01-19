@@ -9,17 +9,18 @@ import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
 
 interface FitnessChaserCardProps {
   totalChallenges: number;
-  onShare?: () => void
+  onShare?: () => void;
 }
 
 export default function FitnessChaserCard({
-  totalChallenges, onShare
+  totalChallenges,
+  onShare,
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getFitnessChaserConfig(totalChallenges);
 
   return (
-    <div ref={ref} >
+    <div ref={ref}>
       <MobileCardFrame
         background={config.background}
         fileName="fitness-chaser.png"
@@ -35,8 +36,9 @@ export default function FitnessChaserCard({
                   key={i}
                   src="/fitness-chaser/oval.svg"
                   alt=""
-                  className={`flex-1 w-full object-cover transform-gpu ${fromRight ? "origin-right" : "origin-left"
-                    }`}
+                  className={`flex-1 w-full object-cover transform-gpu ${
+                    fromRight ? "origin-right" : "origin-left"
+                  }`}
                   initial={{
                     scaleX: 0,
                     opacity: 0,
@@ -62,7 +64,10 @@ export default function FitnessChaserCard({
           </div>
         }
         topContent={
-          <h1 className=" font-bold text-white text-[48px] whitespace-pre-line leading-none">
+          <h1
+            className=" font-bold text-white text-[48px] font-source whitespace-pre-line leading-none"
+            style={{ fontFamily: "var(--font-source-sans)" }}
+          >
             {config.title}
           </h1>
         }

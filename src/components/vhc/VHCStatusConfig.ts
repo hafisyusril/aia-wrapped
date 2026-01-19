@@ -13,7 +13,7 @@ export interface VHCStatusLevel {
 export const vhcStatusConfig: VHCStatusLevel[] = [
   {
     status: "checked",
-    title: "AIA Vitality Health Check:\Completed ",
+    title: "AIA Vitality Health Check:\nCompleted ",
     background: "bg-pink-300",
     headerBackground: "bg-red-600",
     illustrationSrc: "/vhc/checked.svg",

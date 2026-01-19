@@ -8,7 +8,7 @@ import { getStepsConfig } from "./stepsUtils";
 
 interface StepsCardProps {
   steps: number;
-  onShare?: () => void
+  onShare?: () => void;
 }
 
 export default function StepsCard({ steps, onShare }: StepsCardProps) {
@@ -63,7 +63,8 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         }
         topContent={
           <h1
-            className="text-white text-[50px]  font-bold leading-none"
+            className="text-white text-[50px] font-source  font-bold leading-none"
+            style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: config.title }}
           />
         }
@@ -122,7 +123,6 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
                 variants={rightShoe}
                 transition={{
                   ...walkTransition,
-
                 }}
               />
 
@@ -132,8 +132,6 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
                 className="absolute bottom-0 right-0 w-[50%] max-w-55 h-auto object-contain"
               />
             </div>
-
-          
           </>
         }
       />
