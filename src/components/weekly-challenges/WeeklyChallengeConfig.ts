@@ -19,12 +19,11 @@ export const weeklyChallengeConfig: WeeklyChallengeLevel[] = [
     illustrationSrc: "/weekly-challenge/person_illustration.svg",
     coinSrc: "/weekly-challenge/coin.svg",
     currency: "Rp",
-    title: "rewards redeemed!",
+    title: "living healthier feels good\nfor your body and your wallet",
     message: [
-      "Living healthier feels good",
-      "for your body and your wallet.",
+      
       "",
-      "Your favorite reward: <strong>Tokopedia</strong>",
+      "Your favorite reward:\n <strong>Tokopedia</strong>",
     ],
   },
 ];

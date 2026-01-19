@@ -81,31 +81,43 @@ export default function WeeklyChallengeCard({
       <div className={`px-6 py-12 ${headerBackground} relative z-30`}>
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-lg font-medium">
+            <p className="text-[20px] font-everest font-medium">
               Total rewards redeemed:
             </p>
             <ShareButton onClick={onShare} />
           </div>
 
           <div className="flex items-end space-x-2 mt-6">
-            <p className="text-lg font-medium">{currency}</p>
-            <h1 className="text-5xl font-extrabold leading-tight">
+            <div className="flex items-end space-x-1">
+              <span
+                className="text-[40px] font-extrabold font-source leading-none "
+                style={{ fontFamily: "var(--font-source-sans)" }}
+              >
+                {currency}
+              </span>
+
               {mounted && isInView ? (
-                <AnimatedCounter target={totalReward} duration={900} />
+                <AnimatedCounter
+                  key={totalReward}
+                  target={totalReward}
+                  duration={900}
+                  className="text-[62px] font-extrabold leading-none font-source"
+                  style={{ fontFamily: "var(--font-source-sans)" }}
+                />
               ) : (
-                formatCurrency(0)
+                <span className="text-[62px] font-extrabold leading-none">
+                  0
+                </span>
               )}
-            </h1>
+            </div>
           </div>
 
-          <p className="mt-3 text-xl font-medium">
-            {title}
-          </p>
+          <p className="text-xl font-medium whitespace-pre-line">{title}</p>
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-between px-6 py-8 relative z-30">
-        <p className="text-black text-lg font-medium leading-relaxed">
+      <div className="flex-1 flex flex-col justify-between px-6 py-0 relative z-30">
+        <p className="text-black text-[20px] font-medium leading-relaxed whitespace-pre-line">
           {message.map((line, index) => (
             <span
               key={index}

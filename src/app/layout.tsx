@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Source_Code_Pro, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
 import { UserFlowProvider } from "../contexts/UserFlowContext";
 
@@ -23,6 +24,19 @@ const sourceSans = Source_Sans_3({
   weight: ["400", "600", "700"],
   display: "swap",
 });
+
+export const aiaEverest = localFont({
+  src: [
+    {
+      path: "../fonts/AIAEverest-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+  ],
+  variable: "--font-aia-everest",
+  display: "swap",
+});
+
 
 export const metadata: Metadata = {
   title: "AIA Vitality Wrapped",
@@ -54,7 +68,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} ${sourceSans.variable} ${sourceCode.variable} antialiased`}>
+      <body className={`font-sans ${inter.variable} ${sourceSans.variable} ${sourceCode.variable} ${aiaEverest.variable} antialiased`}>
         <UserFlowProvider>
           {children}
         </UserFlowProvider>

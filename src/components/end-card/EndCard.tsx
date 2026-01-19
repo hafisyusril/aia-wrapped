@@ -46,7 +46,7 @@ export default function EndCard({
           </p>
 
           <p className="mt-4 font-semibold leading-snug">
-            Special perks for the first 200 members only:
+            Special perks for the first 200 members only until 6 February 2026!:
           </p>
         </div>
       </div>
@@ -54,7 +54,7 @@ export default function EndCard({
       {/* ===== BOTTOM CONTENT (WHITE AREA) ===== */}
       <div className="relative flex flex-col justify-start px-7.5 pt-6 pb-28 text-gray-900 z-20">
         <p className="font-light mb-6">
-          Share your AIA Vitality Wrapped in social media and get:
+          Share your AIA Vitality Wrapped in social media, tag @AIAIndonesia and get:
         </p>
         <div className="flex flex-col items-start gap-3">
           <div className="inline-flex items-center gap-2 border border-[#E60041] rounded-2xl px-4 py-1 text-sm">

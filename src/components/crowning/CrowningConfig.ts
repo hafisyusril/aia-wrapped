@@ -80,7 +80,7 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "challenger",
-    titleLine1: "Unstoppable",
+    titleLine1: "The Unstoppable",
     titleLine2: "Athlete",
     description: "You exercise almost everyday. Great! But, are you okay?",
     themeColor: "text-[#2563EB]", // blue
@@ -97,10 +97,10 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "athlete",
-    titleLine1: "Legendary",
+    titleLine1: "The Legendary",
     titleLine2: "Champion",
     description:
-      "You pushed yourself to the max! Are you training for the Olympics?",
+      "Maximum efforts, minimum excuses.\n Olympian-consistency, runs in your blood",
     themeColor: "text-[#E11D48]", // red
     illustrationSrc: "/crowning/man-thropy.svg",
     sparkleSvg: "/crowning/sparkle-athlete.svg",
