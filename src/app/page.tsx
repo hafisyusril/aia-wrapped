@@ -58,9 +58,6 @@ export default function Home() {
   const introRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
 
-  /* =========================
-     DATA NORMALIZATION
-  ========================== */
   const data = {
     steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
     level: isDummyUser ? DUMMY_DATA.level : userData?.level ?? "light",
@@ -84,17 +81,12 @@ export default function Home() {
 
   useEffect(() => {
     if (!encodedId) return;
-
     const decoded = decodeVitalityId(encodedId);
     if (!decoded) return;
-
     setVitalityId(decoded);
     localStorage.setItem("aia-vitality-id", decoded);
   }, [encodedId, setVitalityId]);
 
-  /* =========================
-     AUTO SCROLL TO INTRO
-  ========================== */
   useEffect(() => {
     if (flowStep === "intro") {
       introRef.current?.scrollIntoView({
@@ -104,9 +96,6 @@ export default function Home() {
     }
   }, [flowStep]);
 
-  /* =========================
-     AUDIT LOG
-  ========================== */
   const handleSectionVisible = (sectionName: string) => {
     const id = vitalityId || localStorage.getItem("aia-vitality-id");
     if (id) {
@@ -114,9 +103,6 @@ export default function Home() {
     }
   };
 
-  /* =========================
-     SCROLL UP HANDLER
-  ========================== */
   const scrollPrev = (currentIndex: number) => {
     if (currentIndex <= 0) return;
     sectionRefs.current[currentIndex - 1]?.scrollIntoView({
@@ -125,19 +111,15 @@ export default function Home() {
     });
   };
 
-  /* =========================
-     SECTIONS (INPUT TERKUNCI)
-  ========================== */
+  const activities = userData?.activities;
+
   const sections: SectionItem[] = [
-    // 🔒 INPUT HANYA MUNCUL SAAT flowStep === "input"
-    ...(flowStep === "input"
-      ? [
-        {
-          name: "Input ID",
-          content: <InputVitalityCard />,
-        },
-      ]
-      : []),
+    flowStep === "input"
+      ? {
+        name: "Input ID",
+        content: <InputVitalityCard />,
+      }
+      : null,
 
     {
       name: "Intro",
@@ -148,7 +130,7 @@ export default function Home() {
       ),
     },
 
-    data.vhcStatus === "checked"
+    activities?.vhc && data.vhcStatus === "checked"
       ? {
         name: "VHC Status",
         content: (
@@ -161,38 +143,50 @@ export default function Home() {
       }
       : null,
 
-    {
-      name: "Steps",
-      content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
-          {({ onShare }) => (
-            <StepsCard steps={data.steps} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    activities?.steps
+      ? {
+        name: "Steps",
+        content: (
+          <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+            {({ onShare }) => (
+              <StepsCard steps={data.steps} onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
 
-    {
-      name: "Heart Rate",
-      content: (
-        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
-          {({ onShare }) => (
-            <HeartRateCard level={data.level} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    activities?.heartRate
+      ? {
+        name: "Heart Rate",
+        content: (
+          <PageCaptureWrapper
+            fileName="heart-rate-card.png"
+            pageName="Heart Rate"
+          >
+            {({ onShare }) => (
+              <HeartRateCard level={data.level} onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
 
-    {
-      name: "Gym Visit",
-      content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => (
-            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    activities?.gymVisit
+      ? {
+        name: "Gym Visit",
+        content: (
+          <PageCaptureWrapper
+            fileName="gym-visit-card.png"
+            pageName="Gym Visit"
+          >
+            {({ onShare }) => (
+              <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
 
     {
       name: "Fitness Chaser",
@@ -211,24 +205,26 @@ export default function Home() {
       ),
     },
 
-    {
-      name: "Weekly Challenge",
-      content: (
-        <PageCaptureWrapper
-          fileName="weekly-challenge.png"
-          pageName="Weekly Challenge"
-        >
-          {({ onShare }) => (
-            <WeeklyChallengeCard
-              totalReward={data.totalReward}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    activities?.weeklyChallenge
+      ? {
+        name: "Weekly Challenge",
+        content: (
+          <PageCaptureWrapper
+            fileName="weekly-challenge.png"
+            pageName="Weekly Challenge"
+          >
+            {({ onShare }) => (
+              <WeeklyChallengeCard
+                totalReward={data.totalReward}
+                onShare={onShare}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
 
-    data.vhcStatus === "unchecked"
+    activities?.vhc && data.vhcStatus === "unchecked"
       ? {
         name: "VHC Status",
         content: (
@@ -241,20 +237,25 @@ export default function Home() {
       }
       : null,
 
-    {
-      name: "Vitality Rank",
-      content: (
-        <PageCaptureWrapper fileName="vitality-rank.png" pageName="Vitality Rank">
-          {({ onShare }) => (
-            <VitalityRankCard
-              genderRank={data.genderRank}
-              generalRank={data.generalRank}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    activities?.rank
+      ? {
+        name: "Vitality Rank",
+        content: (
+          <PageCaptureWrapper
+            fileName="vitality-rank.png"
+            pageName="Vitality Rank"
+          >
+            {({ onShare }) => (
+              <VitalityRankCard
+                genderRank={data.genderRank}
+                generalRank={data.generalRank}
+                onShare={onShare}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      }
+      : null,
 
     {
       name: "Crowning",
@@ -273,9 +274,6 @@ export default function Home() {
     },
   ].filter(Boolean) as SectionItem[];
 
-  /* =========================
-     RENDER
-  ========================== */
   return (
     <MusicProvider playMusic={play}>
       <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
