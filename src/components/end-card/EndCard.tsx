@@ -15,7 +15,7 @@ export default function EndCard({
   return (
     <div
       className="
-        relative grid min-h-svh w-full max-w-[430px] mx-auto
+        relative grid min-h-screen w-full max-w-[430px] mx-auto
         grid-rows-[35%_65%]
         overflow-hidden font-sans
       "
@@ -23,50 +23,39 @@ export default function EndCard({
         background: "linear-gradient(to bottom, #E60041 35%, #ffffff 35%)",
       }}
     >
-      {/* ===== SHARE SAFE AREA ===== */}
-      {/* (optional kalau nanti mau capture) */}
-
-      {/* ===== LOGO (OUTSIDE CONTENT) ===== */}
+      {/* ===== LOGO ===== */}
       <div className="absolute top-8 left-7.5 z-30">
         <Image
           src="/end-card/aia-logo-white.svg"
           alt="AIA Wrapped"
-          width={120}
+          width={60}
           height={32}
           priority
         />
       </div>
 
       {/* ===== TOP CONTENT (RED AREA) ===== */}
-      <div
-        className="
-          relative flex flex-col justify-end
-          px-7.5 pb-6 text-white z-20
-        "
-      >
-        <h1 className="text-4xl font-black leading-none">Thank you</h1>
+      <div className="relative flex flex-col justify-end px-7.5 pb-6 text-white z-20">
+        <h1 className="text-4xl font-black leading-none">
+          Thank you
+        </h1>
 
-        <div className="text-base text-white">
+        <div className="text-base text-white mt-2">
           <p className="leading-snug">
-            for living healthier life with us in 2025.
+            for living a healthier life with us in 2025.
           </p>
-          <p className="mt-5 leading-snug">
-            here's to another year of wellness together!
+
+          <p className="mt-4 font-semibold leading-snug">
+            Special perks for the first 200 members only:
           </p>
         </div>
       </div>
 
       {/* ===== BOTTOM CONTENT (WHITE AREA) ===== */}
-      <div
-        className="
-          relative flex flex-col justify-start
-          px-7.5 pt-6 pb-28 text-gray-900 z-20
-        "
-      >
+      <div className="relative flex flex-col justify-start px-7.5 pt-6 pb-28 text-gray-900 z-20">
         <p className="font-light mb-6">
-          Share your AIA Vitality Wrapped and get:
+          Share your AIA Vitality Wrapped in social media and get:
         </p>
-
         <div className="flex flex-col items-start gap-3">
           <div className="inline-flex items-center gap-2 border border-[#E60041] rounded-2xl px-4 py-1 text-sm">
             <img
@@ -75,7 +64,7 @@ export default function EndCard({
               alt=""
             />
             <span className="leading-none whitespace-nowrap">
-              100 AIA Vitality Points
+              50 AIA Vitality Points
             </span>
           </div>
 
@@ -86,7 +75,7 @@ export default function EndCard({
               alt=""
             />
             <span className="leading-none whitespace-nowrap">
-              2 Kopi Kenangan Vouchers
+              Kopi Kenangan vouchers Rp 50.000
             </span>
           </div>
         </div>
@@ -102,19 +91,19 @@ export default function EndCard({
         />
       </div>
 
-      <div className="absolute bottom-4 right-0 z-10 w-70 h-70 ">
+      <div className="absolute bottom-4 right-0 z-10 w-56 h-56">
         {/* Man with ticket */}
         <img
           src="/end-card/man-with-ticket.svg"
           alt=""
-          className="absolute bottom-0 right-2 w-full h-full object-contain z-20"
+          className="absolute bottom-0 right-1 w-full h-full object-contain z-20"
         />
 
         {/* Mobile phone (layer depan) */}
         <img
           src="/end-card/mobile-phone.svg"
           alt=""
-          className="absolute bottom-0 right-0 w-40 h-45 object-contain z-10"
+          className="absolute bottom-0 right-0 w-32 h-36 object-contain z-10"
         />
       </div>
     </div>

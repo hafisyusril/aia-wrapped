@@ -90,7 +90,7 @@ export default function CrowningCard({ type, onShare }: CrowningCardProps) {
       {/* CONTENT */}
       <div className="px-6 sm:px-8 pt-10 pb-12">
         <p className="text-sm sm:text-base text-gray-600 mb-4">
-          Your Vitality Type
+          Your AIA Vitality Type
         </p>
 
         <p

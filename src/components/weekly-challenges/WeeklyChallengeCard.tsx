@@ -27,7 +27,8 @@ const coinVariants = {
 };
 
 export default function WeeklyChallengeCard({
-  totalReward, onShare
+  totalReward,
+  onShare,
 }: WeeklyChallengeCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [mounted, setMounted] = useState(false);
@@ -76,29 +77,17 @@ export default function WeeklyChallengeCard({
           ))}
         </div>
       )}
+
       <div className={`px-6 py-12 ${headerBackground} relative z-30`}>
         <div className="text-white">
-          <p className="text-lg font-medium mb-2">
-            Total rewards redeemed:
-          </p>
-          <ShareButton onClick={onShare} />
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-lg font-medium">
+              Total rewards redeemed:
+            </p>
+            <ShareButton onClick={onShare} />
+          </div>
 
-          <motion.div
-            className="inline-block bg-white text-red-600 font-extrabold px-4 py-1 mb-4 text-4xl"
-            initial={{ scale: 0, rotate: -180, opacity: 0 }}
-            animate={
-              mounted && isInView
-                ? { scale: 1, rotate: -4, opacity: 1 }
-                : { scale: 0, rotate: -180, opacity: 0 }
-            }
-            transition={{
-              duration: 0.9,
-              ease: [0.34, 1.56, 0.64, 1],
-            }}
-          >
-            ALWAYS ON
-          </motion.div>
-          <div className="flex items-end space-x-2 mt-4">
+          <div className="flex items-end space-x-2 mt-6">
             <p className="text-lg font-medium">{currency}</p>
             <h1 className="text-5xl font-extrabold leading-tight">
               {mounted && isInView ? (
@@ -109,11 +98,12 @@ export default function WeeklyChallengeCard({
             </h1>
           </div>
 
-          <p className="mt-2 text-xl font-medium">
+          <p className="mt-3 text-xl font-medium">
             {title}
           </p>
         </div>
       </div>
+
       <div className="flex-1 flex flex-col justify-between px-6 py-8 relative z-30">
         <p className="text-black text-lg font-medium leading-relaxed">
           {message.map((line, index) => (

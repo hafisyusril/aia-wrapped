@@ -73,20 +73,8 @@ function HeaderContent() {
 function CenterFrame() {
   return (
     <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-      <div className="relative w-full max-w-72 aspect-3/5 h-[50svh] translate-y-30">
-        {/* FRAME */}
-        <div className="relative w-full h-full border border-[rgba(211,17,69,1)]">
-          {/* DOTS */}
-          <span className="dot -top-2 -left-2" />
-          <span className="dot -top-2 -right-2" />
-          <span className="dot -bottom-2 -left-2" />
-          <span className="dot -bottom-2 -right-2" />
-
-          {/* CONTENT */}
-          <div className="relative w-full h-full overflow-hidden flex justify-center">
-            <Artboard />
-          </div>
-        </div>
+      <div className="relative translate-y-48">
+        <Artboard />
       </div>
     </div>
   );
@@ -97,39 +85,57 @@ function Artboard() {
     <div
       className="
         relative
-        w-[340px]
-        h-[450px]
         origin-top
         scale-[0.75]
         min-[390px]:scale-[0.85]
         min-[430px]:scale-100
       "
     >
-      <img
-        src="/heart-rate/red-heart.svg"
-        className="absolute top-2 right-3 w-25 rotate-20"
-      />
-      <img
-        src="/reward-redeem/women-gold.svg"
-        className="absolute left-1 top-1 w-50 h-60"
-      />
-      <img
-        src="/gym-visit/gym-visit-deadlift.svg"
-        className="absolute bottom-4 left-1 w-50"
-      />
-      <img
-        src="/reward-redeem/gold-coin.svg"
-        className="absolute bottom-15 left-1 w-23"
-      />
-      <img
-        src="/intro/check-inside-love.svg"
-        className="absolute top-1 right-30 w-20"
-      />
-      <img
-        src="/intro/wrapped-woman-red.svg"
-        className="absolute bottom-4 right-1 w-42"
-      />
-      <img src="/intro/shoe.svg" className="absolute top-40 right-0 w-35" />
+      {/* ===== WHITE CANVAS + FRAME ===== */}
+      <div className="relative w-[300px] h-[450px] bg-white border border-[rgba(211,17,69,1)]">
+        {/* DOTS */}
+        <span className="dot absolute -top-2 -left-2" />
+        <span className="dot absolute -top-2 -right-2" />
+        <span className="dot absolute -bottom-2 -left-2" />
+        <span className="dot absolute -bottom-2 -right-2" />
+
+        {/* ===== ILLUSTRATIONS ===== */}
+        <img
+          src="/heart-rate/red-heart.svg"
+          className="absolute top-10 right-3 w-20 rotate-20"
+          alt=""
+        />
+        <img
+          src="/reward-redeem/women-gold.svg"
+          className="absolute left-1 top-1 w-50 h-60"
+          alt=""
+        />
+        <img
+          src="/gym-visit/gym-visit-deadlift.svg"
+          className="absolute bottom-4 left-1 w-50"
+          alt=""
+        />
+        <img
+          src="/reward-redeem/gold-coin.svg"
+          className="absolute bottom-15 left-1 w-23"
+          alt=""
+        />
+        <img
+          src="/intro/check-inside-love.svg"
+          className="absolute top-10 right-22 w-15"
+          alt=""
+        />
+        <img
+          src="/intro/wrapped-woman-red.svg"
+          className="absolute bottom-4 right-1 w-42"
+          alt=""
+        />
+        <img
+          src="/intro/shoe.svg"
+          className="absolute top-40 right-0 w-35"
+          alt=""
+        />
+      </div>
     </div>
   );
 }
