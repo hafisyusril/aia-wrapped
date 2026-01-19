@@ -7,14 +7,24 @@ type FlowStep = "input" | "intro" | "content";
 
 interface UserData {
   vhcStatus: "checked" | "unchecked";
-  steps: number;
-  level: HeartRateLevel;
-  gymVisit: number;
-  weeklyChallenges: number;
-  totalReward: number;
-  generalRank: number;
-  genderRank: number;
+  steps?: number;
+  level?: HeartRateLevel;
+  gymVisit?: number;
+  weeklyChallenges?: number;
+  totalReward?: number;
+  generalRank?: number;
+  genderRank?: number;
+  activities: {
+    steps: boolean;
+    heartRate: boolean;
+    gymVisit: boolean;
+    weeklyChallenge: boolean;
+    reward: boolean;
+    rank: boolean;
+    vhc: boolean;
+  };
 }
+
 
 interface UserFlowContextProps {
   isDummyUser: boolean;
@@ -69,14 +79,33 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       // Map API response to UserData
       const userData: UserData = {
         vhcStatus: apiData.vhc === "Yes" ? "checked" : "unchecked",
-        steps: Number(apiData.steps || 0),
-        level: (apiData.heart_rate ? apiData.heart_rate.toLowerCase() : "light") as HeartRateLevel,
-        gymVisit: Number(apiData.gym_visit || 0),
-        weeklyChallenges: Number(apiData.weekly_challenge_completion || 0),
-        totalReward: Number(apiData.total_rewards_earned || 0),
-        generalRank: Number(apiData.rank || 0),
-        genderRank: Number(apiData.rank_by_gender || 0),
+        steps: apiData.steps ? Number(apiData.steps) : undefined,
+        level: apiData.heart_rate
+          ? (apiData.heart_rate.toLowerCase() as HeartRateLevel)
+          : undefined,
+        gymVisit: apiData.gym_visit ? Number(apiData.gym_visit) : undefined,
+        weeklyChallenges: apiData.weekly_challenge_completion
+          ? Number(apiData.weekly_challenge_completion)
+          : undefined,
+        totalReward: apiData.total_rewards_earned
+          ? Number(apiData.total_rewards_earned)
+          : undefined,
+        generalRank: apiData.rank ? Number(apiData.rank) : undefined,
+        genderRank: apiData.rank_by_gender
+          ? Number(apiData.rank_by_gender)
+          : undefined,
+
+        activities: {
+          steps: !!apiData.steps,
+          heartRate: !!apiData.heart_rate,
+          gymVisit: !!apiData.gym_visit,
+          weeklyChallenge: !!apiData.weekly_challenge_completion,
+          reward: !!apiData.total_rewards_earned,
+          rank: !!apiData.rank,
+          vhc: !!apiData.vhc,
+        },
       };
+
 
       setUserData(userData);
       setIsDummyUser(false);
