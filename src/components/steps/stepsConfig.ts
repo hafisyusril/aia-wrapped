@@ -24,7 +24,7 @@ export const stepsConfig: StepsLevel[] = [
   {
     max: 4_600_000,
     background: "linear-gradient(to bottom, #0061EF 35%, #FFA6CA 35%)",
-    title: "Non-Stops <br /> Wanderer",
+    title: "Non-Stop <br /> Wanderer",
     averageText: "7.003-12.500 steps each day.",
     motivation: "Do you ever sit down?\n Your legs deserves a nice massage",
   },

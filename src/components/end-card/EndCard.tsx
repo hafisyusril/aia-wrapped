@@ -36,7 +36,7 @@ export default function EndCard({
 
       {/* ===== TOP CONTENT (RED AREA) ===== */}
       <div className="relative flex flex-col justify-end px-7.5 pb-6 text-white z-20">
-        <h1 className="text-4xl font-black leading-none">
+        <h1 className="text-4xl font-bold font-source leading-none" style={{ fontFamily: "var(--font-source-sans)" }}>
           Thank you
         </h1>
 

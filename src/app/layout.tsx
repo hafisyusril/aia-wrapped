@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${sourceSans.variable} ${sourceCode.variable} antialiased`}>
+      <body className={`font-sans ${inter.variable} ${sourceSans.variable} ${sourceCode.variable} antialiased`}>
         <UserFlowProvider>
           {children}
         </UserFlowProvider>
