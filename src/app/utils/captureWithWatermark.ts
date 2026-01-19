@@ -4,28 +4,25 @@ import { toPng } from "html-to-image";
 type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
-  disableWatermark?: boolean; // <--- baru
+  disableWatermark?: boolean;
 };
 
 export async function captureWithWatermark({
   element,
   fileName = "shared-image.png",
-  disableWatermark = false, // <--- default false
+  disableWatermark = false,
 }: CaptureOptions) {
   if (!element) return;
 
-  // 1. Capture DOM → PNG
   const baseImage = await toPng(element, {
     cacheBust: true,
     pixelRatio: 2,
   });
 
-  // 2. Canvas
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  // 3. Base image
   const img = new Image();
   img.src = baseImage;
   await new Promise((res) => (img.onload = res));
@@ -37,8 +34,10 @@ export async function captureWithWatermark({
   // ===== WATERMARK =====
   if (!disableWatermark) {
     const padding = 24;
-    const baseSize = Math.min(canvas.width, canvas.height) * 0.14;
-    const watermarkWidth = Math.max(72, Math.min(baseSize, 160));
+
+    // 🔥 DIBESARKAN
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
+    const watermarkWidth = Math.max(110, Math.min(baseSize, 240));
 
     const isBright = isBrightBackground(ctx, padding, padding);
 
@@ -57,7 +56,6 @@ export async function captureWithWatermark({
     ctx.globalAlpha = 1;
   }
 
-  // 5. Download
   const finalImage = canvas.toDataURL("image/png");
 
   const link = document.createElement("a");
@@ -69,12 +67,11 @@ export async function captureWithWatermark({
   document.body.removeChild(link);
 }
 
-// tetap sama
 function isBrightBackground(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  sampleSize = 20
+  sampleSize = 20,
 ) {
   const imageData = ctx.getImageData(x, y, sampleSize, sampleSize).data;
 
