@@ -29,8 +29,8 @@ export interface CrowningLevel {
 export const crowningConfig: CrowningLevel[] = [
   {
     type: "stretcher",
-    titleLine1: "Certified",
-    titleLine2: "Stretcher",
+    titleLine1: "The Newbie",
+    titleLine2: " ",
     description:
       "Some days you move, some days you wait for motivation. We try again this year!",
     themeColor: "text-[#6EC1E4]", // light blue
@@ -46,8 +46,8 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "starter",
-    titleLine1: "Certified",
-    titleLine2: "Starter",
+    titleLine1: "The Consistent",
+    titleLine2: "Learner",
     description:
       "The most important part: you started. Your fitness era is coming. Right?",
     themeColor: "text-[#FF6A3D]", // orange
@@ -63,8 +63,8 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "active",
-    titleLine1: "Certified",
-    titleLine2: "Active",
+    titleLine1: "The Active",
+    titleLine2: "Mover",
     description:
       "Busy life and yet still making time to move and check your AIA Vitality app. Respect!",
     themeColor: "text-[#7B6CF6]", // purple
@@ -80,8 +80,8 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "challenger",
-    titleLine1: "Certified",
-    titleLine2: "Challenger",
+    titleLine1: "Unstoppable",
+    titleLine2: "Athlete",
     description: "You exercise almost everyday. Great! But, are you okay?",
     themeColor: "text-[#2563EB]", // blue
     illustrationSrc: "/crowning/wheel.svg",
@@ -97,8 +97,8 @@ export const crowningConfig: CrowningLevel[] = [
   },
   {
     type: "athlete",
-    titleLine1: "Certified",
-    titleLine2: "Athlete",
+    titleLine1: "Legendary",
+    titleLine2: "Champion",
     description:
       "You pushed yourself to the max! Are you training for the Olympics?",
     themeColor: "text-[#E11D48]", // red
