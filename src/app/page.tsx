@@ -79,6 +79,17 @@ export default function Home() {
       : userData?.vhcStatus ?? "unchecked",
   };
 
+  const resolvedActivities = isDummyUser
+    ? {
+      steps: true,
+      heartRate: true,
+      gymVisit: true,
+      weeklyChallenge: true,
+      vhc: true,
+      rank: true,
+    }
+    : userData?.activities;
+
   useEffect(() => {
     if (!encodedId) return;
     const decoded = decodeVitalityId(encodedId);
@@ -96,11 +107,21 @@ export default function Home() {
     }
   }, [flowStep]);
 
+  const isLocked = !vitalityId && flowStep === "input";
+
+  if (isLocked) {
+    return (
+      <MusicProvider playMusic={play}>
+        <main className="h-svh overflow-hidden flex items-center justify-center">
+          <InputVitalityCard />
+        </main>
+      </MusicProvider>
+    );
+  }
+
   const handleSectionVisible = (sectionName: string) => {
     const id = vitalityId || localStorage.getItem("aia-vitality-id");
-    if (id) {
-      logAudit(id, sectionName);
-    }
+    if (id) logAudit(id, sectionName);
   };
 
   const scrollPrev = (currentIndex: number) => {
@@ -111,16 +132,7 @@ export default function Home() {
     });
   };
 
-  const activities = userData?.activities;
-
   const sections: SectionItem[] = [
-    flowStep === "input"
-      ? {
-        name: "Input ID",
-        content: <InputVitalityCard />,
-      }
-      : null,
-
     {
       name: "Intro",
       content: (
@@ -130,63 +142,49 @@ export default function Home() {
       ),
     },
 
-    activities?.vhc && data.vhcStatus === "checked"
-      ? {
-        name: "VHC Status",
-        content: (
-          <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
-            {({ onShare }) => (
-              <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.vhc && {
+      name: "VHC Status",
+      content: (
+        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
+          {({ onShare }) => (
+            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-    activities?.steps
-      ? {
-        name: "Steps",
-        content: (
-          <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
-            {({ onShare }) => (
-              <StepsCard steps={data.steps} onShare={onShare} />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.steps && {
+      name: "Steps",
+      content: (
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+          {({ onShare }) => (
+            <StepsCard steps={data.steps} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-    activities?.heartRate
-      ? {
-        name: "Heart Rate",
-        content: (
-          <PageCaptureWrapper
-            fileName="heart-rate-card.png"
-            pageName="Heart Rate"
-          >
-            {({ onShare }) => (
-              <HeartRateCard level={data.level} onShare={onShare} />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate",
+      content: (
+        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
+          {({ onShare }) => (
+            <HeartRateCard level={data.level} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-    activities?.gymVisit
-      ? {
-        name: "Gym Visit",
-        content: (
-          <PageCaptureWrapper
-            fileName="gym-visit-card.png"
-            pageName="Gym Visit"
-          >
-            {({ onShare }) => (
-              <GymVisitCard counter={data.gymVisit} onShare={onShare} />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.gymVisit && {
+      name: "Gym Visit",
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
+          {({ onShare }) => (
+            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     {
       name: "Fitness Chaser",
@@ -205,57 +203,40 @@ export default function Home() {
       ),
     },
 
-    activities?.weeklyChallenge
-      ? {
-        name: "Weekly Challenge",
-        content: (
-          <PageCaptureWrapper
-            fileName="weekly-challenge.png"
-            pageName="Weekly Challenge"
-          >
-            {({ onShare }) => (
-              <WeeklyChallengeCard
-                totalReward={data.totalReward}
-                onShare={onShare}
-              />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.weeklyChallenge && {
+      name: "Weekly Challenge",
+      content: (
+        <PageCaptureWrapper
+          fileName="weekly-challenge.png"
+          pageName="Weekly Challenge"
+        >
+          {({ onShare }) => (
+            <WeeklyChallengeCard
+              totalReward={data.totalReward}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
-    activities?.vhc && data.vhcStatus === "unchecked"
-      ? {
-        name: "VHC Status",
-        content: (
-          <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
-            {({ onShare }) => (
-              <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
-
-    activities?.rank
-      ? {
-        name: "Vitality Rank",
-        content: (
-          <PageCaptureWrapper
-            fileName="vitality-rank.png"
-            pageName="Vitality Rank"
-          >
-            {({ onShare }) => (
-              <VitalityRankCard
-                genderRank={data.genderRank}
-                generalRank={data.generalRank}
-                onShare={onShare}
-              />
-            )}
-          </PageCaptureWrapper>
-        ),
-      }
-      : null,
+    resolvedActivities?.rank && {
+      name: "Vitality Rank",
+      content: (
+        <PageCaptureWrapper
+          fileName="vitality-rank.png"
+          pageName="Vitality Rank"
+        >
+          {({ onShare }) => (
+            <VitalityRankCard
+              genderRank={data.genderRank}
+              generalRank={data.generalRank}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     {
       name: "Crowning",
