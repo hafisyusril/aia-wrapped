@@ -25,7 +25,7 @@ export default function CrowningCard({
     illustrationSrc,
     sparkleSvg,
     sparkles,
-  } = getCrowningByType("active");
+  } = getCrowningByType(type);
 
   const [scope, animate] = useAnimate();
   const inView = useInView(scope, {
