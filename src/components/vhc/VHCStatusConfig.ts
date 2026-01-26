@@ -15,7 +15,7 @@ export const vhcStatusConfig: VHCStatusLevel[] = [
     status: "checked",
     title: "AIA Vitality Health Check:\nCompleted ",
     background: "bg-pink-300",
-    headerBackground: "bg-red-600",
+    headerBackground: "bg-[#EA0F4A]",
     illustrationSrc: "/vhc/checked.svg",
     textColor: "text-black",
     message: "Your future self says thank you!\nLet’s do it again in 2026!",
