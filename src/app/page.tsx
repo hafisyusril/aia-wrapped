@@ -55,6 +55,7 @@ export default function Home() {
 
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
+  const containerRef = useRef<HTMLElement>(null)
   const introRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
 
@@ -137,7 +138,7 @@ export default function Home() {
       name: "Intro",
       content: (
         <div ref={introRef}>
-          <IntroCard />
+          <IntroCard containerRef={containerRef}/>
         </div>
       ),
     },
@@ -257,7 +258,7 @@ export default function Home() {
 
   return (
     <MusicProvider playMusic={play}>
-      <main className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
+      <main ref={containerRef} className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
         {sections.map((section, idx) => {
           const disableScrollUp =
             idx === 0 || idx === sections.length - 1;
