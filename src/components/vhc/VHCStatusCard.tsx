@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useAnimate, animationControls } from "framer-motion";
 import { VHCStatus } from "./VHCStatusConfig";
 import { getVHCStatusContent } from "./VHCStatusUtils";
 import ShareButton from "../ShareButton";
+import VhcIllustration from "./VhcIllustration";
 
 interface SparkleStarProps {
   size: number;
@@ -55,6 +56,17 @@ const SparkleStar = ({ size, top, left, delay }: SparkleStarProps) => (
   </motion.svg>
 );
 
+const curtainAnim = {
+  hidden: { scaleY: 0 },
+  visible: {
+    scaleY: 1,
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1], // smooth premium
+    },
+  },
+};
+
 interface VHCStatusCardProps {
   status: VHCStatus;
   onShare?: () => void;
@@ -89,7 +101,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
         top: Math.random() * 100,
         left: Math.random() * 100,
         delay: Math.random() * 2,
-      })
+      }),
     );
 
     setStars(generatedStars);
@@ -99,7 +111,12 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
 
   return (
     <section
-      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col font-sans overflow-hidden ${background}`}
+      className={`
+    relative grid min-h-dvh grid-rows-[35%_65%]
+    w-full max-w-[430px] mx-auto
+    overflow-hidden font-sans
+    ${background}
+  `}
     >
       <div className="pointer-events-none absolute inset-0 z-0">
         {stars.map((star, i) => (
@@ -109,35 +126,76 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
 
       <ShareButton onClick={onShare} className="z-20" />
 
-      <div className={`relative z-10 px-6 py-10  ${headerBackground}`}>
-        <h1
-          className="text-white font-bold text-3xl pt-15 leading-tight"
-          style={{ fontFamily: "var(--font-source-sans)" }}
-        >
-          <p className="font-medium ">{titleLine1} </p>
-          
-          <p className="font-extrabold text-[54px]">{titleLine2} </p>
-        </h1>
-      </div>
-
-      <div className="relative z-10 flex-1 flex flex-col  justify-center px-6 gap-6">
-        <Image
-          src={illustrationSrc}
-          alt="VHC Illustration"
-          width={220}
-          height={220}
-          priority
-          className="ml-10 "
+      {/* HEADER BACKGROUND — Tirai */}
+        <motion.div
+          className={`${headerBackground} absolute top-0 left-0 w-full origin-bottom`}
+          initial={{ height: "100%" }}
+          whileInView={{ height: "35%" }}
+          viewport={{ once: false, amount: 0.5 }} // false supaya tiap masuk viewport animasi jalan
+          transition={{
+            duration: 2,
+            ease: [0.22, 1, 0.36, 1],
+          }}
         />
 
-        <p className={`${textColor} text-2xl font-medium `}>
+      
+      {/* TOP CONTENT */}
+      <div className="relative z-20 h-full overflow-hidden">
+        
+
+        {/* HEADER CONTENT */}
+        <div className="relative flex h-full flex-col justify-end px-7.5 pb-5">
+          <h1 className="text-white font-bold text-3xl pt-15 leading-tight">
+            <motion.p
+              className="font-medium text-[20px]"
+              initial={{ y: -100, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {titleLine1}
+            </motion.p>
+
+            <motion.p
+              className="font-extrabold text-[54px]"
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+            >
+              {titleLine2}
+            </motion.p>
+          </h1>
+        </div>
+      </div>
+
+      {/* BOTTOM CONTENT */}
+
+      <div className="relative px-7.5 pt-15 z-20 flex flex-col gap-[50px]">
+        <div className="ml-10 w-[220px]">
+          <VhcIllustration />
+        </div>
+
+        {/* MESSAGE */}
+        <div
+          className={`${textColor} text-[20px] font-medium flex flex-col gap-2`}
+        >
           {message.split("\n").map((line, index) => (
-            <span key={index}>
+            <motion.span
+              key={index}
+              initial={{ y: -20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              viewport={{ once: false }} 
+              transition={{
+                duration: 0.8,
+                delay: 1.5, // stagger tiap baris
+                ease: "easeOut",
+              }}
+            >
               {line}
-              <br />
-            </span>
+            </motion.span>
           ))}
-        </p>
+        </div>
       </div>
     </section>
   );
