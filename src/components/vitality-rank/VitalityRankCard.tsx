@@ -90,25 +90,30 @@ export default function VitalityRankCard({
           <div className="flex flex-col gap-10">
             <div>
               <p className="text-[20px] font-medium text-white">General Rank</p>
-              <p className="text-[32px] font-extrabold text-white">
-                {/* HASTAG dipisah jadi 32px, ANIMASI ANGKA menjadi 60px */}
-                {isInView ? (
-                  <RankCounter key="general-rank" target={generalRank} />
-                ) : (
-                  "#0"
-                )}
-              </p>
+              <div className="flex items-start  text-white font-extrabold">
+                <span className="text-[32px] mt-1">#</span>
+                <span className="text-[100px] leading-none font-source" style={{ fontFamily: "var(--font-source-sans)" }}>
+                  {isInView ? (
+                    <RankCounter key="general-rank" target={generalRank}  />
+                  ) : (
+                    "0"
+                  )}
+                </span>
+              </div>
             </div>
 
             <div>
               <p className="text-[20px] font-medium text-white">Gender Rank</p>
-              <p className="text-[58px] font-extrabold text-white">
-                {isInView ? (
-                  <RankCounter key="gender-rank" target={genderRank} />
-                ) : (
-                  "#0"
-                )}
-              </p>
+              <div className="flex items-start text-white font-extrabold">
+                <span className="text-[32px] mt-1">#</span>
+                <span className="text-[100px] leading-none font-source" style={{ fontFamily: "var(--font-source-sans)" }}>
+                  {isInView ? (
+                    <RankCounter key="gender-rank" target={genderRank} />
+                  ) : (
+                    "0"
+                  )}
+                </span>
+              </div>
             </div>
           </div>
         </div>

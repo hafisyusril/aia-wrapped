@@ -33,5 +33,5 @@ export default function RankCounter({
         return () => cancelAnimationFrame(rafId);
     }, [target, duration]);
 
-    return <>#{count.toLocaleString("id-ID")}</>;
+    return <>{count.toLocaleString("id-ID")}</>;
 }
