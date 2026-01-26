@@ -244,7 +244,11 @@ export default function Home() {
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
-            <CrowningCard type="athlete" onShare={onShare} />
+            <CrowningCard
+              type="athlete"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
           )}
         </PageCaptureWrapper>
       ),
