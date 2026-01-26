@@ -65,7 +65,7 @@ export default function FitnessChaserCard({
         }
         topContent={
           <h1
-            className=" font-bold text-white text-[50px] font-source whitespace-pre-line leading-none"
+            className=" font-bold text-white text-[54px] font-source whitespace-pre-line leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {config.title}
