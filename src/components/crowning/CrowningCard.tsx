@@ -22,7 +22,7 @@ export default function CrowningCard({
     titleLine2,
     description,
     themeColor,
-    illustrationSrc,
+    illustrations,
     sparkleSvg,
     sparkles,
   } = getCrowningByType(type);
@@ -51,6 +51,18 @@ export default function CrowningCard({
         { y: "50%", opacity: 1 },
         animationKeyframes,
       );
+      await Promise.all([
+        animate(
+          '[data-animate="img-left"]',
+          { x: "100%", opacity: 1 },
+          animationKeyframes,
+        ),
+        animate(
+          '[data-animate="img-right"]',
+          { x: "-100%", opacity: 1 },
+          animationKeyframes,
+        ),
+      ]);
       await animate(
         '[data-animate="text-label"]',
         { y: "50%", opacity: 1 },
@@ -73,6 +85,16 @@ export default function CrowningCard({
       animate(
         '[data-animate="header"]',
         { y: "-50%", opacity: 0 },
+        animationKeyframes,
+      );
+      animate(
+        '[data-animate="img-left"]',
+        { x: "-100%", opacity: 0 },
+        animationKeyframes,
+      );
+      animate(
+        '[data-animate="img-right"]',
+        { x: "100%", opacity: 0 },
         animationKeyframes,
       );
       animate(
@@ -119,42 +141,47 @@ export default function CrowningCard({
 
       {/* ILLUSTRATION */}
       <div className="relative flex-1 bg-gray-100 flex items-center justify-center overflow-hidden">
-        <img
-          src={illustrationSrc}
-          alt={`${titleLine1} ${titleLine2}`}
-          width={400}
-          height={400}
-          className="object-contain z-10 drop-shadow-lg w-full max-w-sm sm:max-w-md md:max-w-lg px-8"
-        />
-        {/* SPARKLES */}
-        {sparkles.map((s, i) => {
-          const { size, delay, duration, ...position } = s;
+        <div className="w-full aspect-video flex-none relative"></div>
+        {illustrations.map((illustration, i) => (
+          <img
+            data-animate={i ? "img-right" : "img-left"}
+            key={i}
+            src={illustration.src}
+            alt={`${titleLine1} ${titleLine2}`}
+            className={`absolute z-10 ${i ? "translate-x-full" : "-translate-x-full"}`}
+            style={{ inset: illustration.inset, width: illustration.width }}
+          />
+        ))}
+        <motion.div style={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+          {sparkles.map((s, i) => {
+            const { size, delay, duration, ...position } = s;
 
-          return (
-            <motion.img
-              key={i}
-              src={sparkleSvg}
-              alt=""
-              className={`absolute ${size} z-20 pointer-events-none`}
-              style={{
-                ...position,
-                filter: "drop-shadow(0 0 8px rgba(0, 212, 251, 0.9))",
-              }}
-              animate={{
-                scale: [0.6, 1.4, 0.6],
-                opacity: [0.3, 1, 0.3],
-                rotate: [0, 20, -20, 0],
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration,
-                delay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          );
-        })}
+            return (
+              <motion.img
+                key={i}
+                src={sparkleSvg}
+                alt=""
+                className={`absolute ${size} z-20 pointer-events-none`}
+                style={{
+                  ...position,
+                  filter: "drop-shadow(0 0 8px rgba(0, 212, 251, 0.9))",
+                }}
+                animate={{
+                  scale: [0.6, 1.4, 0.6],
+                  opacity: [0.3, 1, 0.3],
+                  rotate: [0, 20, -20, 0],
+                  y: [0, -10, 0],
+                }}
+                transition={{
+                  duration,
+                  delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            );
+          })}
+        </motion.div>
       </div>
 
       {/* CONTENT */}
