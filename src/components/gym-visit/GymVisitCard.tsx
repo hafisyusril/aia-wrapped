@@ -6,6 +6,7 @@ import MobileCardFrame from "../MobileCardFrame";
 import GymDeadliftSvg from "./GymDeadliftSvg";
 import AnimatedCounter from "../steps/StepsCounter";
 import { useInView } from "@/src/app/hooks/useInView";
+import Weightlifter from "./Weightlifter";
 
 interface GymVisitCardProps {
   counter: number;
@@ -87,13 +88,16 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
           </div>
         }
         illustration={
-          <div className="absolute bottom-12 right-0 w-50 h-auto z-10 pointer-events-none">
-            <img
-              src="/gym-visit/deadlift.gif"
-              alt=""
-              className="w-full h-auto"
-            />
+          <div className="absolute bottom-17.5 right-8 z-10 pointer-events-none">
+            <Weightlifter width={154} height={185} />
           </div>
+          // <div className="absolute bottom-12 right-0 w-50 h-auto z-10 pointer-events-none">
+          //   <img
+          //     src="/gym-visit/deadlift.gif"
+          //     alt=""
+          //     className="w-full h-auto"
+          //   />
+          // </div>
         }
         topContent={
           <h1
