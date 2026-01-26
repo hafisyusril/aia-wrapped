@@ -50,10 +50,11 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedId = localStorage.getItem("aia-vitality-id");
-    if (storedId) {
-      setVitalityId(storedId);
-    }
+    // const storedId = localStorage.getItem("aia-vitality-id");
+    // if (storedId) {
+    //   setVitalityId(storedId);
+    // }
+    setVitalityId('VI03391268');
   }, []);
 
   async function setVitalityId(id: string) {

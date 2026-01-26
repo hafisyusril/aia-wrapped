@@ -141,7 +141,7 @@ export default function CrowningCard({
 
       {/* ILLUSTRATION */}
       <div className="relative flex-1 bg-gray-100 flex items-center justify-center overflow-hidden">
-        <div className="w-full aspect-9/1 flex-none relative"></div>
+        <div className="w-full flex-none relative min-h-[200px]"></div>
         {illustrations.map((illustration, i) => (
           <img
             data-animate={i ? "img-right" : "img-left"}

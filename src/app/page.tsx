@@ -110,15 +110,15 @@ export default function Home() {
 
   const isLocked = !vitalityId && flowStep === "input";
 
-  if (isLocked) {
-    return (
-      <MusicProvider playMusic={play}>
-        <main className="h-svh overflow-hidden flex items-center justify-center">
-          <InputVitalityCard />
-        </main>
-      </MusicProvider>
-    );
-  }
+  // if (isLocked) {
+  //   return (
+  //     <MusicProvider playMusic={play}>
+  //       <main className="h-svh overflow-hidden flex items-center justify-center">
+  //         <InputVitalityCard />
+  //       </main>
+  //     </MusicProvider>
+  //   );
+  // }
 
   const handleSectionVisible = (sectionName: string) => {
     const id = vitalityId || localStorage.getItem("aia-vitality-id");
@@ -154,93 +154,95 @@ export default function Home() {
       ),
     },
 
-    resolvedActivities?.steps && {
-      name: "Steps",
-      content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
-          {({ onShare }) => (
-            <StepsCard steps={data.steps} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    // resolvedActivities?.steps && {
+    //   name: "Steps",
+    //   content: (
+    //     <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+    //       {({ onShare }) => (
+    //         <StepsCard steps={data.steps} onShare={onShare} />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
 
-    resolvedActivities?.heartRate && {
-      name: "Heart Rate",
-      content: (
-        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
-          {({ onShare }) => (
-            <HeartRateCard level={data.level} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    // resolvedActivities?.heartRate && {
+    //   name: "Heart Rate",
+    //   content: (
+    //     <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
+    //       {({ onShare }) => (
+    //         <HeartRateCard level={data.level} onShare={onShare} />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
 
-    resolvedActivities?.gymVisit && {
+    // resolvedActivities?.gymVisit && {
+    {
       name: "Gym Visit",
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare }) => (
-            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+            // <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+            <GymVisitCard counter={24} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
+
+    // {
+    //   name: "Fitness Chaser",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="fitness-chaser-card.png"
+    //       pageName="Fitness Chaser"
+    //     >
+    //       {({ onShare }) => (
+    //         <FitnessChaserCard
+    //           totalChallenges={data.weeklyChallenges}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
+
+    // resolvedActivities?.weeklyChallenge && {
+    //   name: "Weekly Challenge",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="weekly-challenge.png"
+    //       pageName="Weekly Challenge"
+    //     >
+    //       {({ onShare }) => (
+    //         <WeeklyChallengeCard
+    //           totalReward={data.totalReward}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
+
+    // resolvedActivities?.rank && {
+    //   name: "Vitality Rank",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="vitality-rank.png"
+    //       pageName="Vitality Rank"
+    //     >
+    //       {({ onShare }) => (
+    //         <VitalityRankCard
+    //           genderRank={data.genderRank}
+    //           generalRank={data.generalRank}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
 
     {
-      name: "Fitness Chaser",
-      content: (
-        <PageCaptureWrapper
-          fileName="fitness-chaser-card.png"
-          pageName="Fitness Chaser"
-        >
-          {({ onShare }) => (
-            <FitnessChaserCard
-              totalChallenges={data.weeklyChallenges}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.weeklyChallenge && {
-      name: "Weekly Challenge",
-      content: (
-        <PageCaptureWrapper
-          fileName="weekly-challenge.png"
-          pageName="Weekly Challenge"
-        >
-          {({ onShare }) => (
-            <WeeklyChallengeCard
-              totalReward={data.totalReward}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.rank && {
-      name: "Vitality Rank",
-      content: (
-        <PageCaptureWrapper
-          fileName="vitality-rank.png"
-          pageName="Vitality Rank"
-        >
-          {({ onShare }) => (
-            <VitalityRankCard
-              genderRank={data.genderRank}
-              generalRank={data.generalRank}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    {
-      name: "Crowning",
+      name: "Crowning 1",
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
@@ -253,11 +255,67 @@ export default function Home() {
         </PageCaptureWrapper>
       ),
     },
-
     {
-      name: "End Card",
-      content: <EndCard />,
+      name: "Crowning 2",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="active"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
     },
+    {
+      name: "Crowning 3",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="challenger"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 4",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="starter"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 5",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="stretcher"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    // {
+    //   name: "End Card",
+    //   content: <EndCard />,
+    // },
   ].filter(Boolean) as SectionItem[];
 
   return (
