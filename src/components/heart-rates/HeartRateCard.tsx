@@ -24,6 +24,9 @@ export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
       className="grid-rows-[35%_60%]"
       topClassName="translate-y-10"
       bottomClassName="translate-y-5"
+      curtainColor={
+          config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"
+        }
       background={config.background}
       onShare={onShare}
       pageName="heart-rate"
