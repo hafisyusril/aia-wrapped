@@ -37,7 +37,7 @@ export default function HeartRateCard({
       type: "spring" as const,
       stiffness: 100,
       damping: 5,
-      mass: 0.8,
+      mass: 0.4,
     } as const;
 
     const enter = async () => {
@@ -183,7 +183,6 @@ export default function HeartRateCard({
       className="w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
       style={{ background }}
     >
-      {level} {condition}
       {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
       <div
         data-animate="content"
