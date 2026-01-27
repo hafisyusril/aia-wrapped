@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +16,11 @@ export default function InputVitalityCard() {
   const { setVitalityId, isLoading, error: apiError } = useUserFlow();
   const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
+
+  // FOR DEMO ONLY
+  useEffect(() => {
+    localStorage.removeItem("aia-vitality-id");
+  }, []);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
