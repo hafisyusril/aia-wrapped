@@ -160,16 +160,59 @@ export default function Home() {
     //   ),
     // },
 
-    // resolvedActivities?.heartRate && {
-    //   name: "Heart Rate",
-    //   content: (
-    //     <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
-    //       {({ onShare }) => (
-    //         <HeartRateCard level={data.level} onShare={onShare} />
-    //       )}
-    //     </PageCaptureWrapper>
-    //   ),
-    // },
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate Light",
+      content: (
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate Light"
+        >
+          {({ onShare }) => (
+            <HeartRateCard
+              containerRef={containerRef}
+              level={"light"}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate Moderate",
+      content: (
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate Moderate"
+        >
+          {({ onShare }) => (
+            <HeartRateCard
+              containerRef={containerRef}
+              level={"moderate"}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate",
+      content: (
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate"
+        >
+          {({ onShare }) => (
+            <HeartRateCard
+              containerRef={containerRef}
+              level={data.level}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     // resolvedActivities?.gymVisit && {
     {

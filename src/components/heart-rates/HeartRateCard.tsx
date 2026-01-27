@@ -1,115 +1,250 @@
 "use client";
 
-import { motion } from "framer-motion";
-import MobileCardFrame from "../MobileCardFrame";
+import { motion, useAnimate, useInView } from "framer-motion";
 import { heartRateConfig } from "./heartRateConfig";
 import { getHeartRateCondition, HeartRateLevel } from "./heartRateUtils";
+import ShareButton from "../ShareButton";
+import { RefObject, useEffect } from "react";
 
 interface HeartRateCardProps {
   level: HeartRateLevel;
-  onShare?: () => void
+  containerRef: RefObject<HTMLElement | null>;
+  onShare?: () => void;
 }
 
-export default function HeartRateCard({ level, onShare }: HeartRateCardProps) {
+export default function HeartRateCard({
+  level,
+  containerRef,
+  onShare,
+}: HeartRateCardProps) {
   const condition = getHeartRateCondition(level);
   const config = heartRateConfig[condition];
 
-  const fadeScale = {
-    hidden: { opacity: 0, scale: 0.85, y: 30 },
-    show: { opacity: 1, scale: 1, y: 0 },
-  };
+  const [scope, animate] = useAnimate();
+  const inView = useInView(scope, {
+    root: containerRef,
+    initial: false,
+    amount: 0.75,
+  });
 
+  useEffect(() => {
+    const animationKeyframes = {
+      type: "keyframes",
+      duration: 0.4,
+    } as const;
+
+    const animationSpring = {
+      type: "spring" as const,
+      stiffness: 100,
+      damping: 5,
+      mass: 0.8,
+    } as const;
+
+    const enter = async () => {
+      animate(
+        '[data-animate="content"]',
+        {
+          y: "0%",
+        },
+        animationKeyframes,
+      );
+
+      await animate(
+        '[data-animate="bg-heart"]',
+        {
+          x: 0,
+          y: 0,
+          opacity: 0.5,
+          scale: 1,
+        },
+        animationKeyframes,
+      );
+
+      await Promise.all([
+        animate(
+          '[data-animate="label"',
+          {
+            y: "0%",
+            opacity: 1,
+          },
+          animationKeyframes,
+        ),
+        animate(
+          '[data-animate="red-heart"',
+          {
+            opacity: 1,
+          },
+          animationKeyframes,
+        ),
+      ]);
+
+      await animate(
+        '[data-animate="top-image"]',
+        {
+          scale: 1,
+          opacity: 1,
+        },
+        animationSpring,
+      );
+
+      await animate(
+        '[data-animate="message"',
+        {
+          y: "0%",
+          opacity: 1,
+        },
+        animationKeyframes,
+      );
+
+      await animate(
+        '[data-animate="motivation"',
+        {
+          y: "0%",
+          opacity: 1,
+        },
+        animationKeyframes,
+      );
+    };
+
+    const exit = () => {
+      animate(
+        '[data-animate="content"]',
+        {
+          y: "100%",
+        },
+        animationKeyframes,
+      );
+
+      animate(
+        '[data-animate="bg-heart"]',
+        {
+          x: -120,
+          y: 120,
+          opacity: 0.5,
+          scale: 0.1,
+          rotate: -15,
+        },
+        animationKeyframes,
+      );
+
+      animate(
+        '[data-animate="label"',
+        {
+          y: "-100%",
+          opacity: 0,
+        },
+        animationKeyframes,
+      );
+
+      animate(
+        '[data-animate="red-heart"',
+        {
+          opacity: 0,
+        },
+        animationKeyframes,
+      );
+
+      animate(
+        '[data-animate="top-image"]',
+        {
+          scale: 0,
+          opacity: 0,
+        },
+        animationSpring,
+      );
+
+      animate(
+        '[data-animate="message"',
+        {
+          y: "-100%",
+          opacity: 0,
+        },
+        animationKeyframes,
+      );
+
+      animate(
+        '[data-animate="motivation"',
+        {
+          y: "100%",
+          opacity: 0,
+        },
+        animationKeyframes,
+      );
+    };
+
+    if (inView) enter();
+    else exit();
+  }, [inView, animate]);
+
+  const [background, bgContent] = config.backgrounds;
   return (
-    <MobileCardFrame
-      className="grid-rows-[35%_60%]"
-      topClassName="translate-y-10"
-      bottomClassName="translate-y-5"
-      background={config.background}
-      onShare={onShare}
-      pageName="heart-rate"
-      fileName="heart-rate.png"
-      ornaments={
-        <motion.img
-          src="/heart-rate/abstract-bg.svg"
-          className="absolute w-full h-full object-fill overflow-visible opacity-50 z-0"
-          alt="ornament"
-          initial={{
-            x: -120,
-            y: 120,
-            opacity: 0.5,
-            scale: 0.1,
-            rotate: -15,
-          }}
-          whileInView={{
-            x: 0,
-            y: 0,
-            opacity: 0.5,
-            scale: 1,
-            rotate: 0,
-          }}
-          transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
-          viewport={{ once: true }}
-        />
-      }
-      topContent={
-        <motion.div
-          variants={fadeScale}
-          initial="hidden"
-          whileInView="show"
-          transition={{
-            duration: 1.2,
-            delay: 1.8,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          viewport={{ once: true }}
-          className="h-full flex flex-col pt-5 translate-y-12"
-        >
-          <p className="text-white font-semibold text-[20px] mb-2">
-            Your exercise vibe:
-          </p>
-          <img src={config.topImage} className="w-full" alt="" />
-        </motion.div>
-      }
-      illustration={
+    <div
+      ref={scope}
+      className="w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
+      style={{ background }}
+    >
+      {level} {condition}
+      {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
+      <div
+        data-animate="content"
+        className="absolute inset-x-0 bottom-0 h-[70%]"
+        style={{ background: bgContent }}
+      />
+      <img
+        data-animate="bg-heart"
+        src="/heart-rate/bg-heart.png"
+        className="absolute w-[150%] max-w-none h-full object-contain overflow-visible opacity-50 z-0"
+        style={{
+          filter: "brightness(0.5)",
+        }}
+      />
+      <div data-animate="red-heart">
         <motion.img
           src="/heart-rate/red-heart.svg"
           alt="Red Heart"
           className="absolute bottom-10 right-10 w-37.5 z-10"
           animate={{ scale: [0.5, 0.8, 0.5] }}
           transition={{
-            duration: 1.5,
+            duration: {
+              "low-heat": 1.5,
+              "on-fire": 1,
+              "cardio-junkie": 0.75,
+            }[condition],
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
-      }
-      bottomContent={
-        <motion.div
-          variants={fadeScale}
-          initial="hidden"
-          whileInView="show"
-          transition={{
-            duration: 1.2,
-            delay: 2.6, // SAMA DENGAN illustration
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          viewport={{ once: true }}
-          className="relative text-black translate-y-20"
+      </div>
+      <div className="relative px-7 mt-[87px]">
+        <p
+          data-animate="label"
+          className="text-white font-semibold text-[20px] mb-2"
         >
-          <p className="text-2xl font-everest font-light">You're mostly doing</p>
+          Your exercise vibe:
+        </p>
+        <img
+          data-animate="top-image"
+          src={config.topImage}
+          className="block w-full mb-7"
+          alt=""
+        />
+        <div data-animate="message">
+          <p className="text-2xl font-everest font-light">
+            You&apos;re mostly doing
+          </p>
           <p className="text-2xl font-medium leading-tight">
             {config.description}
           </p>
           {config.showExerciseText && (
             <p className="text-2xl font-light leading-tight">exercise</p>
           )}
-          <div className="mt-10">
-            <p className="text-[20px] font-medium leading-tight whitespace-pre-line">
-              {config.motivation}
-            </p>
-          </div>
-        </motion.div>
-      }
-    />
+        </div>
+        <div data-animate="motivation" className="mt-10">
+          <p className="text-[20px] font-medium leading-tight whitespace-pre-line">
+            {config.motivation}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
