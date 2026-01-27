@@ -35,8 +35,8 @@ export interface CrowningLevel {
 export const crowningConfig: CrowningLevel[] = [
   {
     type: "stretcher",
-    titleLine1: "The Newbie",
-    titleLine2: " ",
+    titleLine1: "The Rising",
+    titleLine2: "Newbie",
     description:
       "Some days you move, some days you wait for motivation. We try again this year!",
     themeColor: "text-[#07C0FF]", // light blue

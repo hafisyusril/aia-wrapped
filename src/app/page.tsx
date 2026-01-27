@@ -42,53 +42,48 @@ type SectionItem = {
 };
 
 export default function Home() {
-  const {
-    userData,
-    isDummyUser,
-    flowStep,
-    vitalityId,
-    setVitalityId,
-  } = useUserFlow();
+  const { userData, isDummyUser, flowStep, vitalityId, setVitalityId } =
+    useUserFlow();
 
   const params = useParams();
   const encodedId = params?.slug as string | undefined;
 
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
-  const containerRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
 
   const data = {
-    steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
-    level: isDummyUser ? DUMMY_DATA.level : userData?.level ?? "light",
-    gymVisit: isDummyUser ? DUMMY_DATA.gymVisit : userData?.gymVisit ?? 0,
+    steps: isDummyUser ? DUMMY_DATA.steps : (userData?.steps ?? 0),
+    level: isDummyUser ? DUMMY_DATA.level : (userData?.level ?? "light"),
+    gymVisit: isDummyUser ? DUMMY_DATA.gymVisit : (userData?.gymVisit ?? 0),
     weeklyChallenges: isDummyUser
       ? DUMMY_DATA.weeklyChallenges
-      : userData?.weeklyChallenges ?? 0,
+      : (userData?.weeklyChallenges ?? 0),
     totalReward: isDummyUser
       ? DUMMY_DATA.totalReward
-      : userData?.totalReward ?? 0,
+      : (userData?.totalReward ?? 0),
     generalRank: isDummyUser
       ? DUMMY_DATA.generalRank
-      : userData?.generalRank ?? 0,
+      : (userData?.generalRank ?? 0),
     genderRank: isDummyUser
       ? DUMMY_DATA.genderRank
-      : userData?.genderRank ?? 0,
+      : (userData?.genderRank ?? 0),
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
-      : userData?.vhcStatus ?? "unchecked",
+      : (userData?.vhcStatus ?? "unchecked"),
   };
 
   const resolvedActivities = isDummyUser
     ? {
-      steps: true,
-      heartRate: true,
-      gymVisit: true,
-      weeklyChallenge: true,
-      vhc: true,
-      rank: true,
-    }
+        steps: true,
+        heartRate: true,
+        gymVisit: true,
+        weeklyChallenge: true,
+        vhc: true,
+        rank: true,
+      }
     : userData?.activities;
 
   useEffect(() => {
@@ -110,15 +105,15 @@ export default function Home() {
 
   const isLocked = !vitalityId && flowStep === "input";
 
-  // if (isLocked) {
-  //   return (
-  //     <MusicProvider playMusic={play}>
-  //       <main className="h-svh overflow-hidden flex items-center justify-center">
-  //         <InputVitalityCard />
-  //       </main>
-  //     </MusicProvider>
-  //   );
-  // }
+  if (isLocked) {
+    return (
+      <MusicProvider playMusic={play}>
+        <main className="h-svh overflow-hidden flex items-center justify-center">
+          <InputVitalityCard />
+        </main>
+      </MusicProvider>
+    );
+  }
 
   const handleSectionVisible = (sectionName: string) => {
     const id = vitalityId || localStorage.getItem("aia-vitality-id");
@@ -138,7 +133,7 @@ export default function Home() {
       name: "Intro",
       content: (
         <div ref={introRef}>
-          <IntroCard containerRef={containerRef}/>
+          <IntroCard containerRef={containerRef} />
         </div>
       ),
     },
@@ -320,10 +315,12 @@ export default function Home() {
 
   return (
     <MusicProvider playMusic={play}>
-      <main ref={containerRef} className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
+      <main
+        ref={containerRef}
+        className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
+      >
         {sections.map((section, idx) => {
-          const disableScrollUp =
-            idx === 0 || idx === sections.length - 1;
+          const disableScrollUp = idx === 0 || idx === sections.length - 1;
 
           return (
             <SnapSection
