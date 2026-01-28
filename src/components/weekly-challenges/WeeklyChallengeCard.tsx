@@ -13,17 +13,31 @@ interface WeeklyChallengeCardProps {
   onShare?: () => void;
 }
 
+// Varian untuk teks Slide Down
+const textVariant = {
+  hidden: { y: -100, opacity: 0 },
+  visible: (delay: number) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      delay: delay,
+      ease: "easeOut" as const,
+    },
+  }),
+};
+
 const coinVariants = {
-  initial: {
-    y: "-100vh",
-    opacity: 0,
-    rotate: 0,
-  },
-  animate: {
-    y: "100vh",
-    opacity: [0, 1, 1, 0],
-    rotate: 540,
-  },
+  floating: (i: number) => ({
+    y: [0, -70, 0],
+    rotate: [0, 40, -40, 0],
+    transition: {
+      duration: 2 + Math.random() * 2, // Kecepatan beda-beda (2-4 detik)
+      ease: "easeInOut" as const,
+      repeat: Infinity,
+      delay: i * 0.2, // Biar gak barengan geraknya
+    },
+  }),
 };
 
 export default function WeeklyChallengeCard({
@@ -50,59 +64,76 @@ export default function WeeklyChallengeCard({
   return (
     <section
       ref={ref}
-      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col font-sans ${background}`}
+      // Kita gunakan grid atau min-h agar strukturnya stabil saat tirai bergerak
+      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
     >
+      {/* 1. HEADER BACKGROUND (ANIMASI TIRAI) */}
+      <motion.div
+        className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
+        initial={{ height: "100%" }}
+        animate={isInView ? { height: "38%" } : { height: "100%" }}
+        transition={{
+          duration: 1,
+          ease: [0.22, 1, 0.36, 1], // Premium ease yang sama dengan VHC
+        }}
+      />
+
+      {/* 2. ANIMASI COIN MENGAMBANG */}
       {mounted && isInView && (
-        <div className="fixed inset-0 pointer-events-none z-20">
-          {Array.from({ length: 10 }).map((_, i) => (
-            <motion.img
-              key={i}
-              src={coinSrc}
-              alt="Coin"
-              className="absolute w-[56px] h-auto"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: "-80px",
-              }}
-              variants={coinVariants}
-              initial="initial"
-              animate="animate"
-              transition={{
-                duration: 3.2,
-                ease: "linear",
-                repeat: Infinity,
-                delay: i * 0.25,
-              }}
-            />
-          ))}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+          {Array.from({ length: 3 }).map((_, i) => {
+            const section = 100 / 3;
+            const baseLeft = i * section;
+            const randomLeft = `${5 + baseLeft + Math.random() * (section - 15)}%`;
+            /** * RUMUS: Dasar (40%) + Acak (0 sampai 20%)
+             * Hasilnya akan selalu di antara 40% dan 60%
+             */
+            const randomTop = `${60 + Math.random() * 10}%`;
+
+            return (
+              <motion.img
+                key={i}
+                src={coinSrc}
+                alt="Coin"
+                className="absolute w-[60px] h-auto"
+                variants={coinVariants}
+                custom={i}
+                animate="floating"
+                style={{ left: randomLeft, top: randomTop }}
+              />
+            );
+          })}
         </div>
       )}
 
-      <div className={`px-6 py-12 ${headerBackground} relative z-30`}>
+      {/* 3. CONTENT TOP */}
+      <div className="relative z-30 px-6 pt-35 pb-8 h-[38%] flex flex-col justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-[20px] font-everest font-medium">
+            {/* Animasi Slide Down: Label */}
+            <motion.p
+              variants={textVariant}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              custom={0.5} // Delay setelah tirai naik
+              className="text-[20px] font-everest font-medium"
+            >
               Total rewards redeemed:
-            </p>
+            </motion.p>
             <ShareButton onClick={onShare} />
           </div>
 
           <div className="flex items-end space-x-2 mt-6">
             <div className="flex items-end space-x-1">
-              <span
-                className="text-[40px] font-extrabold font-source leading-none "
-                style={{ fontFamily: "var(--font-source-sans)" }}
-              >
+              <span className="text-[40px] font-extrabold leading-none font-source">
                 {currency}
               </span>
-
               {mounted && isInView ? (
                 <AnimatedCounter
                   key={totalReward}
                   target={totalReward}
                   duration={900}
                   className="text-[62px] font-extrabold leading-none font-source"
-                  style={{ fontFamily: "var(--font-source-sans)" }}
                 />
               ) : (
                 <span className="text-[62px] font-extrabold leading-none">
@@ -111,28 +142,41 @@ export default function WeeklyChallengeCard({
               )}
             </div>
           </div>
-
-          <p className="text-xl font-medium whitespace-pre-line">{title}</p>
+          {/* Animasi Slide Down: Title */}
+          <motion.p
+            variants={textVariant}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            custom={1.5}
+            className="text-xl font-medium whitespace-pre-line mt-2"
+          >
+            {title}
+          </motion.p>
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-between px-6 py-0 relative z-30">
-        <p className="text-black text-[20px] font-medium leading-relaxed whitespace-pre-line">
+      {/* 4. CONTENT BOTTOM */}
+      <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pt-10 pb-4">
+        <div className="text-black text-[20px] font-medium leading-relaxed whitespace-pre-line">
           {message.map((line, index) => (
-            <span
+            <motion.p
               key={index}
+              variants={textVariant}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              custom={1.7 + index * 0.2} // Delay staggered tiap baris pesan
               dangerouslySetInnerHTML={{
                 __html: line ? `${line}<br />` : "<br />",
               }}
             />
           ))}
-        </p>
+        </div>
 
-        <div className="relative flex justify-center items-end mt-8">
+        <div className="relative flex justify-center items-end mt-4">
           <img
             src={illustrationSrc}
             alt="Weekly Challenge Reward"
-            className="w-[320px] h-auto"
+            className="w-[300px] h-auto"
           />
         </div>
       </div>

@@ -150,7 +150,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
 
               <motion.p
                 variants={firstGroupVariants}
-                className="text-[24px] text-black mt-5 font-everest font-bold"
+                className="text-[24px] text-black mt-5 font-everest font-bold leading-none "
               >
                 Steps this year.
               </motion.p>
@@ -161,7 +161,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               initial={{ opacity: 0, y: -20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }} // muncul setelah grup 1
-              className="mt-3 flex flex-col gap-2"
+              className="mt-10 flex flex-col gap-2"
             >
               <p className="text-[20px] text-black font-light leading-none">
                 That’s an average of {config.averageText}

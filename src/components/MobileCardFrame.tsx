@@ -96,7 +96,7 @@ export default function MobileCardFrame({
         initial={{ height: "100vh" }}
         whileInView={{ height: "35%" }}
         viewport={{ once: false, amount: 0.5 }}
-        transition={{ duration: 2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         style={{ background: curtainColor ?? "#000" }} 
       />
 
