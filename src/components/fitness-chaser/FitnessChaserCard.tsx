@@ -30,24 +30,23 @@ export default function FitnessChaserCard({
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">
             {[...Array(4)].map((_, i) => {
-              const fromRight = i % 2 === 0;
-
               return (
                 <motion.img
                   key={i}
                   src="/fitness-chaser/oval.svg"
                   alt=""
-                  className={`flex-1 w-full object-cover transform-gpu ${
-                    fromRight ? "origin-right" : "origin-left"
-                  }`}
+                  className="flex-1 w-full object-cover transform-gpu"
+                  style={{
+                    filter: 'brightness(0)',
+                  }}
                   initial={{
-                    scaleX: 0,
+                    translateY: "100%",
                     opacity: 0,
                   }}
                   animate={
                     isInView
-                      ? { scaleX: 1, opacity: 1 }
-                      : { scaleX: 0, opacity: 0 }
+                      ? { translateY: "0%", opacity: 0.15 }
+                      : { translateY: "100%", opacity: 0 }
                   }
                   transition={{
                     duration: 0.7,
