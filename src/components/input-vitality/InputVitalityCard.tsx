@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -17,8 +17,19 @@ export default function InputVitalityCard() {
   const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
 
+  // FOR DEMO ONLY
+  useEffect(() => {
+    localStorage.removeItem("aia-vitality-id");
+  }, []);
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // FOR DEMO ONLY
+    if (Date.now()) {
+      setVitalityId("VI03391268");
+      playMusic();
+      return;
+    }
 
     if (!value.trim()) {
       setError("Your year with AIA Vitality cannot be empty");
@@ -81,14 +92,12 @@ export default function InputVitalityCard() {
               className={`
                 h-12 rounded-xl border px-4 text-base
                 focus:outline-none focus:ring-2 focus:ring-red-500
-                ${(error || apiError) ? "border-red-500" : "border-gray-300"}
+                ${error || apiError ? "border-red-500" : "border-gray-300"}
               `}
             />
 
             {(error || apiError) && (
-              <p className="text-xs text-red-500">
-                {error || apiError}
-              </p>
+              <p className="text-xs text-red-500">{error || apiError}</p>
             )}
 
             <button

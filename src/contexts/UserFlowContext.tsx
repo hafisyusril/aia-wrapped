@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
 
 type FlowStep = "input" | "intro" | "content";
@@ -25,7 +31,6 @@ interface UserData {
   };
 }
 
-
 interface UserFlowContextProps {
   isDummyUser: boolean;
   userData: UserData | null;
@@ -38,7 +43,7 @@ interface UserFlowContextProps {
 }
 
 const UserFlowContext = createContext<UserFlowContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 export function UserFlowProvider({ children }: { children: ReactNode }) {
@@ -67,7 +72,9 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error("Vitality ID not found. Please check your ID and try again.");
+          throw new Error(
+            "Vitality ID not found. Please check your ID and try again.",
+          );
         }
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `API Error: ${response.statusText}`);
@@ -106,15 +113,17 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
         },
       };
 
-
       setUserData(userData);
       setIsDummyUser(false);
       setFlowStep("intro");
-      localStorage.setItem("aia-vitality-id", id);
+      // FOR DEMO ONLY
+      // localStorage.setItem("aia-vitality-id", id);
     } catch (err: any) {
       console.error("Failed to fetch vitality data:", err);
       // Use the specific error message if available, otherwise a generic fallback
-      setError(err.message || "Unable to retrieve data. Please try again later.");
+      setError(
+        err.message || "Unable to retrieve data. Please try again later.",
+      );
       setUserData(null);
       setIsDummyUser(false);
       localStorage.removeItem("aia-vitality-id");
@@ -125,7 +134,16 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
   return (
     <UserFlowContext.Provider
-      value={{ isDummyUser, userData, flowStep, setVitalityId, vitalityId, isLoading, error, setError }}
+      value={{
+        isDummyUser,
+        userData,
+        flowStep,
+        setVitalityId,
+        vitalityId,
+        isLoading,
+        error,
+        setError,
+      }}
     >
       {children}
     </UserFlowContext.Provider>

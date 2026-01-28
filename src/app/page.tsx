@@ -42,53 +42,48 @@ type SectionItem = {
 };
 
 export default function Home() {
-  const {
-    userData,
-    isDummyUser,
-    flowStep,
-    vitalityId,
-    setVitalityId,
-  } = useUserFlow();
+  const { userData, isDummyUser, flowStep, vitalityId, setVitalityId } =
+    useUserFlow();
 
   const params = useParams();
   const encodedId = params?.slug as string | undefined;
 
   const { play } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
-  const containerRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
 
   const data = {
-    steps: isDummyUser ? DUMMY_DATA.steps : userData?.steps ?? 0,
-    level: isDummyUser ? DUMMY_DATA.level : userData?.level ?? "light",
-    gymVisit: isDummyUser ? DUMMY_DATA.gymVisit : userData?.gymVisit ?? 0,
+    steps: isDummyUser ? DUMMY_DATA.steps : (userData?.steps ?? 0),
+    level: isDummyUser ? DUMMY_DATA.level : (userData?.level ?? "light"),
+    gymVisit: isDummyUser ? DUMMY_DATA.gymVisit : (userData?.gymVisit ?? 0),
     weeklyChallenges: isDummyUser
       ? DUMMY_DATA.weeklyChallenges
-      : userData?.weeklyChallenges ?? 0,
+      : (userData?.weeklyChallenges ?? 0),
     totalReward: isDummyUser
       ? DUMMY_DATA.totalReward
-      : userData?.totalReward ?? 0,
+      : (userData?.totalReward ?? 0),
     generalRank: isDummyUser
       ? DUMMY_DATA.generalRank
-      : userData?.generalRank ?? 0,
+      : (userData?.generalRank ?? 0),
     genderRank: isDummyUser
       ? DUMMY_DATA.genderRank
-      : userData?.genderRank ?? 0,
+      : (userData?.genderRank ?? 0),
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
-      : userData?.vhcStatus ?? "unchecked",
+      : (userData?.vhcStatus ?? "unchecked"),
   };
 
   const resolvedActivities = isDummyUser
     ? {
-      steps: true,
-      heartRate: true,
-      gymVisit: true,
-      weeklyChallenge: true,
-      vhc: true,
-      rank: true,
-    }
+        steps: true,
+        heartRate: true,
+        gymVisit: true,
+        weeklyChallenge: true,
+        vhc: true,
+        rank: true,
+      }
     : userData?.activities;
 
   useEffect(() => {
@@ -138,7 +133,7 @@ export default function Home() {
       name: "Intro",
       content: (
         <div ref={introRef}>
-          <IntroCard containerRef={containerRef}/>
+          <IntroCard containerRef={containerRef} />
         </div>
       ),
     },
@@ -154,12 +149,48 @@ export default function Home() {
       ),
     },
 
-    resolvedActivities?.steps && {
-      name: "Steps",
+    // resolvedActivities?.steps && {
+    //   name: "Steps",
+    //   content: (
+    //     <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+    //       {({ onShare }) => (
+    //         <StepsCard steps={data.steps} onShare={onShare} />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
+
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate Light",
       content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate Light"
+        >
           {({ onShare }) => (
-            <StepsCard steps={data.steps} onShare={onShare} />
+            <HeartRateCard
+              containerRef={containerRef}
+              level={"light"}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    resolvedActivities?.heartRate && {
+      name: "Heart Rate Moderate",
+      content: (
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate Moderate"
+        >
+          {({ onShare }) => (
+            <HeartRateCard
+              containerRef={containerRef}
+              level={"moderate"}
+              onShare={onShare}
+            />
           )}
         </PageCaptureWrapper>
       ),
@@ -168,100 +199,171 @@ export default function Home() {
     resolvedActivities?.heartRate && {
       name: "Heart Rate",
       content: (
-        <PageCaptureWrapper fileName="heart-rate-card.png" pageName="Heart Rate">
+        <PageCaptureWrapper
+          fileName="heart-rate-card.png"
+          pageName="Heart Rate"
+        >
           {({ onShare }) => (
-            <HeartRateCard level={data.level} onShare={onShare} />
+            <HeartRateCard
+              containerRef={containerRef}
+              level={data.level}
+              onShare={onShare}
+            />
           )}
         </PageCaptureWrapper>
       ),
     },
 
-    resolvedActivities?.gymVisit && {
+    // resolvedActivities?.gymVisit && {
+    {
       name: "Gym Visit",
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare }) => (
-            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+            // <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+            <GymVisitCard counter={24} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
+
+    // {
+    //   name: "Fitness Chaser",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="fitness-chaser-card.png"
+    //       pageName="Fitness Chaser"
+    //     >
+    //       {({ onShare }) => (
+    //         <FitnessChaserCard
+    //           totalChallenges={data.weeklyChallenges}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
+
+    // resolvedActivities?.weeklyChallenge && {
+    //   name: "Weekly Challenge",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="weekly-challenge.png"
+    //       pageName="Weekly Challenge"
+    //     >
+    //       {({ onShare }) => (
+    //         <WeeklyChallengeCard
+    //           totalReward={data.totalReward}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
+
+    // resolvedActivities?.rank && {
+    //   name: "Vitality Rank",
+    //   content: (
+    //     <PageCaptureWrapper
+    //       fileName="vitality-rank.png"
+    //       pageName="Vitality Rank"
+    //     >
+    //       {({ onShare }) => (
+    //         <VitalityRankCard
+    //           genderRank={data.genderRank}
+    //           generalRank={data.generalRank}
+    //           onShare={onShare}
+    //         />
+    //       )}
+    //     </PageCaptureWrapper>
+    //   ),
+    // },
 
     {
-      name: "Fitness Chaser",
-      content: (
-        <PageCaptureWrapper
-          fileName="fitness-chaser-card.png"
-          pageName="Fitness Chaser"
-        >
-          {({ onShare }) => (
-            <FitnessChaserCard
-              totalChallenges={data.weeklyChallenges}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.weeklyChallenge && {
-      name: "Weekly Challenge",
-      content: (
-        <PageCaptureWrapper
-          fileName="weekly-challenge.png"
-          pageName="Weekly Challenge"
-        >
-          {({ onShare }) => (
-            <WeeklyChallengeCard
-              totalReward={data.totalReward}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.rank && {
-      name: "Vitality Rank",
-      content: (
-        <PageCaptureWrapper
-          fileName="vitality-rank.png"
-          pageName="Vitality Rank"
-        >
-          {({ onShare }) => (
-            <VitalityRankCard
-              genderRank={data.genderRank}
-              generalRank={data.generalRank}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    {
-      name: "Crowning",
+      name: "Crowning 1",
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
-            <CrowningCard type="athlete" onShare={onShare} />
+            <CrowningCard
+              type="athlete"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 2",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="active"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 3",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="challenger"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 4",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="starter"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Crowning 5",
+      content: (
+        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+          {({ onShare }) => (
+            <CrowningCard
+              type="stretcher"
+              containerRef={containerRef}
+              onShare={onShare}
+            />
           )}
         </PageCaptureWrapper>
       ),
     },
 
-    {
-      name: "End Card",
-      content: <EndCard />,
-    },
+    // {
+    //   name: "End Card",
+    //   content: <EndCard />,
+    // },
   ].filter(Boolean) as SectionItem[];
 
   return (
     <MusicProvider playMusic={play}>
-      <main ref={containerRef} className="h-svh overflow-y-scroll snap-y snap-mandatory relative">
+      <main
+        ref={containerRef}
+        className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
+      >
         {sections.map((section, idx) => {
-          const disableScrollUp =
-            idx === 0 || idx === sections.length - 1;
+          const disableScrollUp = idx === 0 || idx === sections.length - 1;
 
           return (
             <SnapSection
