@@ -1,10 +1,7 @@
 "use client";
 
-import { ReactNode, useRef, useState, useCallback } from "react";
+import { ReactNode, useRef, useCallback } from "react";
 import { captureWithWatermark } from "../app/utils/captureWithWatermark";
-import ShareBottomSheet from "./ShareBottomSheet";
-
-type Platform = "whatsapp" | "facebook" | "instagram" | "tiktok";
 
 type PageCaptureWrapperProps = {
     children: (props: { onShare: () => void }) => ReactNode;
@@ -17,26 +14,14 @@ export default function PageCaptureWrapper({
     children,
     fileName = "capture.png",
     disableWatermark = false,
-    pageName,
 }: PageCaptureWrapperProps) {
     const captureRef = useRef<HTMLDivElement>(null);
-    const [showSharePopup, setShowSharePopup] = useState(false);
 
-    const handleShare = () => {
-        setShowSharePopup(true);
-    };
-
-    const handlePlatformSelect = useCallback(
-        async (platform: Platform) => {
-            console.log("Wrapper received platform:", platform);
-
+    const handleShareExecution = useCallback(
+        async () => {
             if (!captureRef.current) return;
 
-            setShowSharePopup(false);
-
-            // beri waktu request tracking dikirim
             await new Promise((r) => setTimeout(r, 300));
-
             await captureWithWatermark({
                 element: captureRef.current,
                 fileName,
@@ -49,15 +34,8 @@ export default function PageCaptureWrapper({
     return (
         <div className="relative">
             <div ref={captureRef} data-capture-root className="transform-none">
-                {children({ onShare: handleShare })}
+                {children({ onShare: handleShareExecution })}
             </div>
-
-            <ShareBottomSheet
-                visible={showSharePopup}
-                pageName={pageName}
-                onClose={() => setShowSharePopup(false)}
-                onSelect={handlePlatformSelect}
-            />
         </div>
     );
 }
