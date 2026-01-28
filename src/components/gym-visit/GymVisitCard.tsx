@@ -31,7 +31,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         "Solid habit. You clearly not just hit <br /> the gym for mirror selfies."
       );
       setBackground(
-        "linear-gradient(to bottom, rgba(113,113,226,1) 35%, rgba(178,232,247,1) 35%)"
+        "linear-gradient(to bottom, #7171E2 35%, #B2E8F7 35%)"
       );
     } else if (counter <= 250) {
       setTitle("Gym <br /> Bunny");
@@ -39,7 +39,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         "Admit it, you train hard <br /> so you can have pizza after."
       );
       setBackground(
-        "linear-gradient(to bottom, rgba(70,70,204,1) 35%, rgba(108,220,239,1) 35%)"
+        "linear-gradient(to bottom, #B2E8F7 35%, #8CEAF4 35%)"
       );
     } else {
       setTitle("Hustle <br /> for Muscle");
@@ -47,10 +47,13 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         "You give ‘No Days Off’ Energy. <br /> Be honest, the PT is your bestie!"
       );
       setBackground(
-        "linear-gradient(to bottom, rgba(41,41,155,1) 35%, rgba(23,209,229,1) 35%)"
+        "linear-gradient(to bottom, #29299B 35%, #4ADEE5 35%)"
       );
     }
   }, [counter]);
+
+  // Ambil warna HEX pertama yang ditemukan dalam string background
+const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
 
   return (
     <div ref={ref}>
@@ -58,6 +61,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         background={background}
         onShare={onShare}
         pageName={"gym-visit"}
+        curtainColor={curtainColor}
         fileName="gym-visit.png"
         ornaments={
           <div className="absolute inset-0 z-0 overflow-hidden">

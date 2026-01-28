@@ -133,7 +133,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
           whileInView={{ height: "35%" }}
           viewport={{ once: false, amount: 0.5 }} // false supaya tiap masuk viewport animasi jalan
           transition={{
-            duration: 2,
+            duration: 1,
             ease: [0.22, 1, 0.36, 1],
           }}
         />

@@ -28,14 +28,23 @@ const textVariant = {
 };
 
 const coinVariants = {
+  initial: { opacity: 0, scale: 0 },
+  visible: (i: number) => ({
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delay: 1 + i * 0.1, // Delay 1 detik + stagger antar koin
+      duration: 0.5,
+    },
+  }),
   floating: (i: number) => ({
     y: [0, -70, 0],
     rotate: [0, 40, -40, 0],
     transition: {
-      duration: 2 + Math.random() * 2, // Kecepatan beda-beda (2-4 detik)
+      duration: 2 + Math.random() * 2,
       ease: "easeInOut" as const,
       repeat: Infinity,
-      delay: i * 0.2, // Biar gak barengan geraknya
+      delay: i * 0.2,
     },
   }),
 };
@@ -67,27 +76,21 @@ export default function WeeklyChallengeCard({
       // Kita gunakan grid atau min-h agar strukturnya stabil saat tirai bergerak
       className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
     >
-      {/* 1. HEADER BACKGROUND (ANIMASI TIRAI) */}
+      {/* 1. HEADER BACKGROUND (TIRAI) */}
       <motion.div
         className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
         initial={{ height: "100%" }}
         animate={isInView ? { height: "38%" } : { height: "100%" }}
-        transition={{
-          duration: 1,
-          ease: [0.22, 1, 0.36, 1], // Premium ease yang sama dengan VHC
-        }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* 2. ANIMASI COIN MENGAMBANG */}
-      {mounted && isInView && (
+      {/* 2. ANIMASI COIN MENGAMBANG (DENGAN DELAY 1 DETIK) */}
+      {mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
           {Array.from({ length: 3 }).map((_, i) => {
             const section = 100 / 3;
             const baseLeft = i * section;
             const randomLeft = `${5 + baseLeft + Math.random() * (section - 15)}%`;
-            /** * RUMUS: Dasar (40%) + Acak (0 sampai 20%)
-             * Hasilnya akan selalu di antara 40% dan 60%
-             */
             const randomTop = `${60 + Math.random() * 10}%`;
 
             return (
@@ -96,9 +99,11 @@ export default function WeeklyChallengeCard({
                 src={coinSrc}
                 alt="Coin"
                 className="absolute w-[60px] h-auto"
-                variants={coinVariants}
                 custom={i}
-                animate="floating"
+                variants={coinVariants}
+                initial="initial"
+                // Hanya jalankan animasi jika isInView true
+                animate={isInView ? ["visible", "floating"] : "initial"}
                 style={{ left: randomLeft, top: randomTop }}
               />
             );
@@ -156,7 +161,7 @@ export default function WeeklyChallengeCard({
       </div>
 
       {/* 4. CONTENT BOTTOM */}
-      <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pt-10 pb-4">
+      <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pb-4">
         <div className="text-black text-[20px] font-medium leading-relaxed whitespace-pre-line">
           {message.map((line, index) => (
             <motion.p
@@ -172,13 +177,22 @@ export default function WeeklyChallengeCard({
           ))}
         </div>
 
-        <div className="relative flex justify-center items-end mt-4">
+        <motion.div
+          className="relative flex justify-center items-end mt-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{
+            delay: 1, // Delay 1 detik
+            duration: 0.8,
+            ease: "easeOut",
+          }}
+        >
           <img
             src={illustrationSrc}
             alt="Weekly Challenge Reward"
             className="w-[300px] h-auto"
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
