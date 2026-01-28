@@ -175,11 +175,11 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         }
         illustration={
           <>
-            <div className="pointer-events-none absolute bottom-20 left-10 right-10 inset-0 z-30">
+            <div className="pointer-events-none absolute bottom-15 left-10 right-10 inset-0 z-30">
               <motion.img
                 src="/steps/left-shoe.svg"
                 alt=""
-                className="absolute bottom-2 left-12 w-[40%] h-auto object-contain"
+                className="absolute bottom-2 left-12 w-[30%] h-auto object-contain"
                 animate="walk"
                 variants={leftShoe}
                 transition={walkTransition}
@@ -194,7 +194,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               <motion.img
                 src="/steps/right-shoe.svg"
                 alt=""
-                className="absolute bottom-0 right-12 w-[45%] h-auto object-contain"
+                className="absolute bottom-0 right-12 w-[35%] h-auto object-contain"
                 animate="walk"
                 variants={rightShoe}
                 transition={{
