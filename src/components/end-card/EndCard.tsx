@@ -40,7 +40,7 @@ export default function EndCard({
       // Kita jalankan tanpa 'await' supaya tidak memblokir kode lain jika ada
       animate(
         "[data-anim='illustration']",
-        { y: [0, -15, 0], x: [0, -15, 0] }, // Bergerak naik turun 15px
+        { y: [0, -25, 0], x: [0, -25, 0] }, // Bergerak naik turun 15px
         {
           duration: 3,
           repeat: Infinity,
@@ -98,15 +98,14 @@ export default function EndCard({
 {/* Container tetap nempel di pojok kanan bawah dengan overflow hidden */}
 <div 
   data-anim="illustration" 
-  className="absolute -bottom-5 -right-7 z-10 w-85 h-100 opacity-0 origin-bottom-right overflow-hidden"
+  className="absolute -bottom-10 -right-15 z-10 w-85 h-100 opacity-0 origin-bottom-right overflow-hidden"
   style={{ transform: "translateY(50px) scale(0.9)" }}
 >
   <Image
     src="/end-card/end-card-illustration.svg"
     alt=""
     fill
-    // Kita paksa object-cover atau posisikan manual agar terpotong cantik
-    className="object-contain object-right-bottom z-20 scale-110" 
+    className="object-contain object-right-bottom z-20 " 
     priority
   />
 </div>
