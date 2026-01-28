@@ -149,16 +149,16 @@ export default function Home() {
       ),
     },
 
-    // resolvedActivities?.steps && {
-    //   name: "Steps",
-    //   content: (
-    //     <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
-    //       {({ onShare }) => (
-    //         <StepsCard steps={data.steps} onShare={onShare} />
-    //       )}
-    //     </PageCaptureWrapper>
-    //   ),
-    // },
+    resolvedActivities?.steps && {
+      name: "Steps",
+      content: (
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+          {({ onShare }) => (
+            <StepsCard steps={data.steps} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     resolvedActivities?.heartRate && {
       name: "Heart Rate Light",
@@ -244,22 +244,22 @@ export default function Home() {
     //   ),
     // },
 
-    // resolvedActivities?.weeklyChallenge && {
-    //   name: "Weekly Challenge",
-    //   content: (
-    //     <PageCaptureWrapper
-    //       fileName="weekly-challenge.png"
-    //       pageName="Weekly Challenge"
-    //     >
-    //       {({ onShare }) => (
-    //         <WeeklyChallengeCard
-    //           totalReward={data.totalReward}
-    //           onShare={onShare}
-    //         />
-    //       )}
-    //     </PageCaptureWrapper>
-    //   ),
-    // },
+    resolvedActivities?.weeklyChallenge && {
+      name: "Weekly Challenge",
+      content: (
+        <PageCaptureWrapper
+          fileName="weekly-challenge.png"
+          pageName="Weekly Challenge"
+        >
+          {({ onShare }) => (
+            <WeeklyChallengeCard
+              totalReward={data.totalReward}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     // resolvedActivities?.rank && {
     //   name: "Vitality Rank",
@@ -350,10 +350,10 @@ export default function Home() {
       ),
     },
 
-    // {
-    //   name: "End Card",
-    //   content: <EndCard />,
-    // },
+    {
+      name: "End Card",
+      content: <EndCard />,
+    },
   ].filter(Boolean) as SectionItem[];
 
   return (
