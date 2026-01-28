@@ -9,7 +9,7 @@ interface RankCounterProps {
 
 export default function RankCounter({
     target,
-    duration = 1000,
+    duration = 2000,
 }: RankCounterProps) {
     const [count, setCount] = useState(0);
 

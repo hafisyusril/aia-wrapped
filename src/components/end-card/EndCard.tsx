@@ -98,7 +98,7 @@ export default function EndCard({
 {/* Container tetap nempel di pojok kanan bawah dengan overflow hidden */}
 <div 
   data-anim="illustration" 
-  className="absolute -bottom-10 -right-15 z-10 w-85 h-100 opacity-0 origin-bottom-right overflow-hidden"
+  className="absolute -bottom-10 -right-15 z-10 w-85 h-100  origin-bottom-right overflow-hidden"
   style={{ transform: "translateY(50px) scale(0.9)" }}
 >
   <Image
