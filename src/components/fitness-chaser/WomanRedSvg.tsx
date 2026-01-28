@@ -1,37 +1,47 @@
 import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function WomanRedSvg({ progress = 100 }: { progress?: number }) {
   const outerRef = useRef<SVGPathElement>(null);
   const innerRef = useRef<SVGPathElement>(null);
+  const inViewRef = useRef(null);
+
+  const [outerLength, setOuterLength] = useState(0);
+  const [innerLength, setInnerLength] = useState(0);
 
   const outerControls = useAnimation();
   const innerControls = useAnimation();
 
-  const outerInView = useInView(outerRef, );
-  const innerInView = useInView(innerRef, );
+  const isInView = useInView(inViewRef, { once: true });
 
   useEffect(() => {
-    if (outerRef.current && outerInView) {
-      const length = outerRef.current.getTotalLength();
-      outerControls.set({ strokeDashoffset: length });
-      outerControls.start({
-        strokeDashoffset: length * (1 - progress / 100),
-        transition: { duration: 2, ease: "easeInOut", delay: 0.3 },
-      });
+    if (outerRef.current) {
+      setOuterLength(outerRef.current.getTotalLength());
     }
-    if (innerRef.current && innerInView) {
-      const length = innerRef.current.getTotalLength();
-      innerControls.set({ strokeDashoffset: length });
-      innerControls.start({
-        strokeDashoffset: length * (1 - progress / 100),
-        transition: { duration: 2, ease: "easeInOut" },
-      });
+    if (innerRef.current) {
+      setInnerLength(innerRef.current.getTotalLength());
     }
-  }, [outerInView, innerInView, outerControls, innerControls, progress]);
+  }, []);
+
+  useEffect(() => {
+    if (isInView) {
+      if (outerLength) {
+        outerControls.start({
+          strokeDashoffset: outerLength * (1 - progress / 100),
+          transition: { duration: 2, ease: "easeInOut", delay: 0.3 },
+        });
+      }
+      if (innerLength) {
+        innerControls.start({
+          strokeDashoffset: innerLength * (1 - progress / 100),
+          transition: { duration: 2, ease: "easeInOut" },
+        });
+      }
+    }
+  }, [isInView, outerLength, innerLength, outerControls, innerControls, progress]);
   return (
-    <div className="flex items-center w-full h-full">
+    <div ref={inViewRef} className="flex items-center w-full h-full">
       {/* SVG Inline */}
       <svg
         className="w-full h-full"
@@ -67,8 +77,8 @@ export default function WomanRedSvg({ progress = 100 }: { progress?: number }) {
           strokeWidth="51"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeDasharray={outerRef.current?.getTotalLength() ?? 0}
-          strokeDashoffset={outerRef.current?.getTotalLength() ?? 0}
+          strokeDasharray={outerLength}
+          strokeDashoffset={outerLength}
           animate={outerControls}
         />
 
@@ -91,8 +101,8 @@ export default function WomanRedSvg({ progress = 100 }: { progress?: number }) {
           strokeWidth="41"
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeDasharray={innerRef.current?.getTotalLength() ?? 0}
-          strokeDashoffset={innerRef.current?.getTotalLength() ?? 0}
+          strokeDasharray={innerLength}
+          strokeDashoffset={innerLength}
           animate={innerControls}
         />
         <path

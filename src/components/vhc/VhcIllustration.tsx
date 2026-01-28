@@ -1,34 +1,32 @@
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 
-const STEP = 1.6;
-const LINE_OFFSET = 0.35;
+const rotateVariant: Variants = {
+  visible: (delay: number) => ({
+    rotate: [0, 360],
+    transition: {
+      duration: 0.6,
+      ease: "easeInOut",
+      delay,
+      repeat: 4,
+      repeatDelay: 1,
+    },
+  }),
+};
 
-
-const rotateAnim = (delay = 0) => ({
-  rotate: [0, 360],
-  transition: {
-    duration: 0.6,
-    ease: "easeInOut" as const,
-    delay,
-    repeat: 4,          // total 5x
-    repeatDelay: 1,
-  },
-});
-
-
-const lineReveal = (delay = 0) => ({
-  scaleX: 1,
-  opacity: 1,
-  transition: {
-    duration: 0.6,
-    ease: "easeOut" as const,
-    delay,
-    repeat: 4,
-    repeatDelay: 1,
-  },
-});
-
+const lineVariant: Variants = {
+  visible: (delay: number) => ({
+    scaleX: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      delay,
+      repeat: 4,
+      repeatDelay: 1,
+    },
+  }),
+};
 
 const appearAnim = {
   hidden: {
@@ -41,13 +39,12 @@ const appearAnim = {
     transition: {
       type: "spring" as const,
       stiffness: 140, // makin gede = makin kaku
-      damping: 2,    // makin kecil = makin mantul
+      damping: 2, // makin kecil = makin mantul
       mass: 0.8,
       delay: 1,
     },
   },
 };
-
 
 export default function VhcIllustration() {
   return (
@@ -57,7 +54,6 @@ export default function VhcIllustration() {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: false, amount: 0.5 }}
-    
     >
       {/* // VHC illustration Static */}
       <Image
@@ -76,7 +72,7 @@ export default function VhcIllustration() {
 
 function AnimatedChecklist() {
   return (
-    <svg
+    <motion.svg
       className="absolute z-10"
       style={{
         top: "45%", // sesuaikan ke posisi buku
@@ -95,8 +91,8 @@ function AnimatedChecklist() {
           transformOrigin: "43.5px 20.5px",
         }}
         initial={{ rotate: 0 }}
-        whileInView={rotateAnim(0)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={rotateVariant}
+        custom={0}
       >
         <path
           // icon Plus
@@ -117,16 +113,16 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0}
       />
       <motion.g
         style={{
           transformOrigin: "43.5px 20.5px",
         }}
         initial={{ rotate: 0 }}
-        whileInView={rotateAnim(0)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={rotateVariant}
+        custom={0}
       >
         <path
           // icon Check atas
@@ -149,8 +145,8 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0}
       />
       <motion.path
         // icon garis tengah 1
@@ -164,8 +160,8 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0.1)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0.1}
       />
 
       <motion.g
@@ -173,8 +169,8 @@ function AnimatedChecklist() {
           transformOrigin: "43.5px 20.5px",
         }}
         initial={{ rotate: 0 }}
-        whileInView={rotateAnim(0.1)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={rotateVariant}
+        custom={0.1}
       >
         <path
           // icon check tengah
@@ -197,8 +193,8 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0.1)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0.1}
       />
       <motion.path
         // icon garis bawah 1
@@ -212,8 +208,8 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0.2)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0.2}
       />
 
       <motion.g
@@ -221,8 +217,8 @@ function AnimatedChecklist() {
           transformOrigin: "43.5px 20.5px",
         }}
         initial={{ rotate: 0 }}
-        whileInView={rotateAnim(0.2)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={rotateVariant}
+        custom={0.2}
       >
         <path
           // icon check bawah
@@ -245,9 +241,9 @@ function AnimatedChecklist() {
           transformBox: "fill-box",
         }}
         initial={{ scaleX: 0, opacity: 0 }}
-        whileInView={lineReveal(0.2)}
-        viewport={{ once: false, amount: 0.6 }}
+        variants={lineVariant}
+        custom={0.2}
       />
-    </svg>
+    </motion.svg>
   );
 }

@@ -215,7 +215,7 @@ export default function HeartRateCard({
           }}
         />
       </div>
-      <div className="relative px-7 mt-[87px]">
+      <div className="relative z-10 px-7 mt-[87px]">
         <p
           data-animate="label"
           className="text-white font-semibold text-[20px] mb-2"
