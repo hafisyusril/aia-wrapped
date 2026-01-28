@@ -4,9 +4,11 @@ import { ReactNode, useRef, useState } from "react";
 import ShareButton from "./ShareButton";
 import { captureWithWatermark } from "../app/utils/captureWithWatermark";
 import ShareBottomSheet from "./ShareBottomSheet";
+import { motion } from "framer-motion";
 
 type MobileCardFrameProps = {
   background: string;
+  curtainColor?: string; // <--- baru
   topContent: ReactNode;
   bottomContent: ReactNode;
   ornaments?: ReactNode;
@@ -27,6 +29,7 @@ type MobileCardFrameProps = {
 
 export default function MobileCardFrame({
   background,
+  curtainColor,
   topContent,
   bottomContent,
   ornaments,
@@ -75,10 +78,6 @@ export default function MobileCardFrame({
     // selesai → popup sudah tertutup
   };
 
-
-
-
-
   return (
     <div
       ref={captureRef}
@@ -91,6 +90,16 @@ export default function MobileCardFrame({
       `}
       style={{ background }}
     >
+      {/* Layer animasi tirai */}
+      <motion.div
+        className="absolute top-0 left-0 w-full z-0"
+        initial={{ height: "100vh" }}
+        whileInView={{ height: "35%" }}
+        viewport={{ once: false, amount: 0.5 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        style={{ background: curtainColor ?? "#000" }} 
+      />
+
       {showShareButton && <ShareButton onClick={handleShareClick} />}
 
       {ornaments}

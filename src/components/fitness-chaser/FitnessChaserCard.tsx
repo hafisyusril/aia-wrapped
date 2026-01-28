@@ -25,6 +25,7 @@ export default function FitnessChaserCard({
         background={config.background}
         fileName="fitness-chaser.png"
         pageName={"fitness"}
+        curtainColor={config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"}
         onShare={onShare}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">

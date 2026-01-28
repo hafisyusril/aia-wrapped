@@ -178,6 +178,7 @@ export default function HeartRateCard({
 
   const [background, bgContent] = config.backgrounds;
   return (
+
     <div
       ref={scope}
       className="w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
