@@ -13,6 +13,7 @@ import { decodeVitalityId } from "./utils/vitalityUrl";
 
 import InputVitalityCard from "../components/input-vitality/InputVitalityCard";
 import IntroCard from "../components/IntroCard";
+import RewardInfoCard from "../components/reward-info/RewardInfoCard";
 import StepsCard from "../components/steps/StepsCard";
 import HeartRateCard from "../components/heart-rates/HeartRateCard";
 import GymVisitCard from "../components/gym-visit/GymVisitCard";
@@ -136,6 +137,13 @@ export default function Home() {
           <IntroCard containerRef={containerRef} />
         </div>
       ),
+    },
+    
+    {
+      name: 'Reward Info',
+      content: (
+        <RewardInfoCard containerRef={containerRef} />
+      )
     },
 
     resolvedActivities?.vhc && {
