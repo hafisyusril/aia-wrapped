@@ -2,7 +2,7 @@ import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-export default function WomanRedSvg() {
+export default function WomanRedSvg({ progress = 100 }: { progress?: number }) {
   const outerRef = useRef<SVGPathElement>(null);
   const innerRef = useRef<SVGPathElement>(null);
 
@@ -17,19 +17,19 @@ export default function WomanRedSvg() {
       const length = outerRef.current.getTotalLength();
       outerControls.set({ strokeDashoffset: length });
       outerControls.start({
-        strokeDashoffset: length * 0.1,
-        transition: { duration: 2, ease: "easeInOut" },
+        strokeDashoffset: length * (1 - progress / 100),
+        transition: { duration: 2, ease: "easeInOut", delay: 0.3 },
       });
     }
     if (innerRef.current && innerInView) {
       const length = innerRef.current.getTotalLength();
       innerControls.set({ strokeDashoffset: length });
       innerControls.start({
-        strokeDashoffset: length * 0.1,
+        strokeDashoffset: length * (1 - progress / 100),
         transition: { duration: 2, ease: "easeInOut" },
       });
     }
-  }, [outerInView, innerInView, outerControls, innerControls]);
+  }, [outerInView, innerInView, outerControls, innerControls, progress]);
   return (
     <div className="flex items-center w-full h-full">
       {/* SVG Inline */}
@@ -62,7 +62,7 @@ export default function WomanRedSvg() {
         {/* Circle Bar paling luar animasi */}
         <motion.path
           ref={outerRef}
-          d="M310.4 188.122C415.3 188.122 500.3 273.122 500.3 378.022C500.3 482.922 415.3 567.922 310.4 567.922"
+          d="M310.4 188.122C415.279 188.122 500.3 273.143 500.3 378.022C500.3 482.9 415.279 567.922 310.4 567.922C205.521 567.922 120.5 482.9 120.5 378.022C120.5 273.143 205.521 188.122 310.4 188.122Z"
           stroke="#D31145"
           strokeWidth="51"
           strokeLinecap="round"
@@ -86,7 +86,7 @@ export default function WomanRedSvg() {
         {/* Circle bar paling dalam animasi */}
         <motion.path
           ref={innerRef}
-          d="M404.8 312.322C441.1 364.422 428.3 436.122 376.1 472.422C324 508.722 252.3 495.922 216 443.722"
+          d="M310.4 263.021C373.913 263.021 425.4 314.509 425.4 378.021C425.4 441.534 373.913 493.021 310.4 493.021C246.888 493.021 195.4 441.534 195.4 378.021C195.4 314.509 246.888 263.021 310.4 263.021Z"
           stroke="#4C4794"
           strokeWidth="41"
           strokeLinecap="round"

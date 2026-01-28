@@ -235,22 +235,56 @@ export default function Home() {
       ),
     },
 
-    // {
-    //   name: "Fitness Chaser",
-    //   content: (
-    //     <PageCaptureWrapper
-    //       fileName="fitness-chaser-card.png"
-    //       pageName="Fitness Chaser"
-    //     >
-    //       {({ onShare }) => (
-    //         <FitnessChaserCard
-    //           totalChallenges={data.weeklyChallenges}
-    //           onShare={onShare}
-    //         />
-    //       )}
-    //     </PageCaptureWrapper>
-    //   ),
-    // },
+    {
+      name: "Fitness Chaser 50",
+      content: (
+        <PageCaptureWrapper
+          fileName="fitness-chaser-card.png"
+          pageName="Fitness Chaser"
+        >
+          {({ onShare }) => (
+            <FitnessChaserCard
+              totalChallenges={19}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    {
+      name: "Fitness Chaser 75",
+      content: (
+        <PageCaptureWrapper
+          fileName="fitness-chaser-card.png"
+          pageName="Fitness Chaser"
+        >
+          {({ onShare }) => (
+            <FitnessChaserCard
+              totalChallenges={39}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+
+    {
+      name: "Fitness Chaser 100",
+      content: (
+        <PageCaptureWrapper
+          fileName="fitness-chaser-card.png"
+          pageName="Fitness Chaser"
+        >
+          {({ onShare }) => (
+            <FitnessChaserCard
+              totalChallenges={data.weeklyChallenges}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     resolvedActivities?.weeklyChallenge && {
       name: "Weekly Challenge",

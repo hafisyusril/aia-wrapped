@@ -1,6 +1,7 @@
 // fitnessChaserConfig.ts
 
 export interface FitnessChaserConfig {
+  progress: number;
   background: string;
   title: string;
   description: string;
@@ -8,6 +9,7 @@ export interface FitnessChaserConfig {
 
 export const FITNESS_CHASER_CONFIG = {
   WARMING_UP: {
+    progress: 50,
     background: "linear-gradient(to bottom, #FC7449 35%, #E1F9E6 35%)",
     title: "Casual\nChallenger",
     description:
@@ -15,6 +17,7 @@ export const FITNESS_CHASER_CONFIG = {
   },
 
   CONSISTENT: {
+    progress: 75,
     background: "linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)",
     title: "Fitness\n Chaser",
     description:
@@ -22,6 +25,7 @@ export const FITNESS_CHASER_CONFIG = {
   },
 
   BOUNTY_HUNTER: {
+    progress: 100,
     background: "linear-gradient(to bottom, #EA380F 35%, #88EA98 35%)",
     title: "Bounty\n Hunter",
     description:

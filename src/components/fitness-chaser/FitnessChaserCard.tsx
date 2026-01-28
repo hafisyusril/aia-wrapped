@@ -61,7 +61,7 @@ export default function FitnessChaserCard({
         }
         illustration={
           <div className="absolute bottom-10 -right-3.75 w-75 h-65 z-10">
-            <WomanRedSvg />
+            <WomanRedSvg progress={config.progress}/>
           </div>
         }
         topContent={
