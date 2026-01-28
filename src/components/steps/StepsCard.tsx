@@ -28,6 +28,9 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
 
+  // speed sesuai dengan 3 kondisi dari config
+  const animeSpeed = config.speed || 1;
+
   const leftShoe = {
     walk: {
       x: [0, 50, 80, 40, 0],
@@ -45,7 +48,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
   };
 
   const walkTransition = {
-    duration: 1,
+    duration: animeSpeed,
     repeat: Infinity,
     ease: "linear" as const,
   };

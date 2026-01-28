@@ -4,6 +4,7 @@ export type StepsLevel = {
   title: string;
   averageText: string;
   motivation: string;
+  speed: number;
 };
 
 export const stepsConfig: StepsLevel[] = [
@@ -13,6 +14,7 @@ export const stepsConfig: StepsLevel[] = [
     title: "Turtle <br /> Master",
     averageText: "14-5.000 steps each day.",
     motivation: "We know you’re not lazy.\nYou just enjoy slow living.",
+    speed: 1.5,
   },
   {
     max: 2_600_000,
@@ -20,6 +22,7 @@ export const stepsConfig: StepsLevel[] = [
     title: "Consistent <br /> Walker",
     averageText: "5.003-7.000 steps each day.",
     motivation: "Did you walk around the park or walk around\n the office for meetings?",
+    speed: 1,
   },
   {
     max: 4_600_000,
@@ -27,5 +30,6 @@ export const stepsConfig: StepsLevel[] = [
     title: "Non-Stop <br /> Wanderer",
     averageText: "7.003-12.500 steps each day.",
     motivation: "Do you ever sit down?\n Your legs deserves a nice massage",
+    speed: 0.8,
   },
 ];

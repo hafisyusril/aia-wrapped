@@ -261,23 +261,23 @@ export default function Home() {
       ),
     },
 
-    // resolvedActivities?.rank && {
-    //   name: "Vitality Rank",
-    //   content: (
-    //     <PageCaptureWrapper
-    //       fileName="vitality-rank.png"
-    //       pageName="Vitality Rank"
-    //     >
-    //       {({ onShare }) => (
-    //         <VitalityRankCard
-    //           genderRank={data.genderRank}
-    //           generalRank={data.generalRank}
-    //           onShare={onShare}
-    //         />
-    //       )}
-    //     </PageCaptureWrapper>
-    //   ),
-    // },
+    resolvedActivities?.rank && {
+      name: "Vitality Rank",
+      content: (
+        <PageCaptureWrapper
+          fileName="vitality-rank.png"
+          pageName="Vitality Rank"
+        >
+          {({ onShare }) => (
+            <VitalityRankCard
+              genderRank={data.genderRank}
+              generalRank={data.generalRank}
+              onShare={onShare}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     {
       name: "Crowning 1",
