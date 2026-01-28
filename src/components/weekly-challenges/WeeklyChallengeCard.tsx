@@ -112,7 +112,7 @@ export default function WeeklyChallengeCard({
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pt-35 pb-8 h-[38%] flex flex-col justify-end">
+      <div className="relative z-30 px-6 pt-25 pb-8 h-[38%] flex flex-col justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
             {/* Animasi Slide Down: Label */}

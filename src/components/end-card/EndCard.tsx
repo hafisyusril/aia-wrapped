@@ -95,19 +95,21 @@ export default function EndCard({
       </div>
 
       {/* ===== ILLUSTRATIONS ===== */}
-      <div 
-        data-anim="illustration" 
-        className="absolute bottom-0 right-0 z-10 w-80 h-95 opacity-0 origin-bottom"
-        style={{ transform: "translateY(50px) scale(0.9)" }}
-      >
-        <Image
-          src="/end-card/end-card-illustration.svg"
-          alt=""
-          fill
-          className="object-contain object-right object-bottom z-20"
-          priority
-        />
-      </div>
+{/* Container tetap nempel di pojok kanan bawah dengan overflow hidden */}
+<div 
+  data-anim="illustration" 
+  className="absolute -bottom-5 -right-7 z-10 w-85 h-100 opacity-0 origin-bottom-right overflow-hidden"
+  style={{ transform: "translateY(50px) scale(0.9)" }}
+>
+  <Image
+    src="/end-card/end-card-illustration.svg"
+    alt=""
+    fill
+    // Kita paksa object-cover atau posisikan manual agar terpotong cantik
+    className="object-contain object-right-bottom z-20 scale-110" 
+    priority
+  />
+</div>
     </div>
   );
 }
