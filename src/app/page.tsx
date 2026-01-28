@@ -293,7 +293,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="athlete"
+              type="stretcher"
               containerRef={containerRef}
               onShare={onShare}
             />
@@ -307,7 +307,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="active"
+              type="starter"
               containerRef={containerRef}
               onShare={onShare}
             />
@@ -321,7 +321,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="challenger"
+              type="active"
               containerRef={containerRef}
               onShare={onShare}
             />
@@ -335,7 +335,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="starter"
+              type="challenger"
               containerRef={containerRef}
               onShare={onShare}
             />
@@ -349,7 +349,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="stretcher"
+              type="athlete"
               containerRef={containerRef}
               onShare={onShare}
             />
