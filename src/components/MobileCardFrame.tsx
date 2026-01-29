@@ -61,7 +61,7 @@ export default function MobileCardFrame({
 
   // Step 2: user pilih platform → capture element, simpan file, tapi jangan download langsung
   const handlePlatformSelect = async (_platform: string) => {
-
+    if (!captureRef.current) return;
     // langsung tutup popup
     setShowSharePopup(false);
 
