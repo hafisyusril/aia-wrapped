@@ -258,8 +258,37 @@ export default function Home() {
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare }) => (
-            // <GymVisitCard counter={data.gymVisit} onShare={onShare} />
             <GymVisitCard counter={24} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Gym Visit 100",
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
+          {({ onShare }) => (
+            <GymVisitCard counter={100} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Gym Visit 199",
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
+          {({ onShare }) => (
+            <GymVisitCard counter={199} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    {
+      name: "Gym Visit 399",
+      content: (
+        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
+          {({ onShare }) => (
+            <GymVisitCard counter={399} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),

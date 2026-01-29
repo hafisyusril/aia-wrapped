@@ -1,22 +1,42 @@
 import { motion } from "framer-motion";
 
-const Weightlifter = ({ width = 352, height = 426 }: { width?: number; height?: number }) => {
+const Weightlifter = ({ width = 352, height = 426, speed = 2 }: { width?: number; height?: number; speed?: 1 | 2 | 3 | 4 }) => {
   // Animation configuration
+  const getTransitionConfig = (animationSpeed: 1 | 2 | 3 | 4) => {
+    switch (animationSpeed) {
+      case 1: // Slower
+        return {
+          duration: 1.0,
+          repeatDelay: 0.4,
+        };
+      case 3: // Faster
+        return {
+          duration: 0.5,
+          repeatDelay: 0.1,
+        };
+      case 4: // Fastest
+        return {
+          duration: 0.3,
+          repeatDelay: 0.05,
+        };
+      case 2: // Default speed
+      default:
+        return {
+          duration: 0.75,
+          repeatDelay: 0.25,
+        };
+    }
+  };
+
+  const { duration, repeatDelay } = getTransitionConfig(speed);
+
   const transition = {
-    duration: 0.75, // Made faster by reducing duration
+    duration,
     ease: "easeInOut",
     repeat: Infinity,
     repeatType: "reverse",
-    repeatDelay: 0.25, // Reduced repeat delay proportionally
-  } as const; // Added 'as const' to ensure literal types for framer-motion props
-  // FASTER
-  // const transition = {
-  //   duration: 0.5, // Made faster by reducing duration further
-  //   ease: 'easeInOut',
-  //   repeat: Infinity,
-  //   repeatType: 'reverse',
-  //   repeatDelay: 0.1, // Reduced repeat delay proportionally
-  // }
+    repeatDelay,
+  } as const;
 
   // We define the paths that move.
   // 'dInitial' is the resting state. 'dFinal' is the lifted state.
@@ -198,7 +218,7 @@ const Weightlifter = ({ width = 352, height = 426 }: { width?: number; height?: 
       {/* 2. Plates and End Caps (Animated) */}
       {animatedPaths.slice(0, 8).map((path, index) => (
         <motion.path
-          key={`plate-${index}`}
+          key={`plate-${index}-${speed}`}
           fill={path.fill}
           d={path.dInitial}
           animate={{ d: path.dFinal }}
@@ -209,7 +229,7 @@ const Weightlifter = ({ width = 352, height = 426 }: { width?: number; height?: 
       {/* 3. Arms (Animated) */}
       {animatedPaths.slice(8, 10).map((path, index) => (
         <motion.path
-          key={`arm-${index}`}
+          key={`arm-${index}-${speed}`}
           fill={path.fill}
           d={path.dInitial}
           animate={{ d: path.dFinal }}
@@ -222,6 +242,7 @@ const Weightlifter = ({ width = 352, height = 426 }: { width?: number; height?: 
 
       {/* 5. Bar Handle (Animated - on top) */}
       <motion.path
+        key={`bar-handle-${speed}`}
         fill={barHandle.fill}
         d={barHandle.dInitial}
         animate={{ d: barHandle.dFinal }}

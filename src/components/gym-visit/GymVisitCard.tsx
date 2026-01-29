@@ -17,6 +17,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [background, setBackground] = useState("");
+  const [weightlifterSpeed, setWeightlifterSpeed] = useState<1 | 2 | 3 | 4>(2);
   useEffect(() => {
     if (counter <= 50) {
       setTitle("Energy-Saving <br /> Mode");
@@ -24,6 +25,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         "Sometimes leg day, sometimes abs day. <br /> Most times, rest days."
       );
       setBackground("linear-gradient(to bottom, #9393f9 35%, #d7f5ff 35%)");
+      setWeightlifterSpeed(1);
     } else if (counter <= 150) {
       setTitle("Serious <br /> Bodybuilder");
       setMessage(
@@ -32,6 +34,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
       setBackground(
         "linear-gradient(to bottom, #7171E2 35%, #B2E8F7 35%)"
       );
+      setWeightlifterSpeed(2);
     } else if (counter <= 250) {
       setTitle("Gym <br /> Bunny");
       setMessage(
@@ -40,6 +43,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
       setBackground(
         "linear-gradient(to bottom, #B2E8F7 35%, #8CEAF4 35%)"
       );
+      setWeightlifterSpeed(3);
     } else {
       setTitle("Hustle <br /> for Muscle");
       setMessage(
@@ -48,6 +52,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
       setBackground(
         "linear-gradient(to bottom, #29299B 35%, #4ADEE5 35%)"
       );
+      setWeightlifterSpeed(4);
     }
   }, [counter]);
 
@@ -102,15 +107,8 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
         }
         illustration={
           <div className="absolute bottom-17.5 right-8 z-10 pointer-events-none">
-            <Weightlifter width={154} height={185} />
+            <Weightlifter width={154} height={185} speed={weightlifterSpeed} />
           </div>
-          // <div className="absolute bottom-12 right-0 w-50 h-auto z-10 pointer-events-none">
-          //   <img
-          //     src="/gym-visit/deadlift.gif"
-          //     alt=""
-          //     className="w-full h-auto"
-          //   />
-          // </div>
         }
         topContent={
           <h1
