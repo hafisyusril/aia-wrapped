@@ -110,7 +110,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
             dangerouslySetInnerHTML={{ __html: config.title }}
             initial={{ y: -100, opacity: 0 }} // Mulai 100px di atas & transparan
             whileInView={{ y: 0, opacity: 1 }} // Slide ke posisi normal
-            viewport={{ once: false, amount: 0.5 }} // Animasi bisa jalan tiap scroll
+            viewport={{ once: true, amount: 0.5 }} // Animasi bisa jalan tiap scroll
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           />
         }

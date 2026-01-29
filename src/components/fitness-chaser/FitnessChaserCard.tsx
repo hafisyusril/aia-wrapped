@@ -43,11 +43,12 @@ export default function FitnessChaserCard({
                     translateY: "100%",
                     opacity: 0,
                   }}
-                  animate={
-                    isInView
-                      ? { translateY: "0%", opacity: 0.15 }
-                      : { translateY: "100%", opacity: 0 }
-                  }
+                  whileInView={{
+                    translateY: "0%", opacity: 0.15
+                  }}
+                  viewport={{
+                    once: true
+                  }}
                   transition={{
                     duration: 0.7,
                     delay: i * 0.1,

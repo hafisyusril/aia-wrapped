@@ -95,7 +95,7 @@ export default function MobileCardFrame({
         className="absolute top-0 left-0 w-full z-0"
         initial={{ height: "100vh" }}
         whileInView={{ height: "35%" }}
-        viewport={{ once: false, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         style={{ background: curtainColor ?? "#000" }} 
       />

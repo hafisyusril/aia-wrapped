@@ -53,7 +53,7 @@ export default function VhcIllustrationNotCompleted() {
       variants={appearAnim}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.5 }}
+      viewport={{ once: true, amount: 0.5 }}
     >
       {/* // VHC illustration Static */}
       <Image

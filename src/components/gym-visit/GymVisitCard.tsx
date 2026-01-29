@@ -69,7 +69,12 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
               alt=""
               className="absolute top-0 left-0 w-full  h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
-              animate={isInView ? { y: 0, opacity: 1 } : { y: 60, opacity: 0 }}
+              whileInView={
+                { y: 0, opacity: 1 }
+              }
+              viewport={{
+                once: true
+              }}
               transition={{
                 duration: 0.7,
                 ease: easeInOut,
@@ -81,7 +86,12 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
               alt=""
               className="absolute bottom-0 left-0 w-full h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
-              animate={isInView ? { y: 0, opacity: 1 } : { y: 60, opacity: 0 }}
+              whileInView={
+                { y: 0, opacity: 1 }
+              }
+              viewport={{
+                once: true
+              }}
               transition={{
                 duration: 0.7,
                 delay: 0.1,

@@ -28,11 +28,11 @@ export default function InputVitalityCard() {
     }
 
     setError("");
-    playMusic();
 
     try {
       await setVitalityId(value);
       localStorage.setItem("aia-vitality-id", value);
+      playMusic();
   
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
