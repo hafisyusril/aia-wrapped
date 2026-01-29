@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { motion, easeInOut } from "framer-motion";
 import MobileCardFrame from "../MobileCardFrame";
-import GymDeadliftSvg from "./GymDeadliftSvg";
 import AnimatedCounter from "../steps/StepsCounter";
 import { useInView } from "@/src/app/hooks/useInView";
 import Weightlifter from "./Weightlifter";
