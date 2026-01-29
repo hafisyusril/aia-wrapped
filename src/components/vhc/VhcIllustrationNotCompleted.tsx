@@ -30,6 +30,12 @@ const lineVariant: Variants = {
 
 const appearAnim = {
   hidden: {
+    opacity: 0,
+    scale: 0.85,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
     transition: {
       type: "spring" as const,
       stiffness: 140, // makin gede = makin kaku
