@@ -7,6 +7,7 @@ import { VHCStatus } from "./VHCStatusConfig";
 import { getVHCStatusContent } from "./VHCStatusUtils";
 import ShareButton from "../ShareButton";
 import VhcIllustration from "./VhcIllustration";
+import VhcIllustrationNotCompleted from "./VhcIllustrationNotCompleted";
 
 interface SparkleStarProps {
   size: number;
@@ -127,22 +128,19 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
       <ShareButton onClick={onShare} className="z-20" />
 
       {/* HEADER BACKGROUND — Tirai */}
-        <motion.div
-          className={`${headerBackground} absolute top-0 left-0 w-full origin-bottom`}
-          initial={{ height: "100%" }}
-          whileInView={{ height: "35%" }}
-          viewport={{ once: false, amount: 0.5 }} // false supaya tiap masuk viewport animasi jalan
-          transition={{
-            duration: 1,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        />
+      <motion.div
+        className={`${headerBackground} absolute top-0 left-0 w-full origin-bottom`}
+        initial={{ height: "100%" }}
+        whileInView={{ height: "35%" }}
+        viewport={{ once: false, amount: 0.5 }} // false supaya tiap masuk viewport animasi jalan
+        transition={{
+          duration: 1,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      />
 
-      
       {/* TOP CONTENT */}
       <div className="relative z-20 h-full overflow-hidden">
-        
-
         {/* HEADER CONTENT */}
         <div className="relative flex h-full flex-col justify-end px-7.5 pb-5">
           <h1 className="text-white font-bold text-3xl pt-15 leading-tight">
@@ -157,7 +155,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
             </motion.p>
 
             <motion.p
-              className="font-extrabold text-[54px]"
+              className="font-extrabold text-[40px]"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: false }}
@@ -173,7 +171,12 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
 
       <div className="relative px-7.5 pt-15 z-20 flex flex-col gap-[50px]">
         <div className="ml-10 w-[220px]">
-          <VhcIllustration />
+          {/* LOGIKA KONDISIONAL */}
+          {status === "checked" ? (
+            <VhcIllustration />
+          ) : (
+            <VhcIllustrationNotCompleted />
+          )}
         </div>
 
         {/* MESSAGE */}
@@ -185,7 +188,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
               key={index}
               initial={{ y: -20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: false }} 
+              viewport={{ once: false }}
               transition={{
                 duration: 0.8,
                 delay: 1.5, // stagger tiap baris

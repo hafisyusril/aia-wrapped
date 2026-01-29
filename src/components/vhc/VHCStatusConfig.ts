@@ -22,7 +22,7 @@ export const vhcStatusConfig: VHCStatusLevel[] = [
   },
   {
     status: "unchecked",
-    title: "AIA Vitality Health Check:\nNot Completed Yet",
+    title: "AIA Vitality Health Check:\nNot Completed",
     background: "bg-gray-600",
     headerBackground: "bg-gray-800",
     illustrationSrc: "/vhc/unchecked.svg",
