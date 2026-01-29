@@ -111,13 +111,12 @@ export default function InputVitalityCard() {
           </motion.form>
         </div>
       </motion.div>
-      {showErrorModal && (
-        <ErrorLoginModal
-          onClose={() => {
-            setShowErrorModal(false)
-          }}
-        />
-      )}
+      <ErrorLoginModal
+        show={showErrorModal}
+        onClose={() => {
+          setShowErrorModal(false)
+        }}
+      />
     </div>
   );
 }
