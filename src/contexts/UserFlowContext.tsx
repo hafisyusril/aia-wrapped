@@ -63,7 +63,6 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
   async function setVitalityId(id: string) {
     console.log("Fetching API for ID:", id);
-    setVitalityIdState(id);
     setIsLoading(true);
     setError(null);
 
@@ -113,6 +112,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
         },
       };
 
+      setVitalityIdState(id);
       setUserData(userData);
       setIsDummyUser(false);
       setFlowStep("intro");
@@ -127,6 +127,9 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       setUserData(null);
       setIsDummyUser(false);
       localStorage.removeItem("aia-vitality-id");
+      throw new Error(
+        "Vitality ID not found. Please check your ID and try again.",
+      );
     } finally {
       setIsLoading(false);
     }

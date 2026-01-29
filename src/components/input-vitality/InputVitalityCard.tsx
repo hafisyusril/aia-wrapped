@@ -7,29 +7,20 @@ import { useRouter } from "next/navigation";
 import { useUserFlow } from "../../contexts/UserFlowContext";
 import { useMusic } from "@/src/contexts/MusicContext";
 import { encodeVitalityId } from "@/src/app/utils/vitalityUrl";
+import ErrorLoginModal from "./ErrorLoginModal";
 
 export default function InputVitalityCard() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [showErrorModal, setShowErrorModal] = useState(false)
 
   const router = useRouter();
   const { setVitalityId, isLoading, error: apiError } = useUserFlow();
   const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
 
-  // FOR DEMO ONLY
-  useEffect(() => {
-    localStorage.removeItem("aia-vitality-id");
-  }, []);
-
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // FOR DEMO ONLY
-    if (Date.now()) {
-      setVitalityId("VI03391268");
-      playMusic();
-      return;
-    }
 
     if (!value.trim()) {
       setError("Your year with AIA Vitality cannot be empty");
@@ -39,11 +30,15 @@ export default function InputVitalityCard() {
     setError("");
     playMusic();
 
-    setVitalityId(value);
-    localStorage.setItem("aia-vitality-id", value);
-
-    const encoded = encodeVitalityId(value);
-    router.replace(`/?v=${encoded}`);
+    try {
+      await setVitalityId(value);
+      localStorage.setItem("aia-vitality-id", value);
+  
+      const encoded = encodeVitalityId(value);
+      router.replace(`/?v=${encoded}`);
+    } catch {
+      setShowErrorModal(true)
+    }
   }
 
   return (
@@ -116,6 +111,13 @@ export default function InputVitalityCard() {
           </motion.form>
         </div>
       </motion.div>
+      {showErrorModal && (
+        <ErrorLoginModal
+          onClose={() => {
+            setShowErrorModal(false)
+          }}
+        />
+      )}
     </div>
   );
 }
