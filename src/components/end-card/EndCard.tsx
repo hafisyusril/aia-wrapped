@@ -14,7 +14,7 @@ export default function EndCard({
   rightIllustration,
 }: EndCardProps) {
   const [scope, animate] = useAnimate();
-  const isInView = useInView(scope, { amount: 0.5, once: false });
+  const isInView = useInView(scope, { amount: 0.5, once: true });
 
   useEffect(() => {
     const config = { duration: 0.8, ease: "easeOut" } as const;

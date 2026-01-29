@@ -13,6 +13,7 @@ export default function IntroCard({
     root: containerRef,
     initial: false,
     amount: 0.75,
+    once: true,
   });
 
   useEffect(() => {

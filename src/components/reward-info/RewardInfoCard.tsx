@@ -12,6 +12,7 @@ export default function RewardInfoCard({
     root: containerRef,
     initial: false,
     amount: 0.75,
+    once: true,
   });
   
   useEffect(() => {

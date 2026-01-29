@@ -32,6 +32,7 @@ export default function CrowningCard({
     root: containerRef,
     initial: false,
     amount: 0.75,
+    once: true,
   });
 
   useEffect(() => {
