@@ -128,7 +128,7 @@ export default function Home() {
       block: "start",
     });
   };
-
+  
   const sections: SectionItem[] = [
     {
       name: "Intro",
@@ -147,88 +147,22 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc && {
-      name: "VHC Status unchecked",
+      name: "VHC Status",
       content: (
-        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status unchecked">
+        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
           {({ onShare }) => (
-            <VHCStatusCard status={"unchecked"} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    resolvedActivities?.vhc && {
-      name: "VHC Status checked",
-      content: (
-        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status checked">
-          {({ onShare }) => (
-            <VHCStatusCard status={"checked"} onShare={onShare} />
+            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
 
     resolvedActivities?.steps && {
-      name: "Steps turtle master",
+      name: "Steps turtle",
       content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle master">
-          {({ onShare }) => (
-            <StepsCard steps={1000000} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    resolvedActivities?.steps && {
-      name: "Steps consistent walker",
-      content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps consistent walker">
-          {({ onShare }) => (
-            <StepsCard steps={2000000} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    resolvedActivities?.steps && {
-      name: "Steps non-stop wanderer",
-      content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps non-stop wanderer">
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle">
           {({ onShare }) => (
             <StepsCard steps={data.steps} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.heartRate && {
-      name: "Heart Rate Light",
-      content: (
-        <PageCaptureWrapper
-          fileName="heart-rate-card.png"
-          pageName="Heart Rate Light"
-        >
-          {({ onShare }) => (
-            <HeartRateCard
-              containerRef={containerRef}
-              level={"light"}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    resolvedActivities?.heartRate && {
-      name: "Heart Rate Moderate",
-      content: (
-        <PageCaptureWrapper
-          fileName="heart-rate-card.png"
-          pageName="Heart Rate Moderate"
-        >
-          {({ onShare }) => (
-            <HeartRateCard
-              containerRef={containerRef}
-              level={"moderate"}
-              onShare={onShare}
-            />
           )}
         </PageCaptureWrapper>
       ),
@@ -252,84 +186,19 @@ export default function Home() {
       ),
     },
 
-    // resolvedActivities?.gymVisit && {
-    {
+    resolvedActivities?.gymVisit && {
       name: "Gym Visit",
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare }) => (
-            <GymVisitCard counter={24} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Gym Visit 100",
-      content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => (
-            <GymVisitCard counter={100} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Gym Visit 199",
-      content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => (
-            <GymVisitCard counter={199} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Gym Visit 399",
-      content: (
-        <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => (
-            <GymVisitCard counter={399} onShare={onShare} />
+            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
 
-    {
-      name: "Fitness Chaser 50",
-      content: (
-        <PageCaptureWrapper
-          fileName="fitness-chaser-card.png"
-          pageName="Fitness Chaser"
-        >
-          {({ onShare }) => (
-            <FitnessChaserCard
-              totalChallenges={19}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    {
-      name: "Fitness Chaser 75",
-      content: (
-        <PageCaptureWrapper
-          fileName="fitness-chaser-card.png"
-          pageName="Fitness Chaser"
-        >
-          {({ onShare }) => (
-            <FitnessChaserCard
-              totalChallenges={39}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-
-    {
-      name: "Fitness Chaser 100",
+    resolvedActivities?.weeklyChallenge && {
+      name: "Fitness Chaser",
       content: (
         <PageCaptureWrapper
           fileName="fitness-chaser-card.png"
@@ -381,68 +250,12 @@ export default function Home() {
     },
 
     {
-      name: "Crowning 1",
+      name: "Crowning",
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
               type="stretcher"
-              containerRef={containerRef}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Crowning 2",
-      content: (
-        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
-          {({ onShare }) => (
-            <CrowningCard
-              type="starter"
-              containerRef={containerRef}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Crowning 3",
-      content: (
-        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
-          {({ onShare }) => (
-            <CrowningCard
-              type="active"
-              containerRef={containerRef}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Crowning 4",
-      content: (
-        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
-          {({ onShare }) => (
-            <CrowningCard
-              type="challenger"
-              containerRef={containerRef}
-              onShare={onShare}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
-    {
-      name: "Crowning 5",
-      content: (
-        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
-          {({ onShare }) => (
-            <CrowningCard
-              type="athlete"
               containerRef={containerRef}
               onShare={onShare}
             />
