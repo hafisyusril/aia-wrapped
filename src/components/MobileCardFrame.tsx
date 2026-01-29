@@ -49,13 +49,18 @@ export default function MobileCardFrame({
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
 
   // Step 1: user klik share → tampilkan bottom sheet
-  const handleShareClick = () => {
-    setShowSharePopup(true);
+  const handleShareClick = async () => {
+    if (!captureRef.current) return;
+    await new Promise((r) => setTimeout(r, 300));
+    await captureWithWatermark({
+        element: captureRef.current,
+        fileName,
+        disableWatermark: false,
+    });
   };
 
   // Step 2: user pilih platform → capture element, simpan file, tapi jangan download langsung
   const handlePlatformSelect = async (_platform: string) => {
-    if (!captureRef.current) return;
 
     // langsung tutup popup
     setShowSharePopup(false);
