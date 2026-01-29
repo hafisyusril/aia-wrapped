@@ -7,7 +7,7 @@ import ShareBottomSheet from "./ShareBottomSheet";
 type Platform = "whatsapp" | "facebook" | "instagram" | "tiktok";
 
 type PageCaptureWrapperProps = {
-    children: (props: { onShare: () => void }) => ReactNode;
+    children: (props: { onShare: () => Promise<void> }) => ReactNode;
     fileName?: string;
     disableWatermark?: boolean;
     pageName: string;
@@ -22,8 +22,14 @@ export default function PageCaptureWrapper({
     const captureRef = useRef<HTMLDivElement>(null);
     const [showSharePopup, setShowSharePopup] = useState(false);
 
-    const handleShare = () => {
-        setShowSharePopup(true);
+    const handleShare = async () => {
+      if (!captureRef.current) return;
+      await new Promise((r) => setTimeout(r, 300));
+      await captureWithWatermark({
+          element: captureRef.current,
+          fileName,
+          disableWatermark,
+      });
     };
 
     const handlePlatformSelect = useCallback(
