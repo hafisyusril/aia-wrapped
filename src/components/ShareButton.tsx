@@ -33,7 +33,7 @@ export default function ShareButton({
       style={{ color: iconColor }}
     >
       <ShareIcon color={iconColor} />
-      <span>Save</span>
+      <span>Save and Share</span>
     </button>
   );
 }
