@@ -147,20 +147,50 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc && {
-      name: "VHC Status",
+      name: "VHC Status unchecked",
       content: (
-        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
+        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status unchecked">
           {({ onShare }) => (
-            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
+            <VHCStatusCard status={"unchecked"} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    resolvedActivities?.vhc && {
+      name: "VHC Status checked",
+      content: (
+        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status checked">
+          {({ onShare }) => (
+            <VHCStatusCard status={"checked"} onShare={onShare} />
           )}
         </PageCaptureWrapper>
       ),
     },
 
     resolvedActivities?.steps && {
-      name: "Steps",
+      name: "Steps turtle master",
       content: (
-        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps">
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle master">
+          {({ onShare }) => (
+            <StepsCard steps={1000000} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    resolvedActivities?.steps && {
+      name: "Steps consistent walker",
+      content: (
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps consistent walker">
+          {({ onShare }) => (
+            <StepsCard steps={2000000} onShare={onShare} />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
+    resolvedActivities?.steps && {
+      name: "Steps non-stop wanderer",
+      content: (
+        <PageCaptureWrapper fileName="steps-card.png" pageName="Steps non-stop wanderer">
           {({ onShare }) => (
             <StepsCard steps={data.steps} onShare={onShare} />
           )}
