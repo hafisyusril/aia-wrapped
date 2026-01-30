@@ -38,7 +38,7 @@ export const crowningConfig: CrowningLevel[] = [
     titleLine1: "The Rising",
     titleLine2: "Newbie",
     description:
-      "Sometimes you walk, sometimes you run, You move once in a while, but it still counts.",
+      "Sometimes you walk, sometimes you run. You move once in a while, but it still counts.",
     themeColor: "text-[#07C0FF]", // light blue
     illustrations: [
       {
@@ -149,7 +149,7 @@ export const crowningConfig: CrowningLevel[] = [
     titleLine1: "The Legendary",
     titleLine2: "Champion",
     description:
-      "Maximum efforts, minimum excuses.\n Olympian-consistency, runs in your blood",
+      "Maximum efforts, minimum excuses.\n Olympian-consistency runs in your blood",
     themeColor: "text-[#E11D48]", // red
     illustrations: [
       {
