@@ -24,12 +24,19 @@ export default function PageCaptureWrapper({
 
     const handleShare = async () => {
       if (!captureRef.current) return;
+      const shareBtns = document.getElementsByClassName('share-btn');
+      for (const btn of Array.from(shareBtns)) {
+        (btn as HTMLButtonElement).style.opacity = '0'
+      }
       await new Promise((r) => setTimeout(r, 300));
       await captureWithWatermark({
           element: captureRef.current,
           fileName,
           disableWatermark,
       });
+      for (const btn of Array.from(shareBtns)) {
+        (btn as HTMLButtonElement).style.opacity = ''
+      }
     };
 
     const handlePlatformSelect = useCallback(

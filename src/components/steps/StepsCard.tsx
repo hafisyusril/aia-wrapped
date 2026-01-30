@@ -215,6 +215,3 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
     </div>
   );
 }
-
-{
-}

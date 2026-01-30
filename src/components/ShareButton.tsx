@@ -19,6 +19,7 @@ export default function ShareButton({
     <button
       onClick={onClick}
       className={`
+        share-btn
         absolute top-4 right-4 z-30
         flex items-center gap-2
         rounded-full

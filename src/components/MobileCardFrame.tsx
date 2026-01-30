@@ -1,9 +1,7 @@
 "use client";
 
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useRef } from "react";
 import ShareButton from "./ShareButton";
-import { captureWithWatermark } from "../app/utils/captureWithWatermark";
-import ShareBottomSheet from "./ShareBottomSheet";
 import { motion } from "framer-motion";
 
 type MobileCardFrameProps = {
@@ -38,51 +36,9 @@ export default function MobileCardFrame({
   topClassName,
   bottomClassName,
   showShareButton = true,
-  fileName = "shared-image.png",
-  pageName,
   onShare,
 }: MobileCardFrameProps) {
   const captureRef = useRef<HTMLDivElement>(null);
-
-  const [showSharePopup, setShowSharePopup] = useState(false);
-  const [capturedFile, setCapturedFile] = useState<string | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
-
-  // Step 1: user klik share → tampilkan bottom sheet
-  const handleShareClick = async () => {
-    if (!captureRef.current) return;
-    await new Promise((r) => setTimeout(r, 300));
-    await captureWithWatermark({
-        element: captureRef.current,
-        fileName,
-        disableWatermark: false,
-    });
-  };
-
-  // Step 2: user pilih platform → capture element, simpan file, tapi jangan download langsung
-  const handlePlatformSelect = async (_platform: string) => {
-    if (!captureRef.current) return;
-    // langsung tutup popup
-    setShowSharePopup(false);
-
-    // capture element
-    const fileUrl = await captureWithWatermark({
-      element: captureRef.current,
-      fileName,
-    });
-
-    // opsional callback
-    onShare?.();
-
-    // trigger download
-    const a = document.createElement("a");
-    a.href = fileUrl as any;
-    a.download = fileName;
-    // a.click();
-
-    // selesai → popup sudah tertutup
-  };
-
   return (
     <div
       ref={captureRef}
@@ -105,7 +61,7 @@ export default function MobileCardFrame({
         style={{ background: curtainColor ?? "#000" }} 
       />
 
-      {showShareButton && <ShareButton onClick={handleShareClick} />}
+      {showShareButton && <ShareButton onClick={onShare} />}
 
       {ornaments}
 
@@ -129,12 +85,6 @@ export default function MobileCardFrame({
       </div>
 
       {illustration}
-      <ShareBottomSheet
-        pageName={pageName}
-        visible={showSharePopup}
-        onClose={() => setShowSharePopup(false)}
-        onSelect={handlePlatformSelect}
-      />
     </div>
   );
 }
