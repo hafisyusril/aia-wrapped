@@ -224,7 +224,7 @@ export default function CrowningCard({
 
           <p
             data-animate="text-desc"
-            className="mt-3 mb-10 text-base sm:text-lg md:text-xl leading-relaxed whitespace-pre-line translate-y-1/2"
+            className="mt-3 mb-10 text-[16px] md:text-xl leading-relaxed whitespace-pre-line translate-y-1/2"
           >
             {description}
           </p>

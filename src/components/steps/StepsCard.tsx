@@ -167,11 +167,11 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               className="mt-10 flex flex-col gap-2"
             >
               <p className="text-[16px] text-black font-medium leading-none">
-                That’s an average of {config.averageText}
+                That’s an average of {config.averageText} {config.motivation}
               </p>
 
               <p className="text-[16px] text-black font-medium whitespace-pre-line leading-none">
-                {config.motivation}
+                
               </p>
             </motion.div>
           </>
