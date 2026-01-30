@@ -166,11 +166,11 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
               transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }} // muncul setelah grup 1
               className="mt-10 flex flex-col gap-2"
             >
-              <p className="text-[20px] text-black font-light leading-none">
+              <p className="text-[16px] text-black font-medium leading-none">
                 That’s an average of {config.averageText}
               </p>
 
-              <p className="text-[20px] text-black font-light whitespace-pre-line leading-none">
+              <p className="text-[16px] text-black font-medium whitespace-pre-line leading-none">
                 {config.motivation}
               </p>
             </motion.div>

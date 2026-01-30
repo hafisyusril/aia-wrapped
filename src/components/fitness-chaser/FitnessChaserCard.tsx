@@ -97,7 +97,7 @@ export default function FitnessChaserCard({
             {/* <p className="mt-2 text-[18px] text-black font-light">
               Your superpower = consistency!
             </p>  */}
-            <p className="mt-2 text-[15px] text-black font-light whitespace-pre-line leading-tight">
+            <p className="mt-2 text-[16px] text-black font-medium whitespace-pre-line leading-tight">
               {config.description}
             </p>
           </>
