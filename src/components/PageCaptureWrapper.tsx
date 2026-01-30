@@ -11,12 +11,14 @@ type PageCaptureWrapperProps = {
     fileName?: string;
     disableWatermark?: boolean;
     pageName: string;
+    isBrightText?: boolean;
 };
 
 export default function PageCaptureWrapper({
     children,
     fileName = "capture.png",
     disableWatermark = false,
+    isBrightText = false,
     pageName,
 }: PageCaptureWrapperProps) {
     const captureRef = useRef<HTMLDivElement>(null);
@@ -33,6 +35,7 @@ export default function PageCaptureWrapper({
           element: captureRef.current,
           fileName,
           disableWatermark,
+          isBrightText
       });
       for (const btn of Array.from(shareBtns)) {
         (btn as HTMLButtonElement).style.opacity = ''

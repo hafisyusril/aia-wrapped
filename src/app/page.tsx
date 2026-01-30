@@ -237,6 +237,7 @@ export default function Home() {
         <PageCaptureWrapper
           fileName="vitality-rank.png"
           pageName="Vitality Rank"
+          isBrightText
         >
           {({ onShare }) => (
             <VitalityRankCard

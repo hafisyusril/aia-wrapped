@@ -5,12 +5,14 @@ type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
   disableWatermark?: boolean;
+  isBrightText?: boolean;
 };
 
 export async function captureWithWatermark({
   element,
   fileName = "shared-image.png",
   disableWatermark = false,
+  isBrightText = false
 }: CaptureOptions) {
   if (!element) return;
 
@@ -54,6 +56,29 @@ export async function captureWithWatermark({
     ctx.globalAlpha = 0.9;
     ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
     ctx.globalAlpha = 1;
+
+    // Add text lines
+    const textLine1 = "aia.id/aiavitality";
+    const textLine2 = "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
+    const textColor = isBrightText ? "#FFFFFF" : "#000000";
+    const textPaddingX = padding;
+    const textPaddingY = padding;
+
+    ctx.font = `20px Arial, sans-serif`;
+    ctx.fillStyle = textColor;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+
+    const textMetrics2 = ctx.measureText(textLine2);
+    const textHeight2 = textMetrics2.actualBoundingBoxAscent + textMetrics2.actualBoundingBoxDescent;
+
+
+    const yPosLine1 = canvas.height - textPaddingY - textHeight2 - 8;
+    ctx.fillText(textLine1, textPaddingX, yPosLine1);
+
+    const yPosLine2 = canvas.height - textPaddingY;
+    ctx.font = `12px Arial, sans-serif`;
+    ctx.fillText(textLine2, textPaddingX, yPosLine2);
   }
 
   const finalImage = canvas.toDataURL("image/png");
