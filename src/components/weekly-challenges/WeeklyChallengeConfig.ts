@@ -19,7 +19,7 @@ export const weeklyChallengeConfig: WeeklyChallengeLevel[] = [
     illustrationSrc: "/weekly-challenge/person_illustration.svg",
     coinSrc: "/weekly-challenge/coin.svg",
     currency: "Rp",
-    title: "Living healthier feels good for\n your body and your wallet",
+    title: "Living healthier feels good for\n your body and your wallet.",
     message: [
       
       "",
