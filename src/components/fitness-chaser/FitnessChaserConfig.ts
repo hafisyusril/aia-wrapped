@@ -13,7 +13,7 @@ export const FITNESS_CHASER_CONFIG = {
     background: "linear-gradient(to bottom, #FC7449 35%, #E1F9E6 35%)",
     title: "Casual\nChallenger",
     description:
-      "It depends on the week and the mood.\nBut your efforts still counts!",
+      "It depends on the week and the mood. But your efforts still counts!",
   },
 
   CONSISTENT: {
@@ -21,7 +21,7 @@ export const FITNESS_CHASER_CONFIG = {
     background: "linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)",
     title: "Fitness\n Chaser",
     description:
-      "Your life motto must be\n“I never sweat, I glow”.",
+      "Consistency looks good on you",
   },
 
   BOUNTY_HUNTER: {
@@ -29,6 +29,6 @@ export const FITNESS_CHASER_CONFIG = {
     background: "linear-gradient(to bottom, #EA380F 35%, #88EA98 35%)",
     title: "Bounty\n Hunter",
     description:
-      "No rest days? You really deserves\n those weekly rewards",
+      "No rest days? You really deserves those weekly rewards",
   },
 } as const;
