@@ -56,9 +56,19 @@ export default function WeeklyChallengeCard({
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [mounted, setMounted] = useState(false);
 
+  // STATE KUNCI: Untuk memastikan animasi hanya jalan sekali
+  const [hasAnimated, setHasAnimated] = useState(false);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Update hasAnimated saat elemen masuk ke viewport pertama kali
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
 
   const {
     background,
@@ -70,6 +80,9 @@ export default function WeeklyChallengeCard({
     message,
   } = getWeeklyChallengeByVariant("default");
 
+  // Gunakan variabel ini untuk memicu animasi agar tidak bergantung langsung pada isInView lagi
+  const shouldAnimate = hasAnimated;
+
   return (
     <section
       ref={ref}
@@ -80,47 +93,43 @@ export default function WeeklyChallengeCard({
       <motion.div
         className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
         initial={{ height: "100%" }}
-        animate={isInView ? { height: "38%" } : { height: "100%" }}
+        // Gunakan shouldAnimate, jangan isInView
+        animate={{ height: shouldAnimate ? "38%" : "100%" }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* 2. ANIMASI COIN MENGAMBANG (DENGAN DELAY 1 DETIK) */}
+      {/* 2. ANIMASI COIN */}
       {mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
-          {Array.from({ length: 3 }).map((_, i) => {
-            const section = 100 / 3;
-            const baseLeft = i * section;
-            const randomLeft = `${5 + baseLeft + Math.random() * (section - 15)}%`;
-            const randomTop = `${60 + Math.random() * 10}%`;
-
-            return (
-              <motion.img
-                key={i}
-                src={coinSrc}
-                alt="Coin"
-                className="absolute w-[60px] h-auto"
-                custom={i}
-                variants={coinVariants}
-                initial="initial"
-                // Hanya jalankan animasi jika isInView true
-                animate={isInView ? ["visible", "floating"] : "initial"}
-                style={{ left: randomLeft, top: randomTop }}
-              />
-            );
-          })}
+          {Array.from({ length: 3 }).map((_, i) => (
+            <motion.img
+              key={i}
+              src={coinSrc}
+              alt="Coin"
+              className="absolute w-[60px] h-auto"
+              custom={i}
+              variants={coinVariants}
+              initial="initial"
+              // Coin tetap floating selamanya setelah muncul pertama kali
+              animate={shouldAnimate ? ["visible", "floating"] : "initial"}
+              style={{
+                left: `${15 + i * 30}%`, // Posisi statis biar tidak random tiap render
+                top: `${60 + (i % 2) * 5}%`,
+              }}
+            />
+          ))}
         </div>
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pt-25 pb-8 h-[38%] flex flex-col justify-end">
+      <div className="relative z-30 px-6 pt-30 pb-8 h-[38%] flex flex-col justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
-            {/* Animasi Slide Down: Label */}
             <motion.p
               variants={textVariant}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              custom={0.5} // Delay setelah tirai naik
+              animate={shouldAnimate ? "visible" : "hidden"}
+              custom={0.5}
               className="text-[20px] font-everest font-medium"
             >
               Total rewards redeemed:
@@ -133,25 +142,25 @@ export default function WeeklyChallengeCard({
               <span className="text-[40px] font-extrabold leading-none font-source">
                 {currency}
               </span>
-              {mounted && isInView ? (
+              {mounted && shouldAnimate ? (
                 <AnimatedCounter
                   key={totalReward}
                   target={totalReward}
                   duration={900}
-                  className="text-[62px] font-extrabold leading-none font-source"
+                  className="text-[44px] font-extrabold leading-none font-source"
                 />
               ) : (
-                <span className="text-[62px] font-extrabold leading-none">
+                <span className="text-[44px] font-extrabold leading-none">
                   0
                 </span>
               )}
             </div>
           </div>
-          {/* Animasi Slide Down: Title */}
+
           <motion.p
             variants={textVariant}
             initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
+            animate={shouldAnimate ? "visible" : "hidden"}
             custom={1.5}
             className="text-xl font-medium whitespace-pre-line mt-2"
           >
@@ -168,8 +177,8 @@ export default function WeeklyChallengeCard({
               key={index}
               variants={textVariant}
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-              custom={1.7 + index * 0.2} // Delay staggered tiap baris pesan
+              animate={shouldAnimate ? "visible" : "hidden"}
+              custom={1.7 + index * 0.2}
               dangerouslySetInnerHTML={{
                 __html: line ? `${line}<br />` : "<br />",
               }}
@@ -180,9 +189,9 @@ export default function WeeklyChallengeCard({
         <motion.div
           className="relative flex justify-center items-end mt-4"
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{
-            delay: 1, // Delay 1 detik
+            delay: 1,
             duration: 0.8,
             ease: "easeOut",
           }}

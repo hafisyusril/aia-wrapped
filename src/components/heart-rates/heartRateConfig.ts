@@ -35,7 +35,7 @@ export const heartRateConfig: Record<
     background: "linear-gradient(to bottom, #b71c37 35%, #9090fc 35%)",
     backgrounds: ["#b71c37", "#9090fc"],
     topImage: "/heart-rate/cardio-junkie.svg",
-    description: "high intensity exercise",
+    description: "high intensity exercise.",
     motivation:
       "Are you human? Other people workout routine is just your warm-up!",
   },

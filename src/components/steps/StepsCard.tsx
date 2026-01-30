@@ -6,6 +6,7 @@ import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "./StepsCounter";
 import { getStepsConfig } from "./stepsUtils";
 import { delay } from "framer-motion/dom";
+import { useEffect, useState } from "react";
 
 interface StepsCardProps {
   steps: number;
@@ -27,6 +28,17 @@ const secondGroupVariants = {
 export default function StepsCard({ steps, onShare }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
+
+  // STATE KUNCI: Menjaga animasi agar tidak reset
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (isInView && !hasAnimated) {
+      setHasAnimated(true);
+    }
+  }, [isInView, hasAnimated]);
+
+  const shouldAnimate = hasAnimated; // Variabel bantuan untuk readability
 
   // speed sesuai dengan 3 kondisi dari config
   const animeSpeed = config.speed || 1;
@@ -84,20 +96,14 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
                 // --- ANIMASI BERJALAN ---
                 initial={{ pathLength: 0, opacity: 0 }}
                 animate={
-                  isInView
-                    ? {
-                        pathLength: 1,
-                        opacity: 0.7,
-                      }
-                    : {
-                        pathLength: 0,
-                        opacity: 0,
-                      }
+                  shouldAnimate
+                    ? { pathLength: 1, opacity: 0.7 }
+                    : { pathLength: 0, opacity: 0 }
                 }
                 transition={{
-                  duration: 3.5, // Durasi waktu "berjalan" dari ujung ke ujung
+                  duration: 3.5,
                   ease: "easeInOut",
-                  opacity: { duration: 1 }, // Opacity muncul lebih cepat
+                  opacity: { duration: 1 },
                 }}
               />
             </motion.svg>
@@ -106,11 +112,9 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         topContent={
           <motion.h1
             className="text-white text-[54px] font-source font-bold leading-none"
-            style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: config.title }}
-            initial={{ y: -100, opacity: 0 }} // Mulai 100px di atas & transparan
-            whileInView={{ y: 0, opacity: 1 }} // Slide ke posisi normal
-            viewport={{ once: true, amount: 0.5 }} // Animasi bisa jalan tiap scroll
+            initial={{ y: -100, opacity: 0 }}
+            animate={shouldAnimate ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           />
         }
@@ -119,7 +123,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
             {/* Grup 1: You walked → counter → Steps this year */}
             <motion.div
               initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
+              animate={shouldAnimate ? "visible" : "hidden"}
               variants={{
                 visible: {
                   transition: { delayChildren: 1 }, // tiap child muncul 0.3s selisih
@@ -134,45 +138,39 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
                 You walked
               </motion.p>
 
-              {isInView ? (
+              {shouldAnimate ? (
                 <AnimatedCounter
                   target={steps}
                   delay={1000}
                   duration={700}
                   className="text-[54px] text-black font-black font-source leading-none"
-                  style={{ fontFamily: "var(--font-source-sans)" }}
                 />
               ) : (
-                <motion.h2
-                  variants={firstGroupVariants}
-                  className="text-[50px] text-black font-bold leading-none"
-                >
-                  0
-                </motion.h2>
+                <span className="text-[54px] text-black font-bold">0</span>
               )}
 
               <motion.p
                 variants={firstGroupVariants}
-                className="text-[24px] text-black mt-5 font-everest font-bold leading-none "
+                className="text-[24px] text-black  font-everest font-bold leading-none "
               >
-                Steps this year.
+                steps this year
               </motion.p>
             </motion.div>
 
             {/* Grup 2: Average text & motivation */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }} // muncul setelah grup 1
               className="mt-10 flex flex-col gap-2"
             >
-              <p className="text-[16px] text-black font-medium leading-none">
+              <p className="text-[16px] text-black font-medium leading-tight">
                 That’s an average of {config.averageText} {config.motivation}
               </p>
 
-              <p className="text-[16px] text-black font-medium whitespace-pre-line leading-none">
+              {/* <p className="text-[16px] text-black font-medium whitespace-pre-line leading-none">
                 
-              </p>
+              </p> */}
             </motion.div>
           </>
         }

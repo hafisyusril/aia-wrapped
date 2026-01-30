@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
@@ -22,6 +22,7 @@ export default function VitalityRankCard({
   const { ref, isInView } = useInView({ threshold: 0.6 });
 
   // Kontrol dipisah agar manajemen animasi lebih granular
+  const [hasAnimated, setHasAnimated] = useState(false);
   const bgControls = useAnimation();
   const textTopControls = useAnimation();
   const trophyControls = useAnimation();
@@ -29,7 +30,10 @@ export default function VitalityRankCard({
 
   useEffect(() => {
     const runAnimations = async () => {
-      if (isInView) {
+      // Syarat: masuk viewport DAN belum pernah animasi sebelumnya
+      if (isInView && !hasAnimated) {
+        setHasAnimated(true); // Kunci agar tidak jalan lagi
+
         // 1. Animasi Tirai (Background #AE002F naik)
         await bgControls.start({
           height: "35%",
@@ -56,17 +60,17 @@ export default function VitalityRankCard({
           opacity: 1,
           transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
         }));
-      } else {
-        // RESET saat keluar viewport
-        bgControls.set({ height: "100%" });
-        textTopControls.set({ x: -100, opacity: 0 });
-        trophyControls.set({ x: 100, opacity: 0 });
-        bottomContentControls.set({ opacity: 0, y: -20 });
-      }
+      } 
     };
 
     runAnimations();
-  }, [isInView, bgControls, textTopControls, trophyControls, bottomContentControls]);
+  }, [
+    isInView,
+    bgControls,
+    textTopControls,
+    trophyControls,
+    bottomContentControls,
+  ]);
 
   return (
     <section
@@ -83,10 +87,9 @@ export default function VitalityRankCard({
       <div className="relative z-10 grid grid-rows-[35vh_65vh] h-screen w-full">
         {/* TOP CONTENT (35%) */}
         <div className="flex items-end justify-between px-6">
-          
           {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
           <motion.div
-            initial={{ x: -100, opacity: 0 }} 
+            initial={{ x: -100, opacity: 0 }}
             animate={textTopControls}
           >
             <h1 className="text-[32px] font-bold leading-tight pb-[18px] text-white font-source">
@@ -97,7 +100,7 @@ export default function VitalityRankCard({
           </motion.div>
 
           {/* TROPHY: Masuk dari Kanan ke Posisi Asli */}
-          <motion.div 
+          <motion.div
             className="relative flex items-center justify-center"
             initial={{ x: 100, opacity: 0 }}
             animate={trophyControls}
@@ -140,7 +143,7 @@ export default function VitalityRankCard({
         <div className="flex flex-col gap-10 px-6 pt-12">
           {[
             { label: "General Rank", val: generalRank },
-            { label: "Gender Rank", val: genderRank }
+            { label: "Gender Rank", val: genderRank },
           ].map((item, i) => (
             <motion.div
               key={item.label}
@@ -148,7 +151,9 @@ export default function VitalityRankCard({
               initial={{ y: -30, opacity: 0 }}
               animate={bottomContentControls}
             >
-              <p className="text-[20px] font-medium text-white/90">{item.label}</p>
+              <p className="text-[20px] font-medium text-white/90">
+                {item.label}
+              </p>
               <div className="flex items-center text-white">
                 <span className="text-[84px] leading-none font-thin">#</span>
                 <span className="text-[84px] leading-none font-black">

@@ -107,7 +107,7 @@ export default function IntroCard({
           data-animate="text"
           className="flex flex-1 items-center self-start px-7 opacity-0 -translate-y-1/2"
         >
-          <p className="text-white text-xl">Ready to check yours?</p>
+          <p className="text-white text-xl">Let's walk through <br/>your healthy journey</p>
         </div>
         <SvgAsset.Year
           data-animate="year"
