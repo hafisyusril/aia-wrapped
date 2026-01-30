@@ -233,7 +233,7 @@ export default function HeartRateCard({
           <p className="text-2xl font-everest font-light">
             You&apos;re mostly doing
           </p>
-          <p className="text-2xl font-medium leading-tight">
+          <p className="text-2xl font-bold leading-tight">
             {config.description}
           </p>
           {config.showExerciseText && (
@@ -241,7 +241,7 @@ export default function HeartRateCard({
           )}
         </div>
         <div data-animate="motivation" className="mt-10">
-          <p className="text-[20px] font-medium leading-tight whitespace-pre-line">
+          <p className="text-[16px] font-medium leading-tight whitespace-pre-line">
             {config.motivation}
           </p>
         </div>

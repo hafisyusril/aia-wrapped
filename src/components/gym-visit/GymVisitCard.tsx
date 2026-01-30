@@ -136,7 +136,7 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
             <p className="text-[20px] font-medium text-black">times</p>
 
             <p
-              className="mt-4 text-[15px] text-black"
+              className="mt-4 text-[16px] font-medium text-black"
               dangerouslySetInnerHTML={{ __html: message }}
             />
           </>
