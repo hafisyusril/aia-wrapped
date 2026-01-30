@@ -21,7 +21,7 @@ export const FITNESS_CHASER_CONFIG = {
     background: "linear-gradient(to bottom, #f9572b 35%, #bcf7c6 35%)",
     title: "Fitness\n Chaser",
     description:
-      "Consistency looks good on you",
+      "Consistency looks good on you. No sweating, just glowing.",
   },
 
   BOUNTY_HUNTER: {

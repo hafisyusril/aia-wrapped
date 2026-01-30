@@ -38,7 +38,7 @@ export const crowningConfig: CrowningLevel[] = [
     titleLine1: "The Rising",
     titleLine2: "Newbie",
     description:
-      "Some days you move, some days you wait for motivation. We try again this year!",
+      "Sometimes you walk, sometimes you run, You move once in a while, but it still counts.",
     themeColor: "text-[#07C0FF]", // light blue
     illustrations: [
       {
@@ -66,7 +66,7 @@ export const crowningConfig: CrowningLevel[] = [
     titleLine1: "The Consistent",
     titleLine2: "Learner",
     description:
-      "The most important part: you started. Your fitness era is coming. Right?",
+      "You enjoy trying different workouts to build healthy habits. That’s progress!",
     themeColor: "text-[#FF6A3D]", // orange
     illustrations: [
       {
@@ -94,7 +94,7 @@ export const crowningConfig: CrowningLevel[] = [
     titleLine1: "The Active",
     titleLine2: "Mover",
     description:
-      "Busy life and yet still making time to move and check your AIA Vitality app. Respect!",
+      "Work-life-exercise balanced! Even on busy days, you still exercise regularly.",
     themeColor: "text-[#7B6CF6]", // purple
     illustrations: [
       {
@@ -121,7 +121,7 @@ export const crowningConfig: CrowningLevel[] = [
     type: "challenger",
     titleLine1: "The Unstoppable",
     titleLine2: "Athlete",
-    description: "You exercise almost everyday. Great! But, are you okay?",
+    description: "Running today, gym tomorrow, tennis next! Exercise is your hobby.",
     themeColor: "text-[#2563EB]", // blue
     illustrations: [
       {

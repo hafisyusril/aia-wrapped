@@ -91,7 +91,7 @@ export default function FitnessChaserCard({
             )}
 
             <p className="text-[25px] text-black font-everest font-semibold">
-              Weekly Challenges!
+              Weekly Challenges
             </p>
 
             {/* <p className="mt-2 text-[18px] text-black font-light">
