@@ -29,6 +29,6 @@ export const FITNESS_CHASER_CONFIG = {
     background: "linear-gradient(to bottom, #EA380F 35%, #88EA98 35%)",
     title: "Bounty\n Hunter",
     description:
-      "No rest days? You really deserves those weekly rewards",
+      "No rest days? You really deserves those weekly rewards!",
   },
 } as const;
