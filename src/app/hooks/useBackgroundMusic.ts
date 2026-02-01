@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from "react";
 
 export function useBackgroundMusic(src: string, volume = 0.4) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const wasPlayingOnBlurRef = useRef(false); // To track if music was playing before blur
+  const isPlayingRef = useRef(false);
   const isLoadedRef = useRef(false);
 
   useEffect(() => {
@@ -19,50 +19,48 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
 
     audio.addEventListener("canplaythrough", handleCanPlayThrough);
 
-    const handleBlur = () => {
-      if (audioRef.current && !audioRef.current.paused) {
-        wasPlayingOnBlurRef.current = true;
-        audioRef.current.pause();
-      } else {
-        wasPlayingOnBlurRef.current = false;
+    const handleVisibilityChange = () => {
+      if (!audioRef.current || !isPlayingRef.current) {
+        return;
       }
+      // Mute when hidden, unmute when visible
+      audioRef.current.volume = document.hidden ? 0 : volume;
     };
 
-    const handleFocus = () => {
-      if (audioRef.current && wasPlayingOnBlurRef.current) {
-        audioRef.current.play().catch(() => {
-          console.warn("Audio play blocked on focus gain");
-        });
-      }
-    };
-
-    window.addEventListener("blur", handleBlur);
-    window.addEventListener("focus", handleFocus);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       audio.removeEventListener("canplaythrough", handleCanPlayThrough);
-      audio.pause();
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       audioRef.current = null;
-      window.removeEventListener("blur", handleBlur);
-      window.removeEventListener("focus", handleFocus);
     };
   }, [src, volume]);
 
   const play = useCallback(() => {
-    if (!audioRef.current || !isLoadedRef.current || !audioRef.current.paused) {
+    if (!audioRef.current || !isLoadedRef.current || isPlayingRef.current) {
       return;
     }
 
-    wasPlayingOnBlurRef.current = true; // Set intent to play
-    audioRef.current.play().catch(() => {
-      wasPlayingOnBlurRef.current = false; // Reset if play fails
-      console.warn("Audio play blocked");
-    });
+    isPlayingRef.current = true;
+
+    if (audioRef.current.paused) {
+      audioRef.current.play().catch((error) => {
+        // If play fails, reset the intent to play.
+        isPlayingRef.current = false;
+        console.warn("Audio play blocked", error);
+      });
+    }
   }, []);
 
   const stop = useCallback(() => {
-    audioRef.current?.pause();
-    wasPlayingOnBlurRef.current = false; // If explicitly stopped, don't resume on focus
+    if (!audioRef.current) {
+      return;
+    }
+    isPlayingRef.current = false;
+    audioRef.current.pause();
   }, []);
 
   return { play, stop };
