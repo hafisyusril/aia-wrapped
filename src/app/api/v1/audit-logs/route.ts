@@ -20,6 +20,7 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
+        authorization: req.headers.get("authorization") ?? "",
       },
       body: JSON.stringify(body),
       keepalive: true,

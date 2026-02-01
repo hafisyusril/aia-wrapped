@@ -119,8 +119,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       setUserData(userData);
       setIsDummyUser(false);
       setFlowStep("intro");
-      // FOR DEMO ONLY
-      // localStorage.setItem("aia-vitality-id", id);
+      localStorage.setItem("aia-session-token", apiData.session_token);
     } catch (err: any) {
       console.error("Failed to fetch vitality data:", err);
       // Use the specific error message if available, otherwise a generic fallback
