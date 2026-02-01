@@ -23,6 +23,7 @@ import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import VHCStatusCard from "../components/vhc/VHCStatusCard";
 import CrowningCard from "../components/crowning/CrowningCard";
 import EndCard from "../components/end-card/EndCard";
+import { addCookie, getCookie } from "./utils/cookie";
 
 const DUMMY_DATA = {
   steps: 3_022_500,
@@ -96,7 +97,7 @@ export default function Home() {
     const decoded = decodeVitalityId(encodedId);
     if (!decoded) return;
     setVitalityId(decoded);
-    localStorage.setItem("aia-vitality-id", decoded);
+    addCookie("aia-vitality-id", decoded, 15);
   }, [encodedId, setVitalityId]);
 
   useEffect(() => {
@@ -121,7 +122,7 @@ export default function Home() {
   }
 
   const handleSectionVisible = (sectionName: string) => {
-    const id = vitalityId || localStorage.getItem("aia-vitality-id");
+    const id = vitalityId || getCookie("aia-vitality-id");
     if (id) logAudit(id, sectionName);
   };
 

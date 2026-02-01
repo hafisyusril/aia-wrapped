@@ -9,6 +9,7 @@ import {
 } from "react";
 import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
 import { CrowningType } from "../components/crowning/CrowningConfig";
+import { addCookie, getCookie, removeCookie } from "../app/utils/cookie";
 
 type FlowStep = "input" | "intro" | "content";
 
@@ -57,7 +58,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedId = localStorage.getItem("aia-vitality-id");
+    const storedId = getCookie("aia-vitality-id");
     if (storedId) {
       setVitalityId(storedId);
     }
@@ -119,7 +120,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       setUserData(userData);
       setIsDummyUser(false);
       setFlowStep("intro");
-      localStorage.setItem("aia-session-token", apiData.session_token);
+      addCookie("aia-session-token", apiData.session_token, 15);
     } catch (err: any) {
       console.error("Failed to fetch vitality data:", err);
       // Use the specific error message if available, otherwise a generic fallback
@@ -128,7 +129,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       );
       setUserData(null);
       setIsDummyUser(false);
-      localStorage.removeItem("aia-vitality-id");
+      removeCookie("aia-vitality-id");
       throw new Error(
         "Vitality ID not found. Please check your ID and try again.",
       );

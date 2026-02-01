@@ -8,11 +8,12 @@ import { useUserFlow } from "../../contexts/UserFlowContext";
 import { useMusic } from "@/src/contexts/MusicContext";
 import { encodeVitalityId } from "@/src/app/utils/vitalityUrl";
 import ErrorLoginModal from "./ErrorLoginModal";
+import { addCookie } from "@/src/app/utils/cookie";
 
 export default function InputVitalityCard() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
-  const [showErrorModal, setShowErrorModal] = useState(false)
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   const router = useRouter();
   const { setVitalityId, isLoading, error: apiError } = useUserFlow();
@@ -31,13 +32,13 @@ export default function InputVitalityCard() {
 
     try {
       await setVitalityId(value);
-      localStorage.setItem("aia-vitality-id", value);
+      addCookie("aia-vitality-id", value, 15);
       playMusic();
-  
+
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
     } catch {
-      setShowErrorModal(true)
+      setShowErrorModal(true);
     }
   }
 
@@ -114,7 +115,7 @@ export default function InputVitalityCard() {
       <ErrorLoginModal
         show={showErrorModal}
         onClose={() => {
-          setShowErrorModal(false)
+          setShowErrorModal(false);
         }}
       />
     </div>
