@@ -87,7 +87,7 @@ export default function WeeklyChallengeCard({
     <section
       ref={ref}
       // Kita gunakan grid atau min-h agar strukturnya stabil saat tirai bergerak
-      className={`relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
+      className={`@container relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
     >
       {/* 1. HEADER BACKGROUND (TIRAI) */}
       <motion.div
@@ -97,7 +97,6 @@ export default function WeeklyChallengeCard({
         animate={{ height: shouldAnimate ? "38%" : "100%" }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
-
       {/* 2. ANIMASI COIN */}
       {mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
@@ -120,7 +119,6 @@ export default function WeeklyChallengeCard({
           ))}
         </div>
       )}
-
       {/* 3. CONTENT TOP */}
       <div className="relative z-30 px-6 pt-30 pb-8 h-[38%] flex flex-col justify-end">
         <div className="text-white">
@@ -130,7 +128,7 @@ export default function WeeklyChallengeCard({
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
               custom={0.5}
-              className="text-[20px] font-everest font-medium"
+              className="text-[3.8cqi] font-everest font-medium"
             >
               Total rewards earned:
             </motion.p>
@@ -139,7 +137,7 @@ export default function WeeklyChallengeCard({
 
           <div className="flex items-end space-x-2 mt-6">
             <div className="flex items-end space-x-1">
-              <span className="text-[40px] font-extrabold leading-none font-source">
+              <span className="text-[10.3cqi] font-extrabold leading-none font-source">
                 {currency}
               </span>
               {mounted && shouldAnimate ? (
@@ -147,10 +145,10 @@ export default function WeeklyChallengeCard({
                   key={totalReward}
                   target={totalReward}
                   duration={900}
-                  className="text-[44px] font-extrabold leading-none font-source"
+                  className="text-[10.3cqi] font-extrabold leading-none font-source"
                 />
               ) : (
-                <span className="text-[44px] font-extrabold leading-none">
+                <span className="text-[10.3cqi] font-extrabold leading-none">
                   0
                 </span>
               )}
@@ -162,16 +160,15 @@ export default function WeeklyChallengeCard({
             initial="hidden"
             animate={shouldAnimate ? "visible" : "hidden"}
             custom={1.5}
-            className="text-xl font-medium whitespace-pre-line mt-2"
+            className="text-[4.8cqi] font-medium whitespace-pre-line mt-2"
           >
             {title}
           </motion.p>
         </div>
       </div>
-
       {/* 4. CONTENT BOTTOM */}
       <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pb-4">
-        <div className="text-black text-[20px] font-medium leading-relaxed whitespace-pre-line">
+        <div className="text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
           {message.map((line, index) => (
             <motion.p
               key={index}
