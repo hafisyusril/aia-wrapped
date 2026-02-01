@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
+// Detect if the browser is running on an iOS device.
+const isIOS =
+  typeof navigator !== "undefined" &&
+  /iPad|iPhone|iPod/.test(navigator.userAgent);
+
 export function useBackgroundMusic(src: string, volume = 0.4) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
@@ -16,25 +21,33 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     const handleCanPlayThrough = () => {
       isLoadedRef.current = true;
     };
-
     audio.addEventListener("canplaythrough", handleCanPlayThrough);
 
+    // This handler will mute/unmute the audio when the tab visibility changes.
     const handleVisibilityChange = () => {
       if (!audioRef.current || !isPlayingRef.current) {
         return;
       }
-      // Mute when hidden, unmute when visible
       audioRef.current.volume = document.hidden ? 0 : volume;
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    // Only apply the visibility handling logic for non-iOS devices.
+    if (!isIOS) {
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+    }
 
     return () => {
       audio.removeEventListener("canplaythrough", handleCanPlayThrough);
       if (audioRef.current) {
         audioRef.current.pause();
       }
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      // Make sure to remove the listener only if it was added.
+      if (!isIOS) {
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange,
+        );
+      }
       audioRef.current = null;
     };
   }, [src, volume]);
@@ -48,7 +61,6 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
 
     if (audioRef.current.paused) {
       audioRef.current.play().catch((error) => {
-        // If play fails, reset the intent to play.
         isPlayingRef.current = false;
         console.warn("Audio play blocked", error);
       });
