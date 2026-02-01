@@ -10,11 +10,13 @@ interface HeartRateCardProps {
   level: HeartRateLevel;
   containerRef: RefObject<HTMLElement | null>;
   onShare?: () => void;
+  pageName?: string;
 }
 
 export default function HeartRateCard({
   level,
   containerRef,
+  pageName,
   onShare,
 }: HeartRateCardProps) {
   const condition = getHeartRateCondition(level);
@@ -184,7 +186,9 @@ export default function HeartRateCard({
       className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
       style={{ background }}
     >
-      {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
+      {onShare && (
+        <ShareButton pageName={pageName} onClick={onShare} isBrightBg={true} />
+      )}
       <div
         data-animate="content"
         className="absolute inset-x-0 bottom-0 h-[70%]"

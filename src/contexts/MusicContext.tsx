@@ -4,7 +4,6 @@ import { createContext, useContext } from "react";
 
 type MusicContextType = {
   playMusic: () => void;
-  stopMusic: () => void;
 };
 
 const MusicContext = createContext<MusicContextType | null>(null);
@@ -12,14 +11,12 @@ const MusicContext = createContext<MusicContextType | null>(null);
 export function MusicProvider({
   children,
   playMusic,
-  stopMusic,
 }: {
   children: React.ReactNode;
   playMusic: () => void;
-  stopMusic: () => void;
 }) {
   return (
-    <MusicContext.Provider value={{ playMusic, stopMusic }}>
+    <MusicContext.Provider value={{ playMusic }}>
       {children}
     </MusicContext.Provider>
   );

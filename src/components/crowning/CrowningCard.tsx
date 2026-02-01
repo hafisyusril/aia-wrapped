@@ -10,11 +10,13 @@ interface CrowningCardProps {
   type: CrowningType;
   containerRef: RefObject<HTMLElement | null>;
   onShare?: () => void;
+  pageName?: string;
 }
 
 export default function CrowningCard({
   type,
   containerRef,
+  pageName,
   onShare,
 }: CrowningCardProps) {
   const {
@@ -137,7 +139,13 @@ export default function CrowningCard({
         />
 
         {/* PASANG isBrightBg={true} karena bg utama section putih */}
-        {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
+        {onShare && (
+          <ShareButton
+            pageName={pageName}
+            onClick={onShare}
+            isBrightBg={true}
+          />
+        )}
       </div>
 
       {/* ILLUSTRATION */}

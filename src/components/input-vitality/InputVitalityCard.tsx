@@ -17,7 +17,7 @@ export default function InputVitalityCard() {
 
   const router = useRouter();
   const { setVitalityId, isLoading, error: apiError } = useUserFlow();
-  const { playMusic, stopMusic } = useMusic();
+  const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -38,7 +38,6 @@ export default function InputVitalityCard() {
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
     } catch {
-      stopMusic();
       setShowErrorModal(true);
     }
   }

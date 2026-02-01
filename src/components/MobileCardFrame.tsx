@@ -36,6 +36,7 @@ export default function MobileCardFrame({
   topClassName,
   bottomClassName,
   showShareButton = true,
+  pageName,
   onShare,
 }: MobileCardFrameProps) {
   const captureRef = useRef<HTMLDivElement>(null);
@@ -62,7 +63,7 @@ export default function MobileCardFrame({
         style={{ background: curtainColor ?? "#000" }}
       />
 
-      {showShareButton && <ShareButton onClick={onShare} />}
+      {showShareButton && <ShareButton pageName={pageName} onClick={onShare} />}
 
       {ornaments}
 

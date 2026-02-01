@@ -10,6 +10,7 @@ import ShareButton from "../ShareButton";
 
 interface WeeklyChallengeCardProps {
   totalReward: number;
+  pageName?: string;
   onShare?: () => void;
 }
 
@@ -51,6 +52,7 @@ const coinVariants = {
 
 export default function WeeklyChallengeCard({
   totalReward,
+  pageName,
   onShare,
 }: WeeklyChallengeCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
@@ -132,7 +134,7 @@ export default function WeeklyChallengeCard({
             >
               Total rewards earned:
             </motion.p>
-            <ShareButton onClick={onShare} />
+            <ShareButton pageName={pageName} onClick={onShare} />
           </div>
 
           <div className="flex items-end space-x-2 mt-6">

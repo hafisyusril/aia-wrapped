@@ -113,7 +113,7 @@ export default function Home() {
 
   if (isLocked) {
     return (
-      <MusicProvider playMusic={play} stopMusic={stop}>
+      <MusicProvider playMusic={play}>
         <main className="h-svh overflow-hidden flex items-center justify-center">
           <InputVitalityCard />
         </main>
@@ -176,10 +176,11 @@ export default function Home() {
           fileName="heart-rate-card.png"
           pageName="Heart Rate"
         >
-          {({ onShare }) => (
+          {({ pageName, onShare }) => (
             <HeartRateCard
               containerRef={containerRef}
               level={data.level}
+              pageName={pageName}
               onShare={onShare}
             />
           )}
@@ -222,9 +223,10 @@ export default function Home() {
           fileName="weekly-challenge.png"
           pageName="Weekly Challenge"
         >
-          {({ onShare }) => (
+          {({ pageName, onShare }) => (
             <WeeklyChallengeCard
               totalReward={data.totalReward}
+              pageName={pageName}
               onShare={onShare}
             />
           )}
@@ -255,11 +257,12 @@ export default function Home() {
       name: "Crowning",
       content: (
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
-          {({ onShare }) => (
+          {({ pageName, onShare }) => (
             <CrowningCard
               type={data.crowning}
               containerRef={containerRef}
               onShare={onShare}
+              pageName={pageName}
             />
           )}
         </PageCaptureWrapper>
@@ -273,7 +276,7 @@ export default function Home() {
   ].filter(Boolean) as SectionItem[];
 
   return (
-    <MusicProvider playMusic={play} stopMusic={stop}>
+    <MusicProvider playMusic={play}>
       <main
         ref={containerRef}
         className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
