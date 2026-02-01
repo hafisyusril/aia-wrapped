@@ -111,10 +111,12 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         }
         topContent={
           <motion.h1
-            className="text-white text-[54px] font-source font-bold leading-none"
+            className="text-white text-[12.6cqi] font-source font-bold leading-none"
             dangerouslySetInnerHTML={{ __html: config.title }}
             initial={{ y: -100, opacity: 0 }}
-            animate={shouldAnimate ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
+            animate={
+              shouldAnimate ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }
+            }
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           />
         }
@@ -133,7 +135,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
             >
               <motion.p
                 variants={firstGroupVariants}
-                className="text-[20px] font-bold font-everest text-black"
+                className="text-[4.8cqi] font-bold font-everest text-black"
               >
                 You walked
               </motion.p>
@@ -143,15 +145,15 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
                   target={steps}
                   delay={1000}
                   duration={700}
-                  className="text-[54px] text-black font-black font-source leading-none"
+                  className="text-[12.6cqi] text-black font-black font-source leading-none"
                 />
               ) : (
-                <span className="text-[54px] text-black font-bold">0</span>
+                <span className="text-[12.6cqi] text-black font-bold">0</span>
               )}
 
               <motion.p
                 variants={firstGroupVariants}
-                className="text-[24px] text-black  font-everest font-bold leading-none "
+                className="text-[5.6cqi] text-black  font-everest font-bold leading-none "
               >
                 steps this year
               </motion.p>
@@ -160,16 +162,18 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
             {/* Grup 2: Average text & motivation */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
-              animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+              animate={
+                shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }
+              }
               transition={{ delay: 1.5, duration: 0.6, ease: "easeOut" }} // muncul setelah grup 1
               className="mt-10 flex flex-col gap-2"
             >
-              <p className="text-[16px] text-black font-medium leading-tight">
+              <p className="text-[3.8cqi] text-black font-medium leading-tight">
                 That’s an average of {config.averageText} {config.motivation}
               </p>
 
               {/* <p className="text-[16px] text-black font-medium whitespace-pre-line leading-none">
-                
+
               </p> */}
             </motion.div>
           </>

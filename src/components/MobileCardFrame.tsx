@@ -44,6 +44,7 @@ export default function MobileCardFrame({
       ref={captureRef}
       id="mobile-frame-capture"
       className={`
+        @container
         relative grid min-h-dvh grid-rows-[35%_65%]
         w-full max-w-[430px] mx-auto
         overflow-hidden font-sans
@@ -58,7 +59,7 @@ export default function MobileCardFrame({
         whileInView={{ height: "35%" }}
         viewport={{ once: true, amount: 0.5 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-        style={{ background: curtainColor ?? "#000" }} 
+        style={{ background: curtainColor ?? "#000" }}
       />
 
       {showShareButton && <ShareButton onClick={onShare} />}

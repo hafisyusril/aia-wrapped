@@ -128,7 +128,7 @@ export default function Home() {
       block: "start",
     });
   };
-  
+
   const sections: SectionItem[] = [
     {
       name: "Intro",
@@ -138,12 +138,10 @@ export default function Home() {
         </div>
       ),
     },
-    
+
     {
-      name: 'Reward Info',
-      content: (
-        <RewardInfoCard containerRef={containerRef} />
-      )
+      name: "Reward Info",
+      content: <RewardInfoCard containerRef={containerRef} />,
     },
 
     resolvedActivities?.vhc && {
@@ -161,9 +159,7 @@ export default function Home() {
       name: "Steps turtle",
       content: (
         <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle">
-          {({ onShare }) => (
-            <StepsCard steps={data.steps} onShare={onShare} />
-          )}
+          {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
         </PageCaptureWrapper>
       ),
     },
