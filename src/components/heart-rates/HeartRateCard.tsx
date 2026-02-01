@@ -179,10 +179,9 @@ export default function HeartRateCard({
 
   const [background, bgContent] = config.backgrounds;
   return (
-
     <div
       ref={scope}
-      className="w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
+      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
       style={{ background }}
     >
       {onShare && <ShareButton onClick={onShare} isBrightBg={true} />}
@@ -219,7 +218,7 @@ export default function HeartRateCard({
       <div className="relative z-10 px-7 mt-[87px]">
         <p
           data-animate="label"
-          className="text-white font-semibold text-[20px] mb-2"
+          className="text-white font-semibold text-[4.8cqi] mb-2"
         >
           Your exercise vibe:
         </p>
@@ -230,18 +229,18 @@ export default function HeartRateCard({
           alt=""
         />
         <div data-animate="message">
-          <p className="text-2xl font-everest font-light">
+          <p className="text-[5.7cqi] font-everest font-light">
             You&apos;re mostly doing
           </p>
-          <p className="text-2xl font-bold leading-tight">
+          <p className="text-[5.7cqi] font-bold leading-tight">
             {config.description}
           </p>
           {config.showExerciseText && (
-            <p className="text-2xl font-light leading-tight">exercise</p>
+            <p className="text-[5.7cqi] font-light leading-tight">exercise</p>
           )}
         </div>
-        <div data-animate="motivation" className="mt-10">
-          <p className="text-[16px] font-medium leading-tight whitespace-pre-line">
+        <div data-animate="motivation" className="mt-10 mr-[50px]">
+          <p className="text-[3.8cqi] font-medium leading-tight whitespace-pre-line">
             {config.motivation}
           </p>
         </div>

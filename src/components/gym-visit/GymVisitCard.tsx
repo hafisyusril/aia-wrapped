@@ -22,42 +22,36 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
     if (counter <= 50) {
       setTitle("Energy-Saving <br /> Mode");
       setMessage(
-        "Sometimes leg day, sometimes abs day. <br /> Most times, rest days."
+        "Sometimes leg day, sometimes abs day. <br /> Most times, rest days.",
       );
       setBackground("linear-gradient(to bottom, #9393f9 35%, #d7f5ff 35%)");
       setWeightlifterSpeed(1);
     } else if (counter <= 150) {
       setTitle("Serious <br /> Bodybuilder");
       setMessage(
-        "Solid habit. You clearly not just hit <br /> the gym for mirror selfies."
+        "Solid habit. You clearly not just hit <br /> the gym for mirror selfies.",
       );
-      setBackground(
-        "linear-gradient(to bottom, #7171E2 35%, #B2E8F7 35%)"
-      );
+      setBackground("linear-gradient(to bottom, #7171E2 35%, #B2E8F7 35%)");
       setWeightlifterSpeed(2);
     } else if (counter <= 250) {
       setTitle("Gym <br /> Bunny");
       setMessage(
-        "Admit it, you train hard <br /> so you can have pizza after."
+        "Admit it, you train hard <br /> so you can have pizza after.",
       );
-      setBackground(
-        "linear-gradient(to bottom, #B2E8F7 35%, #8CEAF4 35%)"
-      );
+      setBackground("linear-gradient(to bottom, #B2E8F7 35%, #8CEAF4 35%)");
       setWeightlifterSpeed(3);
     } else {
       setTitle("Hustle <br /> for Muscle");
       setMessage(
-        "You give ‘No Days Off’ Energy. <br /> Be honest, the PT is your bestie!"
+        "You give ‘No Days Off’ Energy. <br /> Be honest, the PT is your bestie!",
       );
-      setBackground(
-        "linear-gradient(to bottom, #29299B 35%, #4ADEE5 35%)"
-      );
+      setBackground("linear-gradient(to bottom, #29299B 35%, #4ADEE5 35%)");
       setWeightlifterSpeed(4);
     }
   }, [counter]);
 
   // Ambil warna HEX pertama yang ditemukan dalam string background
-const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
+  const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
 
   return (
     <div ref={ref}>
@@ -74,11 +68,9 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
               alt=""
               className="absolute top-0 left-0 w-full  h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
-              whileInView={
-                { y: 0, opacity: 1 }
-              }
+              whileInView={{ y: 0, opacity: 1 }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.7,
@@ -91,11 +83,9 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
               alt=""
               className="absolute bottom-0 left-0 w-full h-[50%] object-cover"
               initial={{ y: 60, opacity: 0 }}
-              whileInView={
-                { y: 0, opacity: 1 }
-              }
+              whileInView={{ y: 0, opacity: 1 }}
               viewport={{
-                once: true
+                once: true,
               }}
               transition={{
                 duration: 0.7,
@@ -112,31 +102,31 @@ const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
         }
         topContent={
           <h1
-            className="text-white text-[45px] font-bold leading-none"
+            className="text-white text-[10.5cqi] font-bold leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: title }}
           />
         }
         bottomContent={
           <>
-            <p className="text-[20px] text-black">You went to gym partner</p>
+            <p className="text-[4.8cqi] text-black">You went to gym partner</p>
 
             {isInView ? (
               <AnimatedCounter
                 target={counter}
                 duration={700}
-                className="text-[50px] text-black font-bold leading-none"
+                className="text-[11.8cqi] text-black font-bold leading-none"
               />
             ) : (
-              <h2 className="text-[50px] text-black font-bold leading-none">
+              <h2 className="text-[11.8cqi] text-black font-bold leading-none">
                 0
               </h2>
             )}
 
-            <p className="text-[20px] font-medium text-black">times</p>
+            <p className="text-[4.8cqi] font-medium text-black">times</p>
 
             <p
-              className="mt-4 text-[16px] font-medium text-black"
+              className="mt-4 text-[3.9cqi] font-medium text-black"
               dangerouslySetInnerHTML={{ __html: message }}
             />
           </>
