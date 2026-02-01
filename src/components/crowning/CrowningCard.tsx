@@ -122,7 +122,7 @@ export default function CrowningCard({
   return (
     <div
       ref={scope}
-      className="w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
+      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
     >
       <div
         data-animate="header"
@@ -202,21 +202,21 @@ export default function CrowningCard({
         <div className="relative">
           <p
             data-animate="text-label"
-            className="text-[24px] sm:text-xl mb-4 opacity-0 -translate-y-1/2"
+            className="text-[5.6cqi] sm:text-xl mb-4 opacity-0 -translate-y-1/2"
           >
             Your AIA Vitality Type
           </p>
 
           <p
             data-animate="text-heading"
-            className={`text-[50px] sm:text-6xl md:text-7xl font-extrabold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
+            className={`text-[11.7cqi] sm:text-6xl md:text-7xl font-extrabold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {titleLine1}
           </p>
           <p
             data-animate="text-heading"
-            className={`text-[50px] sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
+            className={`text-[11.7cqi] sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {titleLine2}
@@ -224,7 +224,7 @@ export default function CrowningCard({
 
           <p
             data-animate="text-desc"
-            className="mt-3 mb-10 text-[16px] md:text-xl leading-relaxed whitespace-pre-line translate-y-1/2"
+            className="mt-3 mb-10 text-[3.8cqi] md:text-xl leading-relaxed whitespace-pre-line translate-y-1/2"
           >
             {description}
           </p>
