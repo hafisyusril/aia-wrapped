@@ -94,7 +94,7 @@ export default function WeeklyChallengeCard({
         className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
         initial={{ height: "100%" }}
         // Gunakan shouldAnimate, jangan isInView
-        animate={{ height: shouldAnimate ? "38%" : "100%" }}
+        animate={{ height: shouldAnimate ? "44%" : "100%" }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
       {/* 2. ANIMASI COIN */}

@@ -3,7 +3,6 @@ import { getCookie } from "./cookie";
 export async function logAudit(vitalityId: string, action: string) {
   if (!vitalityId) return;
   const sessionToken = getCookie("aia-session-token");
-  console.log(sessionToken);
 
   // Fire and forget
   fetch(`/api/v1/audit-logs`, {
