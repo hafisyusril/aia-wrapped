@@ -182,7 +182,7 @@ export default function Home() {
       ),
     },
 
-    !resolvedActivities?.gymVisit && {
+    resolvedActivities?.gymVisit && {
       name: "Gym Visit",
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
