@@ -14,13 +14,13 @@ export default function RewardInfoCard({
     amount: 0.75,
     once: true,
   });
-  
+
   useEffect(() => {
     const animationKeyframes = {
       type: "keyframes",
       duration: 0.6,
     } as const;
-    
+
     const animationSpring = {
       type: "spring" as const,
       stiffness: 100,
@@ -29,21 +29,25 @@ export default function RewardInfoCard({
     } as const;
 
     const enter = async () => {
-      await animate('[data-animate="bottom-box"]', { y: "0%" }, animationKeyframes);
+      await animate(
+        '[data-animate="bottom-box"]',
+        { y: "0%" },
+        animationKeyframes,
+      );
       await animate(
         '[data-animate="logo"]',
         { y: "0%", opacity: 1 },
-        animationKeyframes
+        animationKeyframes,
       );
       await animate(
         '[data-animate="text"]',
         { y: "0%", opacity: 1 },
-        animationKeyframes
+        animationKeyframes,
       );
       await animate(
         '[data-animate="heading"]',
         { y: "0%", opacity: 1 },
-        animationKeyframes
+        animationKeyframes,
       );
       await animate(
         '[data-animate="info"]',
@@ -55,26 +59,26 @@ export default function RewardInfoCard({
       await animate(
         '[data-animate="disclaimer"]',
         { y: "0%", opacity: 1 },
-        animationKeyframes
+        animationKeyframes,
       );
-    }
+    };
 
     const exit = () => {
       animate('[data-animate="bottom-box"]', { y: "100%" }, animationKeyframes);
       animate(
         '[data-animate="logo"]',
         { y: "-100%", opacity: 0 },
-        animationKeyframes
+        animationKeyframes,
       );
       animate(
         '[data-animate="text"]',
         { y: "-100%", opacity: 0 },
-        animationKeyframes
+        animationKeyframes,
       );
       animate(
         '[data-animate="heading"]',
         { y: "-100%", opacity: 0 },
-        animationKeyframes
+        animationKeyframes,
       );
       animate(
         '[data-animate="info"]',
@@ -86,18 +90,18 @@ export default function RewardInfoCard({
       animate(
         '[data-animate="disclaimer"]',
         { y: "100%", opacity: 0 },
-        animationKeyframes
+        animationKeyframes,
       );
-    }
+    };
 
-    if (inView) enter()
-    else exit()
-  }, [inView, animate])
+    if (inView) enter();
+    else exit();
+  }, [inView, animate]);
 
   return (
     <section
       ref={scope}
-      className="relative flex flex-col w-full max-w-107.5 min-h-svh mx-auto overflow-hidden bg-[#EAEAEA] px-7"
+      className="@container relative flex flex-col w-full max-w-107.5 min-h-svh mx-auto overflow-hidden bg-[#EAEAEA] px-7"
     >
       <div
         data-animate="bottom-box"
@@ -112,26 +116,23 @@ export default function RewardInfoCard({
           height={60}
           className="object-contain w-20 sm:w-40 md:w-48 my-14"
         />
-        <p
-          data-animate="text"
-          className="mb-3"
-        >
-          Before you start scrolling...<br /><br />
-          Don&apos;t forget to share your favorite<br />
-          achievements & tag us on<br/>
-          Instagram <b>@aiaindonesia
-        </b>
+        <p data-animate="text" className="mb-3 text-[4.3cqi]">
+          Before you start scrolling...
+          <br />
+          <br />
+          Don&apos;t forget to share your favorite
+          <br />
+          achievements & tag us on
+          <br />
+          Instagram <b>@aiaindonesia</b>
         </p>
         <h3
           data-animate="heading"
-          className="text-[#D31145] font-bold text-xl mb-4"
+          className="text-[#D31145] font-bold text-[5.4cqi] mb-4"
         >
           Get a chance to win:
         </h3>
-        <div
-          data-animate="info"
-          className="flex flex-col gap-4 flex-1"
-        >
+        <div data-animate="info" className="flex flex-col gap-4 flex-1">
           <div className="flex items-center gap-5 px-5 py-4 rounded-[20px] bg-white">
             <div className="flex-none">
               <img
@@ -142,8 +143,10 @@ export default function RewardInfoCard({
               />
             </div>
             <div className="flex-1">
-              <div className="font-bold text-5xl">50</div>
-              <div className="font-semibold">AIA Vitality Points</div>
+              <div className="font-bold text-[13cqi]">50</div>
+              <div className="font-semibold text-[4.3cqi]">
+                AIA Vitality Points
+              </div>
             </div>
           </div>
           <div className="flex items-center gap-5 px-5 py-4 rounded-[20px] bg-white">
@@ -156,19 +159,20 @@ export default function RewardInfoCard({
               />
             </div>
             <div className="flex-1">
-              <div className="font-bold text-2xl">Rp50.000</div>
-              <div className="font-semibold">Kopi Kenangan<br/> vouchers</div>
+              <div className="font-bold text-[6.6cqi]">Rp50.000</div>
+              <div className="font-semibold text-[4.3cqi]">
+                Kopi Kenangan
+                <br /> vouchers
+              </div>
             </div>
           </div>
         </div>
-        <div
-          data-animate="disclaimer"
-          className="mb-16"
-        >
-          Only for the first 200 members,<br />
+        <div data-animate="disclaimer" className="mb-16 text-[4.3cqi]">
+          Only for the first 200 members,
+          <br />
           until 6 February 2025!
         </div>
       </div>
     </section>
-  )
+  );
 }

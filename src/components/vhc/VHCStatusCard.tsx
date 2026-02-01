@@ -116,6 +116,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
     relative grid min-h-dvh grid-rows-[35%_65%]
     w-full max-w-[430px] mx-auto
     overflow-hidden font-sans
+    @container
     ${background}
   `}
     >
@@ -145,7 +146,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
         <div className="relative flex h-full flex-col justify-end px-7.5 pb-5">
           <h1 className="text-white font-bold text-3xl pt-15 leading-tight">
             <motion.p
-              className="font-medium text-[20px]"
+              className="font-medium text-[4.7cqi]"
               initial={{ y: -100, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true }}
@@ -155,7 +156,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
             </motion.p>
 
             <motion.p
-              className="font-extrabold text-[40px]"
+              className="font-extrabold text-[9.5cqi]"
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
@@ -181,7 +182,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
 
         {/* MESSAGE */}
         <div
-          className={`${textColor} text-[20px] font-medium flex flex-col gap-2`}
+          className={`${textColor} text-[4.7cqi] font-medium flex flex-col gap-2`}
         >
           {message.split("\n").map((line, index) => (
             <motion.span
