@@ -60,7 +60,7 @@ export default function VitalityRankCard({
           opacity: 1,
           transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
         }));
-      } 
+      }
     };
 
     runAnimations();
@@ -75,7 +75,7 @@ export default function VitalityRankCard({
   return (
     <section
       ref={ref}
-      className="relative w-full max-w-[430px] mx-auto min-h-screen overflow-hidden font-sans bg-[#EA0F4A]"
+      className="@container relative w-full max-w-[430px] mx-auto min-h-screen overflow-hidden font-sans bg-[#EA0F4A]"
     >
       {/* Background Layer Tirai */}
       <motion.div
@@ -92,7 +92,7 @@ export default function VitalityRankCard({
             initial={{ x: -100, opacity: 0 }}
             animate={textTopControls}
           >
-            <h1 className="text-[32px] font-bold leading-tight pb-[18px] text-white font-source">
+            <h1 className="text-[7.5cqi] font-bold leading-tight pb-[18px] text-white font-source">
               AIA Vitality
               <br />
               Member Rank
@@ -151,12 +151,12 @@ export default function VitalityRankCard({
               initial={{ y: -30, opacity: 0 }}
               animate={bottomContentControls}
             >
-              <p className="text-[20px] font-medium text-white/90">
+              <p className="text-[4.8cqi] font-medium text-white/90">
                 {item.label}
               </p>
-              <div className="flex items-center text-white">
-                <span className="text-[84px] leading-none font-thin">#</span>
-                <span className="text-[84px] leading-none font-black">
+              <div className="flex items-center text-white text-[18.7cqi]">
+                <span className="leading-none font-thin">#</span>
+                <span className="leading-none font-black">
                   {isInView ? <RankCounter target={item.val} /> : "0"}
                 </span>
               </div>
