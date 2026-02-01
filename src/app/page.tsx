@@ -33,6 +33,7 @@ const DUMMY_DATA = {
   generalRank: 1450,
   genderRank: 673,
   vhcStatus: "unchecked" as const,
+  crowning: "starter" as const,
 };
 
 const ENABLE_SNAP_ANIMATION = true;
@@ -74,6 +75,9 @@ export default function Home() {
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
       : (userData?.vhcStatus ?? "unchecked"),
+    crowning: isDummyUser
+      ? DUMMY_DATA.crowning
+      : (userData?.crowning ?? "starter"),
   };
 
   const resolvedActivities = isDummyUser
@@ -252,7 +256,7 @@ export default function Home() {
         <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
           {({ onShare }) => (
             <CrowningCard
-              type="stretcher"
+              type={data.crowning}
               containerRef={containerRef}
               onShare={onShare}
             />

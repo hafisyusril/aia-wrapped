@@ -8,11 +8,13 @@ import {
   ReactNode,
 } from "react";
 import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
+import { CrowningType } from "../components/crowning/CrowningConfig";
 
 type FlowStep = "input" | "intro" | "content";
 
 interface UserData {
   vhcStatus: "checked" | "unchecked";
+  crowning: CrowningType;
   steps?: number;
   level?: HeartRateLevel;
   gymVisit?: number;
@@ -110,6 +112,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
           rank: !!apiData.rank,
           vhc: !!apiData.vhc,
         },
+        crowning: apiData.crowning,
       };
 
       setVitalityIdState(id);
