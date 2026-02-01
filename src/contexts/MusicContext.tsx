@@ -3,27 +3,30 @@
 import { createContext, useContext } from "react";
 
 type MusicContextType = {
-    playMusic: () => void;
+  playMusic: () => void;
+  stopMusic: () => void;
 };
 
 const MusicContext = createContext<MusicContextType | null>(null);
 
 export function MusicProvider({
-    children,
-    playMusic,
+  children,
+  playMusic,
+  stopMusic,
 }: {
-    children: React.ReactNode;
-    playMusic: () => void;
+  children: React.ReactNode;
+  playMusic: () => void;
+  stopMusic: () => void;
 }) {
-    return (
-        <MusicContext.Provider value={{ playMusic }}>
-            {children}
-        </MusicContext.Provider>
-    );
+  return (
+    <MusicContext.Provider value={{ playMusic, stopMusic }}>
+      {children}
+    </MusicContext.Provider>
+  );
 }
 
 export function useMusic() {
-    const ctx = useContext(MusicContext);
-    if (!ctx) throw new Error("useMusic must be used inside MusicProvider");
-    return ctx;
+  const ctx = useContext(MusicContext);
+  if (!ctx) throw new Error("useMusic must be used inside MusicProvider");
+  return ctx;
 }

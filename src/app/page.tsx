@@ -51,7 +51,7 @@ export default function Home() {
   const params = useParams();
   const encodedId = params?.slug as string | undefined;
 
-  const { play } = useBackgroundMusic("/music/aia-vitality.m4a", 0.35);
+  const { play, stop } = useBackgroundMusic("/music/aia-vitality.m4a", 0.35);
 
   const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
@@ -113,7 +113,7 @@ export default function Home() {
 
   if (isLocked) {
     return (
-      <MusicProvider playMusic={play}>
+      <MusicProvider playMusic={play} stopMusic={stop}>
         <main className="h-svh overflow-hidden flex items-center justify-center">
           <InputVitalityCard />
         </main>
@@ -273,7 +273,7 @@ export default function Home() {
   ].filter(Boolean) as SectionItem[];
 
   return (
-    <MusicProvider playMusic={play}>
+    <MusicProvider playMusic={play} stopMusic={stop}>
       <main
         ref={containerRef}
         className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
