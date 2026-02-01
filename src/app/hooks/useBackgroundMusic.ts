@@ -53,7 +53,9 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
       return;
     }
 
+    wasPlayingOnBlurRef.current = true; // Set intent to play
     audioRef.current.play().catch(() => {
+      wasPlayingOnBlurRef.current = false; // Reset if play fails
       console.warn("Audio play blocked");
     });
   }, []);

@@ -29,11 +29,11 @@ export default function InputVitalityCard() {
     }
 
     setError("");
+    playMusic();
 
     try {
       await setVitalityId(value);
       addCookie("aia-vitality-id", value, 15);
-      playMusic();
 
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
