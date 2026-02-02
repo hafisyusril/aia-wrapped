@@ -132,16 +132,10 @@ export default function WeeklyChallengeCard({
     grid-rows-[35%_65%]
     overflow-hidden
     font-sans
-    ${background}
+    ${headerBackground}
   `}
     >
       {/* 1. HEADER BACKGROUND */}
-      <motion.div
-        className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
-        initial={{ height: "100%" }}
-        animate={{ height: shouldAnimate ? "35%" : "100%" }}
-        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      />
 
       {/* 2. ANIMASI COIN */}
       {mounted && (
@@ -214,7 +208,19 @@ export default function WeeklyChallengeCard({
       </div>
 
       {/* 4. CONTENT BOTTOM */}
-      <div className="relative z-30 px-6   flex flex-col justify-between">
+      <motion.div
+        className={`relative z-30 px-6 flex flex-col justify-between ${background}`}
+        initial={{
+          y: "100%",
+        }}
+        whileInView={{
+          y: "0",
+        }}
+        viewport={{
+          once: true,
+        }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
           {dynamicMessage.map((line, index) => (
             <motion.p
@@ -246,7 +252,7 @@ export default function WeeklyChallengeCard({
             className="w-[245px] h-[210px]"
           />
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

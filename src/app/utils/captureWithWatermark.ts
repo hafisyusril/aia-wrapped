@@ -217,7 +217,7 @@ export async function captureWithWatermarkV2({
     // Draw watermark logo if not disabled
     if (!disableWatermarkLogo) {
       const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
-      const watermarkWidth = Math.max(220, Math.min(baseSize * 2, 480));
+      const watermarkWidth = Math.max(110, Math.min(baseSize, 240));
 
       const isBrightOnTop = isBrightBackground(ctx, padding, padding, 100, 50);
 
