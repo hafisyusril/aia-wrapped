@@ -83,13 +83,13 @@ export default function Home() {
 
   const resolvedActivities = isDummyUser
     ? {
-        steps: true,
-        heartRate: true,
-        gymVisit: true,
-        weeklyChallenge: true,
-        vhc: true,
-        rank: true,
-      }
+      steps: true,
+      heartRate: true,
+      gymVisit: true,
+      weeklyChallenge: true,
+      vhc: true,
+      rank: true,
+    }
     : userData?.activities;
 
   useEffect(() => {
@@ -226,6 +226,7 @@ export default function Home() {
           {({ pageName, onShare }) => (
             <WeeklyChallengeCard
               totalReward={data.totalReward}
+              vitalityId={vitalityId!}
               pageName={pageName}
               onShare={onShare}
             />
@@ -233,6 +234,7 @@ export default function Home() {
         </PageCaptureWrapper>
       ),
     },
+
 
     resolvedActivities?.rank && {
       name: "Vitality Rank",
