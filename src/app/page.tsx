@@ -83,13 +83,13 @@ export default function Home() {
 
   const resolvedActivities = isDummyUser
     ? {
-      steps: true,
-      heartRate: true,
-      gymVisit: true,
-      weeklyChallenge: true,
-      vhc: true,
-      rank: true,
-    }
+        steps: true,
+        heartRate: true,
+        gymVisit: true,
+        weeklyChallenge: true,
+        vhc: true,
+        rank: true,
+      }
     : userData?.activities;
 
   useEffect(() => {
@@ -149,16 +149,20 @@ export default function Home() {
       content: <RewardInfoCard containerRef={containerRef} />,
     },
 
-    resolvedActivities?.vhc && {
-      name: "VHC Status",
-      content: (
-        <PageCaptureWrapper fileName="vhc-status.png" pageName="VHC Status">
-          {({ onShare }) => (
-            <VHCStatusCard status={data.vhcStatus} onShare={onShare} />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+    resolvedActivities?.vhc &&
+      data.vhcStatus === "checked" && {
+        name: "VHC Status Completed",
+        content: (
+          <PageCaptureWrapper
+            fileName="vhc-status.png"
+            pageName="VHC Status Completed"
+          >
+            {({ onShare }) => (
+              <VHCStatusCard status="checked" onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      },
 
     resolvedActivities?.steps && {
       name: "Steps turtle",
@@ -235,7 +239,6 @@ export default function Home() {
       ),
     },
 
-
     resolvedActivities?.rank && {
       name: "Vitality Rank",
       content: (
@@ -255,10 +258,30 @@ export default function Home() {
       ),
     },
 
+    resolvedActivities?.vhc &&
+      data.vhcStatus === "unchecked" && {
+        name: "VHC Status Not Completed",
+        content: (
+          <PageCaptureWrapper
+            fileName="vhc-status.png"
+            pageName="VHC Status Not Completed"
+            isBrightText
+          >
+            {({ onShare }) => (
+              <VHCStatusCard status="unchecked" onShare={onShare} />
+            )}
+          </PageCaptureWrapper>
+        ),
+      },
+
     {
       name: "Crowning",
       content: (
-        <PageCaptureWrapper fileName="crowning.png" pageName="Crowning">
+        <PageCaptureWrapper
+          fileName="crowning.png"
+          pageName="Crowning"
+          disableWatermarkLogo
+        >
           {({ pageName, onShare }) => (
             <CrowningCard
               type={data.crowning}

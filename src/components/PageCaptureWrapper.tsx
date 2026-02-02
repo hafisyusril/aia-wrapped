@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useRef } from "react";
 import { captureWithWatermarkV2 } from "../app/utils/captureWithWatermark";
 
 type PageCaptureWrapperProps = {
@@ -10,6 +10,7 @@ type PageCaptureWrapperProps = {
   }) => ReactNode;
   fileName?: string;
   disableWatermark?: boolean;
+  disableWatermarkLogo?: boolean;
   pageName: string;
   isBrightText?: boolean;
 };
@@ -17,6 +18,7 @@ type PageCaptureWrapperProps = {
 export default function PageCaptureWrapper({
   children,
   fileName = "capture.png",
+  disableWatermarkLogo = false,
   disableWatermark = false,
   isBrightText = false,
   pageName,
@@ -36,6 +38,7 @@ export default function PageCaptureWrapper({
       element: captureRef.current,
       fileName,
       disableWatermark,
+      disableWatermarkLogo,
       isBrightText,
     });
   };

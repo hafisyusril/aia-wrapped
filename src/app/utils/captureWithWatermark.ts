@@ -6,6 +6,7 @@ type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
   disableWatermark?: boolean;
+  disableWatermarkLogo?: boolean;
   isBrightText?: boolean;
 };
 
@@ -189,8 +190,10 @@ export async function captureWithWatermarkV2({
   element,
   fileName = "shared-image.png",
   disableWatermark = false,
+  disableWatermarkLogo = false,
   isBrightText = false,
 }: CaptureOptions) {
+  console.log({ isBrightText });
   // Generate high-quality image using Satori-style approach
   const imageDataUrl = await htmlToImageUsingSatori(element);
 
@@ -211,25 +214,34 @@ export async function captureWithWatermarkV2({
   if (!disableWatermark) {
     const padding = 24;
 
-    const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
-    const watermarkWidth = Math.max(220, Math.min(baseSize * 2, 480));
+    // Draw watermark logo if not disabled
+    if (!disableWatermarkLogo) {
+      const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
+      const watermarkWidth = Math.max(220, Math.min(baseSize * 2, 480));
 
-    const isBrightOnTop = isBrightBackground(ctx, padding, padding, 100, 50);
+      const isBrightOnTop = isBrightBackground(ctx, padding, padding, 100, 50);
 
-    const watermark = new Image();
-    watermark.src = isBrightOnTop ? "/aia-new-red.svg" : "/aia-new-white.svg";
+      const watermark = new Image();
+      watermark.src = isBrightOnTop ? "/aia-new-red.svg" : "/aia-new-white.svg";
 
-    await new Promise((res) => (watermark.onload = res));
+      await new Promise((res) => (watermark.onload = res));
 
-    let ratio = watermark.width / watermark.height;
-    if (!ratio || !isFinite(ratio)) {
-      ratio = 4; // AIA Vitality logo is wide, fallback to a sensible aspect ratio
+      let ratio = watermark.width / watermark.height;
+      if (!ratio || !isFinite(ratio)) {
+        ratio = 4; // AIA Vitality logo is wide, fallback to a sensible aspect ratio
+      }
+      const watermarkHeight = watermarkWidth / ratio;
+
+      ctx.globalAlpha = 0.9;
+      ctx.drawImage(
+        watermark,
+        padding,
+        padding,
+        watermarkWidth,
+        watermarkHeight,
+      );
+      ctx.globalAlpha = 1;
     }
-    const watermarkHeight = watermarkWidth / ratio;
-
-    ctx.globalAlpha = 0.9;
-    ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
-    ctx.globalAlpha = 1;
 
     // Add text lines
     const textLine1 = "aia.id/aiavitality";
@@ -247,25 +259,11 @@ export async function captureWithWatermarkV2({
 
     // Measure text 1
     ctx.font = `40px Arial, sans-serif`;
-    const textMetrics1 = ctx.measureText(textLine1);
-    const textHeight1 =
-      textMetrics1.actualBoundingBoxAscent +
-      textMetrics1.actualBoundingBoxDescent;
 
     const yPosLine2 = canvas.height - textPaddingY;
     const yPosLine1 = canvas.height - textPaddingY - textHeight2 - 16;
 
-    // Check background behind text area
-    const textBlockHeight = textHeight1 + textHeight2 + 16;
-    const isBrightAtBottom = isBrightBackground(
-      ctx,
-      textPaddingX,
-      yPosLine1 - textHeight1,
-      Math.max(textMetrics1.width, textMetrics2.width),
-      textBlockHeight,
-    );
-
-    const textColor = isBrightAtBottom || isBrightText ? "#FFFFFF" : "#000000";
+    const textColor = isBrightText ? "#FFFFFF" : "#000000";
     ctx.fillStyle = textColor;
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
