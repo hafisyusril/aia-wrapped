@@ -110,8 +110,10 @@ export default function WeeklyChallengeCard({
   const dynamicMessage = message.map((line) =>
     line.replace(
       "<strong>Tokopedia</strong>",
-      favoriteReward ? `<strong>${favoriteReward}</strong>` : "<strong>Loading...</strong>"
-    )
+      favoriteReward
+        ? `<strong>${favoriteReward}</strong>`
+        : "<strong>Loading...</strong>",
+    ),
   );
 
   const shouldAnimate = hasAnimated;
@@ -119,7 +121,19 @@ export default function WeeklyChallengeCard({
   return (
     <section
       ref={ref}
-      className={`@container relative w-full max-w-[430px] mx-auto min-h-dvh flex flex-col overflow-hidden font-sans ${background}`}
+      className={`
+    @container
+    relative
+    w-full
+    max-w-[430px]
+    mx-auto
+    min-h-dvh
+    grid
+    grid-rows-[35%_65%]
+    overflow-hidden
+    font-sans
+    ${background}
+  `}
     >
       {/* 1. HEADER BACKGROUND */}
       <motion.div
@@ -152,7 +166,7 @@ export default function WeeklyChallengeCard({
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pt-30 pb-8 h-[35%] flex flex-col justify-end">
+      <div className="relative z-30 px-6 pb-8 flex flex-col  justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
             <motion.p
@@ -180,7 +194,9 @@ export default function WeeklyChallengeCard({
                   className="text-[10.3cqi] font-extrabold leading-none font-source"
                 />
               ) : (
-                <span className="text-[10.3cqi] font-extrabold leading-none">0</span>
+                <span className="text-[10.3cqi] font-extrabold leading-none">
+                  0
+                </span>
               )}
             </div>
           </div>
@@ -198,7 +214,7 @@ export default function WeeklyChallengeCard({
       </div>
 
       {/* 4. CONTENT BOTTOM */}
-      <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pb-4">
+      <div className="relative z-30 px-6   flex flex-col justify-between">
         <div className="text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
           {dynamicMessage.map((line, index) => (
             <motion.p
@@ -207,13 +223,15 @@ export default function WeeklyChallengeCard({
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
               custom={1.7 + index * 0.2}
-              dangerouslySetInnerHTML={{ __html: line ? `${line}<br />` : "<br />" }}
+              dangerouslySetInnerHTML={{
+                __html: line ? `${line}<br />` : "<br />",
+              }}
             />
           ))}
         </div>
 
         <motion.div
-          className="relative flex justify-center items-end mt-4"
+          className="relative flex justify-center items-end pb-10"
           initial={{ opacity: 0, y: 20 }}
           animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{
@@ -225,7 +243,7 @@ export default function WeeklyChallengeCard({
           <img
             src={illustrationSrc}
             alt="Weekly Challenge Reward"
-            className="w-[300px] h-auto"
+            className="w-[245px] h-[210px]"
           />
         </motion.div>
       </div>
