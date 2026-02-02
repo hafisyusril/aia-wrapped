@@ -139,7 +139,7 @@ export default function WeeklyChallengeCard({
 
       {/* 2. ANIMASI COIN */}
       {mounted && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-50">
           {Array.from({ length: 3 }).map((_, i) => (
             <motion.img
               key={i}
