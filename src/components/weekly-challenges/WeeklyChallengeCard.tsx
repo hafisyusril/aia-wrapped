@@ -5,13 +5,21 @@ import { useEffect, useState } from "react";
 import { useInView } from "@/src/app/hooks/useInView";
 import AnimatedCounter from "../steps/StepsCounter";
 import { getWeeklyChallengeByVariant } from "./WeeklyChallengeConfig";
-import { formatCurrency } from "./WeeklyChallengeUtils";
 import ShareButton from "../ShareButton";
 
 interface WeeklyChallengeCardProps {
   totalReward: number;
+  vitalityId: string;
   pageName?: string;
   onShare?: () => void;
+}
+
+interface WeeklyChallengeApiResponse {
+  message: string;
+  data: {
+    favorite_rewards: string;
+    [key: string]: any;
+  };
 }
 
 // Varian untuk teks Slide Down
@@ -34,7 +42,7 @@ const coinVariants = {
     opacity: 1,
     scale: 1,
     transition: {
-      delay: 1 + i * 0.1, // Delay 1 detik + stagger antar koin
+      delay: 1 + i * 0.1,
       duration: 0.5,
     },
   }),
@@ -52,25 +60,41 @@ const coinVariants = {
 
 export default function WeeklyChallengeCard({
   totalReward,
+  vitalityId,
   pageName,
   onShare,
 }: WeeklyChallengeCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [mounted, setMounted] = useState(false);
-
-  // STATE KUNCI: Untuk memastikan animasi hanya jalan sekali
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [favoriteReward, setFavoriteReward] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Update hasAnimated saat elemen masuk ke viewport pertama kali
   useEffect(() => {
     if (isInView && !hasAnimated) {
       setHasAnimated(true);
     }
   }, [isInView, hasAnimated]);
+
+  // --- Fetch API berdasarkan vitalityId ---
+  useEffect(() => {
+    async function fetchWeeklyChallenge() {
+      try {
+        const res = await fetch(`/api/v1/vitality/${vitalityId}`);
+        const data: WeeklyChallengeApiResponse = await res.json();
+        setFavoriteReward(data.data.favorite_rewards);
+      } catch (error) {
+        console.error("Failed to fetch weekly challenge:", error);
+      }
+    }
+
+    if (vitalityId) {
+      fetchWeeklyChallenge();
+    }
+  }, [vitalityId]);
 
   const {
     background,
@@ -82,23 +106,29 @@ export default function WeeklyChallengeCard({
     message,
   } = getWeeklyChallengeByVariant("default");
 
-  // Gunakan variabel ini untuk memicu animasi agar tidak bergantung langsung pada isInView lagi
+  // Ganti <strong>Tokopedia</strong> dengan data dari API
+  const dynamicMessage = message.map((line) =>
+    line.replace(
+      "<strong>Tokopedia</strong>",
+      favoriteReward ? `<strong>${favoriteReward}</strong>` : "<strong>Loading...</strong>"
+    )
+  );
+
   const shouldAnimate = hasAnimated;
 
   return (
     <section
       ref={ref}
-      // Kita gunakan grid atau min-h agar strukturnya stabil saat tirai bergerak
       className={`@container relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
     >
-      {/* 1. HEADER BACKGROUND (TIRAI) */}
+      {/* 1. HEADER BACKGROUND */}
       <motion.div
         className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
         initial={{ height: "100%" }}
-        // Gunakan shouldAnimate, jangan isInView
         animate={{ height: shouldAnimate ? "44%" : "100%" }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
+
       {/* 2. ANIMASI COIN */}
       {mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-20">
@@ -111,16 +141,16 @@ export default function WeeklyChallengeCard({
               custom={i}
               variants={coinVariants}
               initial="initial"
-              // Coin tetap floating selamanya setelah muncul pertama kali
               animate={shouldAnimate ? ["visible", "floating"] : "initial"}
               style={{
-                left: `${15 + i * 30}%`, // Posisi statis biar tidak random tiap render
+                left: `${15 + i * 30}%`,
                 top: `${60 + (i % 2) * 5}%`,
               }}
             />
           ))}
         </div>
       )}
+
       {/* 3. CONTENT TOP */}
       <div className="relative z-30 px-6 pt-30 pb-8 h-[38%] flex flex-col justify-end">
         <div className="text-white">
@@ -150,9 +180,7 @@ export default function WeeklyChallengeCard({
                   className="text-[10.3cqi] font-extrabold leading-none font-source"
                 />
               ) : (
-                <span className="text-[10.3cqi] font-extrabold leading-none">
-                  0
-                </span>
+                <span className="text-[10.3cqi] font-extrabold leading-none">0</span>
               )}
             </div>
           </div>
@@ -168,19 +196,18 @@ export default function WeeklyChallengeCard({
           </motion.p>
         </div>
       </div>
+
       {/* 4. CONTENT BOTTOM */}
       <div className="relative z-30 flex-1 flex flex-col justify-between px-6 pb-4">
         <div className="text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
-          {message.map((line, index) => (
+          {dynamicMessage.map((line, index) => (
             <motion.p
               key={index}
               variants={textVariant}
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
               custom={1.7 + index * 0.2}
-              dangerouslySetInnerHTML={{
-                __html: line ? `${line}<br />` : "<br />",
-              }}
+              dangerouslySetInnerHTML={{ __html: line ? `${line}<br />` : "<br />" }}
             />
           ))}
         </div>

@@ -44,9 +44,7 @@ export async function captureWithWatermark({
     const isBrightOnTop = isBrightBackground(ctx, padding, padding, 100, 50);
 
     const watermark = new Image();
-    watermark.src = isBrightOnTop
-      ? "/aia_vitality_red.svg"
-      : "/aia_vitality_white.svg";
+    watermark.src = isBrightOnTop ? "/aia-new-red.svg" : "/aia-new-white.svg";
 
     await new Promise((res) => (watermark.onload = res));
 
