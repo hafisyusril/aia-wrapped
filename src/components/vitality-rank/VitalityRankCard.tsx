@@ -75,7 +75,7 @@ export default function VitalityRankCard({
   return (
     <section
       ref={ref}
-      className="@container relative w-full max-w-[430px] mx-auto min-h-screen overflow-hidden font-sans bg-[#EA0F4A]"
+      className="@container relative w-full max-w-[430px] mx-auto min-h-dvh overflow-hidden font-sans bg-[#EA0F4A]"
     >
       {/* Background Layer Tirai */}
       <motion.div

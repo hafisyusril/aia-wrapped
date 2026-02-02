@@ -11,7 +11,7 @@ export default function FavoriteRewardCard({ userName }: FavoriteRewardCardProps
     const { background, headerBackground, illustrationSrc, title, message, stores } = favoriteReward;
 
     return (
-        <section className={`w-full min-h-screen flex flex-col font-sans ${background}`}>
+        <section className={`w-full min-h-dvh flex flex-col font-sans ${background}`}>
             <div className={`px-6 py-12 ${headerBackground}`}>
                 <div className="text-white text-left">
                     <h1 className="text-4xl font-extrabold leading-snug mb-2">

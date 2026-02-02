@@ -119,13 +119,13 @@ export default function WeeklyChallengeCard({
   return (
     <section
       ref={ref}
-      className={`@container relative w-full max-w-[430px] mx-auto min-h-screen flex flex-col overflow-hidden font-sans ${background}`}
+      className={`@container relative w-full max-w-[430px] mx-auto min-h-dvh flex flex-col overflow-hidden font-sans ${background}`}
     >
       {/* 1. HEADER BACKGROUND */}
       <motion.div
         className={`absolute top-0 left-0 w-full z-10 origin-bottom ${headerBackground}`}
         initial={{ height: "100%" }}
-        animate={{ height: shouldAnimate ? "44%" : "100%" }}
+        animate={{ height: shouldAnimate ? "35%" : "100%" }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
 
@@ -152,7 +152,7 @@ export default function WeeklyChallengeCard({
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pt-30 pb-8 h-[38%] flex flex-col justify-end">
+      <div className="relative z-30 px-6 pt-30 pb-8 h-[35%] flex flex-col justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between mb-4">
             <motion.p

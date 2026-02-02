@@ -183,7 +183,7 @@ export default function HeartRateCard({
   return (
     <div
       ref={scope}
-      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-screen bg-gray-100 font-sans flex flex-col"
+      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-dvh bg-gray-100 font-sans flex flex-col"
       style={{ background }}
     >
       {onShare && (

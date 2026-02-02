@@ -75,7 +75,7 @@ export default function EndCard({
   return (
     <div
       ref={scope}
-      className="@container relative grid min-h-screen w-full max-w-[430px] mx-auto grid-rows-[50%_50%] overflow-hidden font-sans"
+      className="@container relative grid min-h-dvh w-full max-w-[430px] mx-auto grid-rows-[50%_50%] overflow-hidden font-sans"
       style={{
         background: "linear-gradient(to bottom, #E60041 50%, #A00032 50%)",
       }}
