@@ -213,11 +213,8 @@ export default function WeeklyChallengeCard({
         initial={{
           y: "100%",
         }}
-        whileInView={{
-          y: "0",
-        }}
-        viewport={{
-          once: true,
+        animate={{
+          y: shouldAnimate ? "0%" : "100%",
         }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
