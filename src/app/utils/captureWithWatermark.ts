@@ -1,5 +1,6 @@
 // src/utils/captureWithWatermark.ts
 import { toPng } from "html-to-image";
+import { htmlToImageUsingSatori } from "./generateImageWithSatori";
 
 type CaptureOptions = {
   element: HTMLElement;
@@ -182,4 +183,131 @@ function isBrightBackground(
   if (count === 0) return false; // Default to dark if no opaque pixels were sampled
 
   return totalBrightness / count > 180; // A threshold for what's considered "bright"
+}
+
+export async function captureWithWatermarkV2({
+  element,
+  fileName = "shared-image.png",
+  disableWatermark = false,
+  isBrightText = false,
+}: CaptureOptions) {
+  // Generate high-quality image using Satori-style approach
+  const imageDataUrl = await htmlToImageUsingSatori(element);
+
+  // Create canvas to manipulate the image and add watermark if needed
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const img = new Image();
+  img.src = imageDataUrl;
+  await new Promise((res) => (img.onload = res));
+
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.drawImage(img, 0, 0);
+
+  // ===== WATERMARK =====
+  if (!disableWatermark) {
+    const padding = 24;
+
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
+    const watermarkWidth = Math.max(220, Math.min(baseSize * 2, 480));
+
+    const isBrightOnTop = isBrightBackground(ctx, padding, padding, 100, 50);
+
+    const watermark = new Image();
+    watermark.src = isBrightOnTop ? "/aia-new-red.svg" : "/aia-new-white.svg";
+
+    await new Promise((res) => (watermark.onload = res));
+
+    let ratio = watermark.width / watermark.height;
+    if (!ratio || !isFinite(ratio)) {
+      ratio = 4; // AIA Vitality logo is wide, fallback to a sensible aspect ratio
+    }
+    const watermarkHeight = watermarkWidth / ratio;
+
+    ctx.globalAlpha = 0.9;
+    ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
+    ctx.globalAlpha = 1;
+
+    // Add text lines
+    const textLine1 = "aia.id/aiavitality";
+    const textLine2 =
+      "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
+    const textPaddingX = padding;
+    const textPaddingY = padding;
+
+    // Measure text 2
+    ctx.font = `24px Arial, sans-serif`;
+    const textMetrics2 = ctx.measureText(textLine2);
+    const textHeight2 =
+      textMetrics2.actualBoundingBoxAscent +
+      textMetrics2.actualBoundingBoxDescent;
+
+    // Measure text 1
+    ctx.font = `40px Arial, sans-serif`;
+    const textMetrics1 = ctx.measureText(textLine1);
+    const textHeight1 =
+      textMetrics1.actualBoundingBoxAscent +
+      textMetrics1.actualBoundingBoxDescent;
+
+    const yPosLine2 = canvas.height - textPaddingY;
+    const yPosLine1 = canvas.height - textPaddingY - textHeight2 - 16;
+
+    // Check background behind text area
+    const textBlockHeight = textHeight1 + textHeight2 + 16;
+    const isBrightAtBottom = isBrightBackground(
+      ctx,
+      textPaddingX,
+      yPosLine1 - textHeight1,
+      Math.max(textMetrics1.width, textMetrics2.width),
+      textBlockHeight,
+    );
+
+    const textColor = isBrightAtBottom || isBrightText ? "#FFFFFF" : "#000000";
+    ctx.fillStyle = textColor;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+
+    ctx.font = `40px Arial, sans-serif`;
+    ctx.fillText(textLine1, textPaddingX, yPosLine1);
+
+    ctx.font = `24px Arial, sans-serif`;
+    ctx.fillText(textLine2, textPaddingX, yPosLine2);
+  }
+
+  const finalImage = canvas.toDataURL("image/png");
+
+  const blob = await (await fetch(finalImage)).blob();
+  const imageFile = new File([blob], fileName, { type: blob.type });
+
+  // Try to use the Web Share API if available
+  if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+    try {
+      await navigator.share({
+        files: [imageFile],
+        title: "AIA Vitality Wrapped",
+        text: "Check out my summary with AIA Vitality!",
+      });
+      return; // Exit after successful share
+    } catch (err) {
+      console.log("Web Share API failed or was cancelled", err);
+    }
+  }
+
+  // Fallback: Create download link
+  const link = document.createElement("a");
+  link.href = finalImage;
+
+  // iOS Safari doesn't support the download attribute well for data URIs
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    link.target = "_blank";
+  } else {
+    link.download = fileName;
+  }
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
