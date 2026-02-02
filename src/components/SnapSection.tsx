@@ -52,7 +52,7 @@ export default function SnapSection({
     <motion.section
       onViewportEnter={handleViewportEnter}
       ref={innerRef}
-      className="min-h-svh snap-start snap-always w-full relative"
+      className="min-h-dvh snap-start snap-always w-full relative"
       {...(enableAnimation
         ? {
             initial: { opacity: 1, y: 0 },
