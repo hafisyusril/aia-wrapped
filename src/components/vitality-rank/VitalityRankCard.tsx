@@ -84,7 +84,7 @@ export default function VitalityRankCard({
         className="absolute top-0 left-0 w-full bg-[#AE002F] z-0"
       />
 
-      <div className="relative z-10 grid grid-rows-[35vh_65vh] w-full">
+      <div className="relative z-10 grid grid-rows-[35%_65%] w-full">
         {/* TOP CONTENT (35%) */}
         <div className="flex items-end justify-between px-6">
           {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
