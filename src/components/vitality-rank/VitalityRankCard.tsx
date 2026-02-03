@@ -75,7 +75,19 @@ export default function VitalityRankCard({
   return (
     <section
       ref={ref}
-      className="@container relative w-full max-w-[430px] mx-auto min-h-dvh overflow-hidden font-sans bg-[#EA0F4A]"
+      className="
+    @container
+    relative
+    grid
+    grid-rows-[35%_65%]
+    w-full
+    max-w-[430px]
+    mx-auto
+    min-h-dvh
+    overflow-hidden
+    font-sans
+    bg-[#EA0F4A]
+  "
     >
       {/* Background Layer Tirai */}
       <motion.div
@@ -84,9 +96,8 @@ export default function VitalityRankCard({
         className="absolute top-0 left-0 w-full bg-[#AE002F] z-0"
       />
 
-      <div className="relative z-10 grid grid-rows-[35%_65%] w-full">
         {/* TOP CONTENT (35%) */}
-        <div className="flex items-end justify-between px-6">
+        <div className="relative z-10 flex items-end justify-between px-6">
           {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
@@ -140,7 +151,7 @@ export default function VitalityRankCard({
         </div>
 
         {/* BOTTOM CONTENT (65%) */}
-        <div className="flex flex-col gap-10 px-6 pt-12">
+        <div className="relative z-10 flex flex-col gap-10 px-6 pt-12">
           {[
             { label: "Overall Member Rank", val: generalRank },
             { label: "Gender-Based Rank", val: genderRank },
@@ -163,7 +174,6 @@ export default function VitalityRankCard({
             </motion.div>
           ))}
         </div>
-      </div>
 
       <ShareButton onClick={onShare} />
     </section>
