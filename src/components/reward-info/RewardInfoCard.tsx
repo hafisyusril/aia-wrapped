@@ -170,7 +170,7 @@ export default function RewardInfoCard({
         <div data-animate="disclaimer" className="mb-16 text-[4.3cqi]">
           Only for the first 200 members,
           <br />
-          until 20 February 2025!
+          until 20 February 2026!
         </div>
       </div>
     </section>
