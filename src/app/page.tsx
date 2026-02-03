@@ -7,7 +7,7 @@ import { useUserFlow } from "../contexts/UserFlowContext";
 import { useBackgroundMusic } from "./hooks/useBackgroundMusic";
 import { MusicProvider } from "../contexts/MusicContext";
 import PageCaptureWrapper from "../components/PageCaptureWrapper";
-import SnapSection from "../components/SnapSection";
+import SnapSection, { ScrollDirection } from "../components/SnapSection";
 import { logAudit } from "./utils/auditLogger";
 import { decodeVitalityId } from "./utils/vitalityUrl";
 
@@ -42,6 +42,8 @@ const ENABLE_SNAP_ANIMATION = true;
 type SectionItem = {
   name: string;
   content: React.ReactNode;
+  scrollHint?: ScrollDirection | "none";
+  onScroll?: (index: number) => void;
 };
 
 export default function Home() {
@@ -297,6 +299,10 @@ export default function Home() {
     {
       name: "End Card",
       content: <EndCard />,
+      scrollHint: "down",
+      onScroll: () => {
+        introRef.current?.scrollIntoView({ behavior: "smooth" });
+      },
     },
   ].filter(Boolean) as SectionItem[];
 
@@ -307,7 +313,7 @@ export default function Home() {
         className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
       >
         {sections.map((section, idx) => {
-          const disableScrollUp = idx === 0 || idx === sections.length - 1;
+          const showScrollUp = section.scrollHint !== "none";
 
           return (
             <SnapSection
@@ -316,8 +322,13 @@ export default function Home() {
               innerRef={(el) => {
                 if (el) sectionRefs.current[idx] = el;
               }}
-              showScrollUp={!disableScrollUp}
-              onScrollUp={() => scrollPrev(idx)}
+              showScrollUp={showScrollUp}
+              scrollDirection={section.scrollHint === "down" ? "down" : "up"}
+              onScrollUp={
+                section.onScroll
+                  ? () => section.onScroll!(idx)
+                  : () => scrollPrev(idx)
+              }
               onVisible={() => handleSectionVisible(section.name)}
             >
               {section.content}

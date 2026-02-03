@@ -84,7 +84,7 @@ export default function VitalityRankCard({
         className="absolute top-0 left-0 w-full bg-[#AE002F] z-0"
       />
 
-      <div className="relative z-10 grid grid-rows-[35vh_65vh] h-screen w-full">
+      <div className="relative z-10 grid grid-rows-[35vh_65vh] w-full">
         {/* TOP CONTENT (35%) */}
         <div className="flex items-end justify-between px-6">
           {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
@@ -142,8 +142,8 @@ export default function VitalityRankCard({
         {/* BOTTOM CONTENT (65%) */}
         <div className="flex flex-col gap-10 px-6 pt-12">
           {[
-            { label: "General Rank", val: generalRank },
-            { label: "Gender Rank", val: genderRank },
+            { label: "Overall Member Rank", val: generalRank },
+            { label: "Gender-Based Rank", val: genderRank },
           ].map((item, i) => (
             <motion.div
               key={item.label}

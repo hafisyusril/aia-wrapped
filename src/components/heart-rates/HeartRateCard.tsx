@@ -224,7 +224,7 @@ export default function HeartRateCard({
           data-animate="label"
           className="text-white font-semibold text-[4.8cqi] mb-2"
         >
-          Your exercise vibe:
+          Your Exercise Vibe:
         </p>
         <img
           data-animate="top-image"

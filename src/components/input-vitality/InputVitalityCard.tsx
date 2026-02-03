@@ -84,7 +84,7 @@ export default function InputVitalityCard() {
                   });
                 }, 150);
               }}
-              placeholder="Enter your Vitality ID"
+              placeholder="Enter your AIA Vitality ID"
               className={`
                 h-12 rounded-xl border px-4 text-base
                 focus:outline-none focus:ring-2 focus:ring-red-500
