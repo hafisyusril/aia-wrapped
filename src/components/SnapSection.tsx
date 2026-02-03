@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ReactNode, Ref, useEffect, useRef, useState } from "react";
 
+export type ScrollDirection = "up" | "down";
+
 interface SnapSectionProps {
   children: ReactNode;
   innerRef?: Ref<HTMLDivElement>;
@@ -10,6 +12,7 @@ interface SnapSectionProps {
   onScrollUp?: () => void;
   enableAnimation?: boolean;
   onVisible?: () => void;
+  scrollDirection?: ScrollDirection;
 }
 
 export default function SnapSection({
@@ -19,6 +22,7 @@ export default function SnapSection({
   onScrollUp,
   enableAnimation = true,
   onVisible,
+  scrollDirection = "up",
 }: SnapSectionProps) {
   const [showHint, setShowHint] = useState(false);
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -75,9 +79,16 @@ export default function SnapSection({
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="pointer-events-auto absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 cursor-pointer"
         >
-          <img src="/steps/scroll.svg" alt="Scroll" className="w-4 h-4" />
+          <img
+            src="/steps/scroll.svg"
+            alt="Scroll"
+            className={`w-4 h-4 transition-transform ${
+              scrollDirection === "down" ? "rotate-180" : ""
+            }`}
+          />
           <p className="text-xl text-black font-normal tracking-wide">
-            scroll
+            {" "}
+            {scrollDirection === "down" ? "reverse scroll" : "scroll"}
           </p>
         </motion.div>
       )}

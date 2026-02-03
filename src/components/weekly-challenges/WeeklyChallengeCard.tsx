@@ -170,7 +170,7 @@ export default function WeeklyChallengeCard({
               custom={0.5}
               className="text-[3.8cqi] font-everest font-medium"
             >
-              Total rewards earned:
+              Total Rewards Earned:
             </motion.p>
             <ShareButton pageName={pageName} onClick={onShare} />
           </div>

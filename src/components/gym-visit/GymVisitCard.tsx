@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, easeInOut } from "framer-motion";
+import { useInView } from "@/src/app/hooks/useInView";
+import { easeInOut, motion } from "framer-motion";
 import MobileCardFrame from "../MobileCardFrame";
 import AnimatedCounter from "../steps/StepsCounter";
-import { useInView } from "@/src/app/hooks/useInView";
 import Weightlifter from "./Weightlifter";
+import { getGymVisitConfig } from "./gymVisitUtils";
 
 interface GymVisitCardProps {
   counter: number;
@@ -14,49 +14,17 @@ interface GymVisitCardProps {
 
 export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-  const [background, setBackground] = useState("");
-  const [weightlifterSpeed, setWeightlifterSpeed] = useState<1 | 2 | 3 | 4>(2);
-  useEffect(() => {
-    if (counter <= 50) {
-      setTitle("Energy-Saving <br /> Mode");
-      setMessage(
-        "Sometimes leg day, sometimes abs day. <br /> Most times, rest days.",
-      );
-      setBackground("linear-gradient(to bottom, #9393f9 35%, #d7f5ff 35%)");
-      setWeightlifterSpeed(1);
-    } else if (counter <= 150) {
-      setTitle("Serious <br /> Bodybuilder");
-      setMessage(
-        "Solid habit. You clearly not just hit <br /> the gym for mirror selfies.",
-      );
-      setBackground("linear-gradient(to bottom, #7171E2 35%, #B2E8F7 35%)");
-      setWeightlifterSpeed(2);
-    } else if (counter <= 250) {
-      setTitle("Gym <br /> Bunny");
-      setMessage(
-        "Admit it, you train hard <br /> so you can have pizza after.",
-      );
-      setBackground("linear-gradient(to bottom, #B2E8F7 35%, #8CEAF4 35%)");
-      setWeightlifterSpeed(3);
-    } else {
-      setTitle("Hustle <br /> for Muscle");
-      setMessage(
-        "You give ‘No Days Off’ Energy. <br /> Be honest, the PT is your bestie!",
-      );
-      setBackground("linear-gradient(to bottom, #29299B 35%, #4ADEE5 35%)");
-      setWeightlifterSpeed(4);
-    }
-  }, [counter]);
+
+  const config = getGymVisitConfig(counter);
 
   // Ambil warna HEX pertama yang ditemukan dalam string background
-  const curtainColor = background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
+  const curtainColor = config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000";
+
 
   return (
     <div ref={ref}>
       <MobileCardFrame
-        background={background}
+        background={config.background}
         onShare={onShare}
         pageName={"gym-visit"}
         curtainColor={curtainColor}
@@ -97,14 +65,14 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         }
         illustration={
           <div className="absolute bottom-17.5 right-8 z-10 pointer-events-none">
-            <Weightlifter width={154} height={185} speed={weightlifterSpeed} />
+            <Weightlifter width={154} height={185} speed={config.speed} />
           </div>
         }
         topContent={
           <h1
             className="text-white text-[10.5cqi] font-bold leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
-            dangerouslySetInnerHTML={{ __html: title }}
+            dangerouslySetInnerHTML={{ __html: config.title }}
           />
         }
         bottomContent={
@@ -127,7 +95,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
 
             <p
               className="mt-4 text-[3.9cqi] font-medium text-black"
-              dangerouslySetInnerHTML={{ __html: message }}
+              dangerouslySetInnerHTML={{ __html: config.message }}
             />
           </>
         }

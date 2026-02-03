@@ -112,6 +112,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         topContent={
           <motion.h1
             className="text-white text-[12.6cqi] font-source font-bold leading-none"
+            style={{ fontFamily: "var(--font-source-sans)" }}
             dangerouslySetInnerHTML={{ __html: config.title }}
             initial={{ y: -100, opacity: 0 }}
             animate={
