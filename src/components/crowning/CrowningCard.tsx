@@ -199,7 +199,7 @@ export default function CrowningCard({
       {/* CONTENT */}
       <div
         data-animate="body"
-        className="px-6 relative sm:px-8 pt-10 pb-12 bg-white flex-1 translate-y-[120%]"
+        className=" relative px-6  pt-10 pb-12 bg-white flex-1 translate-y-[120%]"
       >
         <div className="absolute bottom-full -mt-20 left-0 right-0 h-24 sm:h-32 md:h-40">
           <div
@@ -220,14 +220,14 @@ export default function CrowningCard({
 
           <p
             data-animate="text-heading"
-            className={`text-[11.7cqi] sm:text-6xl md:text-7xl font-extrabold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
+            className={`text-[10cqi]  font-bold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {titleLine1}
           </p>
           <p
             data-animate="text-heading"
-            className={`text-[11.7cqi] sm:text-6xl md:text-7xl font-bold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
+            className={`text-[10cqi]  font-bold font-source ${themeColor} leading-none opacity-0 -translate-y-1/4`}
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
             {titleLine2}
