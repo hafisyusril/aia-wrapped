@@ -251,14 +251,14 @@ export async function captureWithWatermarkV2({
     const textPaddingY = padding;
 
     // Measure text 2
-    ctx.font = `24px Arial, sans-serif`;
+    ctx.font = `7px Arial, sans-serif`;
     const textMetrics2 = ctx.measureText(textLine2);
     const textHeight2 =
       textMetrics2.actualBoundingBoxAscent +
       textMetrics2.actualBoundingBoxDescent;
 
     // Measure text 1
-    ctx.font = `40px Arial, sans-serif`;
+    ctx.font = `12px Arial, sans-serif`;
 
     const yPosLine2 = canvas.height - textPaddingY;
     const yPosLine1 = canvas.height - textPaddingY - textHeight2 - 16;
@@ -268,10 +268,10 @@ export async function captureWithWatermarkV2({
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
 
-    ctx.font = `40px Arial, sans-serif`;
+    ctx.font = `12px Arial, sans-serif`;
     ctx.fillText(textLine1, textPaddingX, yPosLine1);
 
-    ctx.font = `24px Arial, sans-serif`;
+    ctx.font = `7px Arial, sans-serif`;
     ctx.fillText(textLine2, textPaddingX, yPosLine2);
   }
 
