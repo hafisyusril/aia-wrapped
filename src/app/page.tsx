@@ -330,6 +330,7 @@ export default function Home() {
                   : () => scrollPrev(idx)
               }
               onVisible={() => handleSectionVisible(section.name)}
+              persistScrollHint={section.name === "Intro"}
             >
               {section.content}
             </SnapSection>

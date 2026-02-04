@@ -13,6 +13,7 @@ interface SnapSectionProps {
   enableAnimation?: boolean;
   onVisible?: () => void;
   scrollDirection?: ScrollDirection;
+  persistScrollHint?: boolean;
 }
 
 export default function SnapSection({
@@ -23,6 +24,7 @@ export default function SnapSection({
   enableAnimation = true,
   onVisible,
   scrollDirection = "up",
+  persistScrollHint
 }: SnapSectionProps) {
   const [showHint, setShowHint] = useState(false);
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,9 +41,12 @@ export default function SnapSection({
 
     setShowHint(true);
 
-    hideTimerRef.current = setTimeout(() => {
-      setShowHint(false);
-    }, 3000);
+    if (!persistScrollHint) {
+  hideTimerRef.current = setTimeout(() => {
+    setShowHint(false);
+  }, 3000);
+}
+
   };
 
   useEffect(() => {
