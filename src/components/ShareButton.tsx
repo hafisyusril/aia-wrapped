@@ -1,4 +1,5 @@
 "use client";
+import { motion, MotionProps } from "framer-motion";
 import { getCookie } from "../app/utils/cookie";
 import ShareIcon from "./ShareIcon";
 import { useState } from "react";
@@ -9,7 +10,7 @@ type ShareButtonProps = {
   isBrightBg?: boolean; // true = background terang → hitam, false = gelap → putih
   pageName?: string;
   isReady?: boolean; // Optional: disable button until component is ready
-};
+} & MotionProps;
 
 export default function ShareButton({
   onClick,
@@ -17,6 +18,7 @@ export default function ShareButton({
   pageName,
   isBrightBg = false,
   isReady = true,
+  ...motionProps
 }: ShareButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const iconColor = isBrightBg ? "#000" : "#fff";
@@ -56,7 +58,8 @@ export default function ShareButton({
   };
 
   return (
-    <button
+    <motion.button
+      {...motionProps}
       onClick={handleClick}
       disabled={isDisabled}
       className={`
@@ -73,7 +76,7 @@ export default function ShareButton({
         disabled:opacity-50 disabled:cursor-not-allowed
         ${className ?? ""}
       `}
-      style={{ color: iconColor }}
+      style={{ color: iconColor, ...motionProps.style }}
     >
       {isLoading ? (
         <>
@@ -91,6 +94,6 @@ export default function ShareButton({
           <span>Save and Share</span>
         </>
       )}
-    </button>
+    </motion.button>
   );
 }

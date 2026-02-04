@@ -93,6 +93,7 @@ export default function VHCStatusCard({ status, onShare, isReady = true }: VHCSt
     message,
   } = getVHCStatusContent(status);
 
+  const [isAllowShare, setIsAllowShare] = useState(false)
   const [stars, setStars] = useState<StarConfig[]>([]);
 
   useEffect(() => {
@@ -126,8 +127,22 @@ export default function VHCStatusCard({ status, onShare, isReady = true }: VHCSt
           <SparkleStar key={i} {...star} />
         ))}
       </div>
-
-      <ShareButton onClick={onShare} className="z-20" isReady={isReady} />
+      <ShareButton
+        onClick={onShare}
+        className="z-20"
+        isReady={isReady}
+        viewport={{
+          amount: 'all',
+          once: true,
+        }}
+        style={{
+          pointerEvents: isAllowShare ? 'auto' : 'none',
+          cursor: isAllowShare ? 'pointer' : 'default'
+        }}
+        onViewportEnter={() => {
+          setTimeout(() => setIsAllowShare(true), 2000)
+        }}
+      />
 
       {/* HEADER BACKGROUND — Tirai */}
       <motion.div

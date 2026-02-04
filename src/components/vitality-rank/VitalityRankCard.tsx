@@ -22,6 +22,7 @@ export default function VitalityRankCard({
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
+  const [isAllowShare, setIsAllowShare] = useState(false)
 
   // Kontrol dipisah agar manajemen animasi lebih granular
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -177,7 +178,21 @@ export default function VitalityRankCard({
           ))}
         </div>
 
-      <ShareButton onClick={onShare} isReady={isReady} />
+      <ShareButton
+        onClick={onShare}
+        isReady={isReady}
+        viewport={{
+          amount: 'all',
+          once: true,
+        }}
+        style={{
+          pointerEvents: isAllowShare ? 'auto' : 'none',
+          cursor: isAllowShare ? 'pointer' : 'default'
+        }}
+        onViewportEnter={() => {
+          setTimeout(() => setIsAllowShare(true), 2000)
+        }}
+      />
     </section>
   );
 }

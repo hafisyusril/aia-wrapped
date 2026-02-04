@@ -70,6 +70,7 @@ export default function WeeklyChallengeCard({
   const [mounted, setMounted] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [favoriteReward, setFavoriteReward] = useState<string | null>(null);
+  const [isAllowShare, setIsAllowShare] = useState(false)
 
   useEffect(() => {
     setMounted(true);
@@ -174,7 +175,22 @@ export default function WeeklyChallengeCard({
             >
               Total Rewards Earned:
             </motion.p>
-            <ShareButton pageName={pageName} onClick={onShare} isReady={isReady} />
+            <ShareButton
+              pageName={pageName}
+              onClick={onShare}
+              isReady={isReady}
+              viewport={{
+                amount: 'all',
+                once: true,
+              }}
+              style={{
+                pointerEvents: isAllowShare ? 'auto' : 'none',
+                cursor: isAllowShare ? 'pointer' : 'default'
+              }}
+              onViewportEnter={() => {
+                setTimeout(() => setIsAllowShare(true), 2000)
+              }}
+            />
           </div>
 
           <div className="flex items-end space-x-2 mt-6">

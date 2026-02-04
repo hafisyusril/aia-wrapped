@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useRef } from "react";
+import { ReactNode, useRef, useState } from "react";
 import ShareButton from "./ShareButton";
 import { motion } from "framer-motion";
 
@@ -41,6 +41,7 @@ export default function MobileCardFrame({
   onShare,
   isReady = true,
 }: MobileCardFrameProps) {
+  const [isAllowShare, setIsAllowShare] = useState(false)
   const captureRef = useRef<HTMLDivElement>(null);
   return (
     <div
@@ -66,7 +67,22 @@ export default function MobileCardFrame({
       />
 
       {showShareButton && (
-        <ShareButton pageName={pageName} onClick={onShare} isReady={isReady} />
+        <ShareButton
+          onClick={onShare}
+          pageName={pageName}
+          isReady={isReady}
+          viewport={{
+            amount: 'all',
+            once: true,
+          }}
+          style={{
+            pointerEvents: isAllowShare ? 'auto' : 'none',
+            cursor: isAllowShare ? 'pointer' : 'default'
+          }}
+          onViewportEnter={() => {
+            setTimeout(() => setIsAllowShare(true), 2000)
+          }}
+        />
       )}
 
       {ornaments}

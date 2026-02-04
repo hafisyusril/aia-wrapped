@@ -4,7 +4,7 @@ import { motion, useAnimate, useInView } from "framer-motion";
 import { heartRateConfig } from "./heartRateConfig";
 import { getHeartRateCondition, HeartRateLevel } from "./heartRateUtils";
 import ShareButton from "../ShareButton";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useState } from "react";
 
 interface HeartRateCardProps {
   level: HeartRateLevel;
@@ -24,6 +24,7 @@ export default function HeartRateCard({
   const condition = getHeartRateCondition(level);
   const config = heartRateConfig[condition];
 
+  const [isAllowShare, setIsAllowShare] = useState(false)
   const [scope, animate] = useAnimate();
   const inView = useInView(scope, {
     root: containerRef,
@@ -189,7 +190,23 @@ export default function HeartRateCard({
       style={{ background }}
     >
       {onShare && (
-        <ShareButton pageName={pageName} onClick={onShare} isBrightBg={true} isReady={isReady} />
+        <ShareButton
+          pageName={pageName}
+          onClick={onShare}
+          isBrightBg={true}
+          isReady={isReady}
+          viewport={{
+            amount: 'all',
+            once: true,
+          }}
+          style={{
+            pointerEvents: isAllowShare ? 'auto' : 'none',
+            cursor: isAllowShare ? 'pointer' : 'default'
+          }}
+          onViewportEnter={() => {
+            setTimeout(() => setIsAllowShare(true), 2000)
+          }}
+        />
       )}
       <div
         data-animate="content"

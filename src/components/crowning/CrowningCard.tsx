@@ -4,7 +4,7 @@ import { CrowningType } from "./CrowningConfig";
 import { getCrowningByType } from "./CrowningUtils";
 import ShareButton from "../ShareButton";
 import { motion, useAnimate, useInView } from "framer-motion";
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect, useState } from "react";
 
 interface CrowningCardProps {
   type: CrowningType;
@@ -31,6 +31,7 @@ export default function CrowningCard({
     sparkles,
   } = getCrowningByType(type);
 
+  const [isAllowShare, setIsAllowShare] = useState(false)
   const [scope, animate] = useAnimate();
   const inView = useInView(scope, {
     root: containerRef,
@@ -147,6 +148,17 @@ export default function CrowningCard({
             onClick={onShare}
             isBrightBg={true}
             isReady={isReady}
+            viewport={{
+              amount: 'all',
+              once: true,
+            }}
+            style={{
+              pointerEvents: isAllowShare ? 'auto' : 'none',
+              cursor: isAllowShare ? 'pointer' : 'default'
+            }}
+            onViewportEnter={() => {
+              setTimeout(() => setIsAllowShare(true), 2000)
+            }}
           />
         )}
       </div>
