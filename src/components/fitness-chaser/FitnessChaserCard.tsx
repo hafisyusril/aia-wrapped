@@ -10,11 +10,13 @@ import { getFitnessChaserConfig } from "./getFitnessChaserConfig";
 interface FitnessChaserCardProps {
   totalChallenges: number;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 export default function FitnessChaserCard({
   totalChallenges,
   onShare,
+  isReady = true,
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getFitnessChaserConfig(totalChallenges);
@@ -27,6 +29,7 @@ export default function FitnessChaserCard({
         pageName={"fitness"}
         curtainColor={config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"}
         onShare={onShare}
+        isReady={isReady}
         ornaments={
           <div className="absolute inset-0 flex flex-col overflow-hidden">
             {[...Array(4)].map((_, i) => {

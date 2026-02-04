@@ -10,9 +10,10 @@ import { getGymVisitConfig } from "./gymVisitUtils";
 interface GymVisitCardProps {
   counter: number;
   onShare: () => void;
+  isReady?: boolean;
 }
 
-export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
+export default function GymVisitCard({ counter, onShare, isReady = true }: GymVisitCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
 
   const config = getGymVisitConfig(counter);
@@ -27,6 +28,7 @@ export default function GymVisitCard({ counter, onShare }: GymVisitCardProps) {
         background={config.background}
         onShare={onShare}
         pageName={"gym-visit"}
+        isReady={isReady}
         curtainColor={curtainColor}
         fileName="gym-visit.png"
         ornaments={

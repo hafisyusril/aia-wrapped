@@ -11,12 +11,14 @@ interface VitalityRankCardProps {
   generalRank: number;
   genderRank: number;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 export default function VitalityRankCard({
   generalRank,
   genderRank,
   onShare,
+  isReady = true,
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
@@ -175,7 +177,7 @@ export default function VitalityRankCard({
           ))}
         </div>
 
-      <ShareButton onClick={onShare} />
+      <ShareButton onClick={onShare} isReady={isReady} />
     </section>
   );
 }

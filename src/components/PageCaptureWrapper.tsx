@@ -2,11 +2,13 @@
 
 import { ReactNode, useRef } from "react";
 import { captureWithWatermarkV2 } from "../app/utils/captureWithWatermark";
+import { useIsElementLoadingComplete } from "../app/hooks/useIsComponentReady";
 
 type PageCaptureWrapperProps = {
   children: (props: {
     pageName: string;
     onShare: () => Promise<void>;
+    isReady?: boolean;
   }) => ReactNode;
   fileName?: string;
   disableWatermark?: boolean;
@@ -24,6 +26,9 @@ export default function PageCaptureWrapper({
   pageName,
 }: PageCaptureWrapperProps) {
   const captureRef = useRef<HTMLDivElement>(null);
+  const isReady = useIsElementLoadingComplete(
+    captureRef as React.RefObject<HTMLElement>
+  );
 
   const handleShare = async () => {
     if (!captureRef.current) return;
@@ -46,7 +51,7 @@ export default function PageCaptureWrapper({
   return (
     <div className="relative max-w-[430px] mx-auto">
       <div ref={captureRef} data-capture-root className="transform-none">
-        {children({ pageName, onShare: handleShare })}
+        {children({ pageName, onShare: handleShare, isReady })}
       </div>
     </div>
   );

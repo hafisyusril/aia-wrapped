@@ -159,8 +159,8 @@ export default function Home() {
             fileName="vhc-status.png"
             pageName="VHC Status Completed"
           >
-            {({ onShare }) => (
-              <VHCStatusCard status="checked" onShare={onShare} />
+            {({ onShare, isReady }) => (
+              <VHCStatusCard status="checked" onShare={onShare} isReady={isReady} />
             )}
           </PageCaptureWrapper>
         ),
@@ -170,7 +170,7 @@ export default function Home() {
       name: "Steps turtle",
       content: (
         <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle">
-          {({ onShare }) => <StepsCard steps={data.steps} onShare={onShare} />}
+          {({ onShare, isReady }) => <StepsCard steps={data.steps} onShare={onShare} isReady={isReady} />}
         </PageCaptureWrapper>
       ),
     },
@@ -182,12 +182,13 @@ export default function Home() {
           fileName="heart-rate-card.png"
           pageName="Heart Rate"
         >
-          {({ pageName, onShare }) => (
+          {({ pageName, onShare, isReady }) => (
             <HeartRateCard
               containerRef={containerRef}
               level={data.level}
               pageName={pageName}
               onShare={onShare}
+              isReady={isReady}
             />
           )}
         </PageCaptureWrapper>
@@ -198,8 +199,8 @@ export default function Home() {
       name: "Gym Visit",
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
-          {({ onShare }) => (
-            <GymVisitCard counter={data.gymVisit} onShare={onShare} />
+          {({ onShare, isReady }) => (
+            <GymVisitCard counter={data.gymVisit} onShare={onShare} isReady={isReady} />
           )}
         </PageCaptureWrapper>
       ),
@@ -212,10 +213,11 @@ export default function Home() {
           fileName="fitness-chaser-card.png"
           pageName="Fitness Chaser"
         >
-          {({ onShare }) => (
+          {({ onShare, isReady }) => (
             <FitnessChaserCard
               totalChallenges={data.weeklyChallenges}
               onShare={onShare}
+              isReady={isReady}
             />
           )}
         </PageCaptureWrapper>
@@ -229,12 +231,13 @@ export default function Home() {
           fileName="weekly-challenge.png"
           pageName="Weekly Challenge"
         >
-          {({ pageName, onShare }) => (
+          {({ pageName, onShare, isReady }) => (
             <WeeklyChallengeCard
               totalReward={data.totalReward}
               vitalityId={vitalityId!}
               pageName={pageName}
               onShare={onShare}
+              isReady={isReady}
             />
           )}
         </PageCaptureWrapper>
@@ -249,11 +252,12 @@ export default function Home() {
           pageName="Vitality Rank"
           isBrightText
         >
-          {({ onShare }) => (
+          {({ onShare, isReady }) => (
             <VitalityRankCard
               genderRank={data.genderRank}
               generalRank={data.generalRank}
               onShare={onShare}
+              isReady={isReady}
             />
           )}
         </PageCaptureWrapper>
@@ -269,8 +273,8 @@ export default function Home() {
             pageName="VHC Status Not Completed"
             isBrightText
           >
-            {({ onShare }) => (
-              <VHCStatusCard status="unchecked" onShare={onShare} />
+            {({ onShare, isReady }) => (
+              <VHCStatusCard status="unchecked" onShare={onShare} isReady={isReady} />
             )}
           </PageCaptureWrapper>
         ),
@@ -284,12 +288,13 @@ export default function Home() {
           pageName="Crowning"
           disableWatermarkLogo
         >
-          {({ pageName, onShare }) => (
+          {({ pageName, onShare, isReady }) => (
             <CrowningCard
               type={data.crowning}
               containerRef={containerRef}
               onShare={onShare}
               pageName={pageName}
+              isReady={isReady}
             />
           )}
         </PageCaptureWrapper>

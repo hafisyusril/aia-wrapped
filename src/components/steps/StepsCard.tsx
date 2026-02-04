@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 interface StepsCardProps {
   steps: number;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 // Variants untuk grup pertama
@@ -25,7 +26,7 @@ const secondGroupVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-export default function StepsCard({ steps, onShare }: StepsCardProps) {
+export default function StepsCard({ steps, onShare, isReady = true }: StepsCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const config = getStepsConfig(steps);
 
@@ -71,6 +72,7 @@ export default function StepsCard({ steps, onShare }: StepsCardProps) {
         background={config.background}
         onShare={onShare}
         pageName="steps"
+        isReady={isReady}
         curtainColor={config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"}
         fileName="steps.png"
         ornaments={

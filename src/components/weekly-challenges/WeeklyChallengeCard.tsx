@@ -12,6 +12,7 @@ interface WeeklyChallengeCardProps {
   vitalityId: string;
   pageName?: string;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 interface WeeklyChallengeApiResponse {
@@ -63,6 +64,7 @@ export default function WeeklyChallengeCard({
   vitalityId,
   pageName,
   onShare,
+  isReady = true,
 }: WeeklyChallengeCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
   const [mounted, setMounted] = useState(false);
@@ -172,7 +174,7 @@ export default function WeeklyChallengeCard({
             >
               Total Rewards Earned:
             </motion.p>
-            <ShareButton pageName={pageName} onClick={onShare} />
+            <ShareButton pageName={pageName} onClick={onShare} isReady={isReady} />
           </div>
 
           <div className="flex items-end space-x-2 mt-6">
