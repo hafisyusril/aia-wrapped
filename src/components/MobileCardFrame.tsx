@@ -20,6 +20,7 @@ type MobileCardFrameProps = {
   watermarkSrc?: string;
   fileName?: string;
   pageName: string;
+  isReady?: boolean; // Add isReady prop for share button
 
   /** optional hook for analytics / override */
   onShare?: () => void;
@@ -38,6 +39,7 @@ export default function MobileCardFrame({
   showShareButton = true,
   pageName,
   onShare,
+  isReady = true,
 }: MobileCardFrameProps) {
   const captureRef = useRef<HTMLDivElement>(null);
   return (
@@ -63,7 +65,9 @@ export default function MobileCardFrame({
         style={{ background: curtainColor ?? "#000" }}
       />
 
-      {showShareButton && <ShareButton pageName={pageName} onClick={onShare} />}
+      {showShareButton && (
+        <ShareButton pageName={pageName} onClick={onShare} isReady={isReady} />
+      )}
 
       {ornaments}
 

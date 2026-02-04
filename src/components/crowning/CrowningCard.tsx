@@ -11,6 +11,7 @@ interface CrowningCardProps {
   containerRef: RefObject<HTMLElement | null>;
   onShare?: () => void;
   pageName?: string;
+  isReady?: boolean;
 }
 
 export default function CrowningCard({
@@ -18,6 +19,7 @@ export default function CrowningCard({
   containerRef,
   pageName,
   onShare,
+  isReady = true,
 }: CrowningCardProps) {
   const {
     titleLine1,
@@ -144,6 +146,7 @@ export default function CrowningCard({
             pageName={pageName}
             onClick={onShare}
             isBrightBg={true}
+            isReady={isReady}
           />
         )}
       </div>

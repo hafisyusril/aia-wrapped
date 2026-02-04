@@ -71,6 +71,7 @@ const curtainAnim = {
 interface VHCStatusCardProps {
   status: VHCStatus;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 const STAR_COUNT = 14;
@@ -82,7 +83,7 @@ interface StarConfig {
   delay: number;
 }
 
-export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
+export default function VHCStatusCard({ status, onShare, isReady = true }: VHCStatusCardProps) {
   const {
     title,
     background,
@@ -126,7 +127,7 @@ export default function VHCStatusCard({ status, onShare }: VHCStatusCardProps) {
         ))}
       </div>
 
-      <ShareButton onClick={onShare} className="z-20" />
+      <ShareButton onClick={onShare} className="z-20" isReady={isReady} />
 
       {/* HEADER BACKGROUND — Tirai */}
       <motion.div
