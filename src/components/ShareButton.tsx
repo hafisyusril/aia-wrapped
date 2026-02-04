@@ -78,7 +78,7 @@ export default function ShareButton({
       {isLoading ? (
         <>
           <div className="w-4 h-4 border-2 rounded-full border-current border-t-transparent animate-spin" />
-          <span>Preparing...</span>
+          <span>Loading...</span>
         </>
       ) : !isReady ? (
         <>
