@@ -14,7 +14,7 @@ export interface WeeklyChallengeLevel {
 export const weeklyChallengeConfig: WeeklyChallengeLevel[] = [
   {
     variant: "default",
-    background: "bg-[#FBEAD1]",
+    background: "bg-[#FFF8F0]",
     headerBackground: "bg-[#F2B24C]",
     illustrationSrc: "/weekly-challenge/person_illustration.svg",
     coinSrc: "/weekly-challenge/coin.svg",
