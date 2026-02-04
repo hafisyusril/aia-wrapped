@@ -29,7 +29,6 @@ export default function InputVitalityCard() {
     }
 
     setError("");
-    playMusic();
 
     try {
       await setVitalityId(value);
@@ -37,6 +36,7 @@ export default function InputVitalityCard() {
 
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
+      playMusic();
     } catch {
       setShowErrorModal(true);
     }
