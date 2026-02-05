@@ -23,6 +23,7 @@ const ENHANCED_OPTIONS: Options = {
       // Don't include hidden elements or share buttons in the capture
       return (
         !node.classList.contains("share-btn") &&
+        !node.classList.contains("hide-share") &&
         node.style.display !== "none" &&
         node.style.visibility !== "hidden"
       );

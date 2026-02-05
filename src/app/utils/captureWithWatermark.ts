@@ -6,7 +6,7 @@ type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
   disableWatermark?: boolean;
-  disableWatermarkLogo?: boolean;
+  colorWatermarkLogo?: boolean;
   isBrightText?: boolean;
   pageName?: string;
 };
@@ -136,7 +136,7 @@ export async function captureWithWatermarkV2({
   element,
   fileName = "shared-image.png",
   disableWatermark = false,
-  disableWatermarkLogo = false,
+  colorWatermarkLogo = false,
   isBrightText = false,
   pageName,
 }: CaptureOptions) {
@@ -158,32 +158,30 @@ export async function captureWithWatermarkV2({
     const padding = 24;
 
     // === LOGO ===
-    if (!disableWatermarkLogo) {
-      const baseSize = Math.min(canvas.width, canvas.height) * 0.3;
-      const watermarkWidth = Math.max(140, Math.min(baseSize, 320));
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.3;
+    const watermarkWidth = Math.max(140, Math.min(baseSize, 320));
 
-      const watermark = new Image();
-      watermark.src = "/aia-new-white.svg";
-      await new Promise((res) => (watermark.onload = res));
+    const watermark = new Image();
+    watermark.src = colorWatermarkLogo ? "/aia-new-red.svg" : "/aia-new-white.svg";
+    await new Promise((res) => (watermark.onload = res));
 
-      let ratio = watermark.width / watermark.height;
-      if (!ratio || !isFinite(ratio)) ratio = 4;
+    let ratio = watermark.width / watermark.height;
+    if (!ratio || !isFinite(ratio)) ratio = 4;
 
-      const watermarkHeight = watermarkWidth / ratio;
+    const watermarkHeight = watermarkWidth / ratio;
 
-      const offsetX = 40;
-      const offsetY = 76
+    const offsetX = 40;
+    const offsetY = 76
 
-      ctx.globalAlpha = 0.9;
-      ctx.drawImage(
-        watermark,
-        padding + offsetX,
-        padding + offsetY,
-        watermarkWidth,
-        watermarkHeight,
-      );
-      ctx.globalAlpha = 1;
-    }
+    ctx.globalAlpha = 0.9;
+    ctx.drawImage(
+      watermark,
+      padding + offsetX,
+      padding + offsetY,
+      watermarkWidth,
+      watermarkHeight,
+    );
+    ctx.globalAlpha = 1;
 
     // === TEXT OJK Statement ===
     const textLine1 = "aia.id/aiavitality";

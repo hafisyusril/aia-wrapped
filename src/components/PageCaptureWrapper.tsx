@@ -12,7 +12,7 @@ type PageCaptureWrapperProps = {
   }) => ReactNode;
   fileName?: string;
   disableWatermark?: boolean;
-  disableWatermarkLogo?: boolean;
+  colorWatermarkLogo?: boolean;
   pageName: string;
   isBrightText?: boolean;
 };
@@ -20,7 +20,7 @@ type PageCaptureWrapperProps = {
 export default function PageCaptureWrapper({
   children,
   fileName = "capture.png",
-  disableWatermarkLogo = false,
+  colorWatermarkLogo = false,
   disableWatermark = false,
   isBrightText = false,
   pageName,
@@ -43,7 +43,7 @@ export default function PageCaptureWrapper({
       element: captureRef.current,
       fileName,
       disableWatermark,
-      disableWatermarkLogo,
+      colorWatermarkLogo,
       isBrightText,
       pageName,
     });

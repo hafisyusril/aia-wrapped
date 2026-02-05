@@ -145,7 +145,7 @@ export default function CrowningCard({
           alt="AIA Vitality Wrapped"
           width={60}
           height={60}
-          className="h-10 w-auto"
+          className="h-10 w-auto hide-share"
         />
 
         {/* PASANG isBrightBg={true} karena bg utama section putih */}
