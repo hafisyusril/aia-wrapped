@@ -31,7 +31,7 @@ export default function CrowningCard({
     sparkles,
   } = getCrowningByType(type);
 
-  const [isAllowShare, setIsAllowShare] = useState(false)
+  const [isAllowShare, setIsAllowShare] = useState(false);
   const [scope, animate] = useAnimate();
   const inView = useInView(scope, {
     root: containerRef,
@@ -39,6 +39,13 @@ export default function CrowningCard({
     amount: 0.75,
     once: true,
   });
+
+  useEffect(() => {
+    if (inView && !isAllowShare) {
+      const timer = setTimeout(() => setIsAllowShare(true), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [inView, isAllowShare]);
 
   useEffect(() => {
     const animationKeyframes = {
@@ -147,18 +154,7 @@ export default function CrowningCard({
             pageName={pageName}
             onClick={onShare}
             isBrightBg={true}
-            isReady={isReady}
-            viewport={{
-              amount: 'all',
-              once: true,
-            }}
-            style={{
-              pointerEvents: isAllowShare ? 'auto' : 'none',
-              cursor: isAllowShare ? 'pointer' : 'default'
-            }}
-            onViewportEnter={() => {
-              setTimeout(() => setIsAllowShare(true), 2000)
-            }}
+            isReady={isReady && isAllowShare}
           />
         )}
       </div>
