@@ -155,7 +155,7 @@ export default function WeeklyChallengeCard({
               animate={shouldAnimate ? ["visible", "floating"] : "initial"}
               style={{
                 left: `${15 + i * 30}%`,
-                top: `${60 + (i % 2) * 5}%`,
+                top: `${64 + (i % 2) * 5}%`,
               }}
             />
           ))}

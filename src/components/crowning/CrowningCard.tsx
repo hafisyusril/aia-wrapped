@@ -138,7 +138,7 @@ export default function CrowningCard({
     >
       <div
         data-animate="header"
-        className="px-6 pt-14 pb-4 flex items-center justify-between opacity-0 -translate-y-1/2"
+        className="px-8 pt-14 pb-4 flex items-center justify-between opacity-0 -translate-y-1/2"
       >
         <img
           src="/crowning/aia_vitality.svg"
@@ -207,7 +207,7 @@ export default function CrowningCard({
       {/* CONTENT */}
       <div
         data-animate="body"
-        className=" relative px-6  pt-10 pb-12 bg-white flex-1 translate-y-[120%]"
+        className=" relative px-8 pt-10 pb-12 bg-white flex-1 translate-y-[120%]"
       >
         <div className="absolute bottom-full -mt-20 left-0 right-0 h-24 sm:h-32 md:h-40">
           <div
@@ -243,20 +243,12 @@ export default function CrowningCard({
 
           <p
             data-animate="text-desc"
-            className="mt-3 mb-10 text-[3.8cqi] md:text-xl leading-relaxed whitespace-pre-line translate-y-1/2"
+            className="mt-3 mb-10 text-[3.8cqi] leading-normal whitespace-pre-line translate-y-1/2"
           >
             {description}
           </p>
         </div>
       </div>
-
-      {/* FOOTER */}
-      {/* <div className="px-6 sm:px-8 pb-10 border-t border-gray-200 pt-6">
-        <p className="text-xs sm:text-sm text-gray-500">aia-financial.co.id</p>
-        <p className="text-xs sm:text-sm text-gray-500 mt-2">
-          PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan
-        </p>
-      </div> */}
     </div>
   );
 }
