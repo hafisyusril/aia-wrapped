@@ -159,7 +159,7 @@ export default function VHCStatusCard({ status, onShare, isReady = true }: VHCSt
       {/* TOP CONTENT */}
       <div className="relative z-20 h-full overflow-hidden">
         {/* HEADER CONTENT */}
-        <div className="relative flex h-full flex-col justify-end px-7.5 pb-5">
+        <div className="relative flex h-full flex-col justify-end px-8 pb-5">
           <h1 className="text-white font-bold text-3xl pt-15 leading-tight">
             <motion.p
               className="font-medium text-[4.7cqi]"
@@ -186,7 +186,7 @@ export default function VHCStatusCard({ status, onShare, isReady = true }: VHCSt
 
       {/* BOTTOM CONTENT */}
 
-      <div className="relative px-7.5 pt-15 z-20 flex flex-col gap-[50px]">
+      <div className="relative px-8 pt-15 z-20 flex flex-col gap-[50px]">
         <div className="ml-10 w-[220px]">
           {/* LOGIKA KONDISIONAL */}
           {status === "checked" ? (

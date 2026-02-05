@@ -163,7 +163,7 @@ export default function WeeklyChallengeCard({
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pb-6 flex flex-col  justify-end">
+      <div className="px-8 pb-6 flex flex-col  justify-end">
         <div className="text-white">
           <div className="flex items-center justify-between">
             <motion.p
@@ -227,7 +227,7 @@ export default function WeeklyChallengeCard({
 
       {/* 4. CONTENT BOTTOM */}
       <motion.div
-        className={`relative z-30 px-6 flex flex-col justify-between ${background}`}
+        className={`px-8 flex flex-col justify-between ${background}`}
         initial={{
           y: "100%",
         }}
@@ -236,7 +236,7 @@ export default function WeeklyChallengeCard({
         }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
+        <div className="relative z-50 text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
           {dynamicMessage.map((line, index) => (
             <motion.p
               key={index}
@@ -252,7 +252,7 @@ export default function WeeklyChallengeCard({
         </div>
 
         <motion.div
-          className="relative flex justify-center items-end pb-10"
+          className="pb-16"
           initial={{ opacity: 0, y: 20 }}
           animate={shouldAnimate ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{

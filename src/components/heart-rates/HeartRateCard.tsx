@@ -210,7 +210,7 @@ export default function HeartRateCard({
       )}
       <div
         data-animate="content"
-        className="absolute inset-x-0 bottom-0 h-[70%]"
+        className="absolute inset-x-0 bottom-0 h-[66%]"
         style={{ background: bgContent }}
       />
       <img
@@ -238,7 +238,7 @@ export default function HeartRateCard({
           }}
         />
       </div>
-      <div className="relative z-10 px-7 mt-30">
+      <div className="relative z-10 px-8 mt-36">
         <p
           data-animate="label"
           className="text-white font-semibold text-[4.8cqi] mb-2"

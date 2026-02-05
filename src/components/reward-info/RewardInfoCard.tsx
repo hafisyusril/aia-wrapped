@@ -101,7 +101,7 @@ export default function RewardInfoCard({
   return (
     <section
       ref={scope}
-      className="@container relative flex flex-col w-full max-w-107.5 min-h-dvh mx-auto overflow-hidden bg-[#EAEAEA] px-7"
+      className="@container relative flex flex-col w-full max-w-107.5 min-h-dvh mx-auto overflow-hidden bg-[#EAEAEA] px-8"
     >
       <div
         data-animate="bottom-box"

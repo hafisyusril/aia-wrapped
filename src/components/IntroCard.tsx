@@ -89,7 +89,7 @@ export default function IntroCard({
       ref={scope}
       className="flex flex-col relative w-full max-w-107.5 min-h-svh mx-auto overflow-hidden bg-[#F8114F]"
     >
-      <div className="flex flex-1 flex-col justify-end gap-2 max-h-1/2 px-7 overflow-hidden">
+      <div className="flex flex-1 flex-col justify-end gap-2 max-h-1/2 px-8 overflow-hidden">
         <SvgAsset.Logo
           data-animate="logo"
           className="opacity-0 -translate-y-1/2"
@@ -105,7 +105,7 @@ export default function IntroCard({
       >
         <div
           data-animate="text"
-          className="flex flex-1 items-center self-start px-7 opacity-0 -translate-y-1/2"
+          className="flex flex-1 items-center self-start px-8 opacity-0 -translate-y-1/2"
         >
           <p className="text-white text-xl">Let's walk through <br/>your healthy journey</p>
         </div>

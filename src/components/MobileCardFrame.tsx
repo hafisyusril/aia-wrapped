@@ -90,7 +90,7 @@ export default function MobileCardFrame({
       <div
         className={`
           relative flex flex-col h-full
-          px-7.5 justify-end pb-5 z-20
+          px-8 justify-end pb-5 z-20
           ${topClassName ?? ""}
         `}
       >
@@ -99,7 +99,7 @@ export default function MobileCardFrame({
 
       <div
         className={`
-          relative px-7.5 pt-2 z-20
+          relative px-8 pt-2 z-20
           ${bottomClassName ?? ""}
         `}
       >

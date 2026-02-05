@@ -101,7 +101,7 @@ export default function EndCard({
       {/* ===== TOP CONTENT ===== */}
       <div
         data-anim="top"
-        className="relative flex flex-col justify-end px-7.5 pb-6 text-white z-20 opacity-0"
+        className="relative flex flex-col justify-end px-8 pb-6 text-white z-20 opacity-0"
         style={{ transform: "translateX(-30px)" }}
       >
         <h1
@@ -118,7 +118,7 @@ export default function EndCard({
       {/* ===== BOTTOM CONTENT ===== */}
       <div
         data-anim="bottom"
-        className="relative flex flex-col justify-start px-7.5 pt-6 pb-28 text-gray-900 z-20 opacity-0"
+        className="relative flex flex-col justify-start px-8 pt-6 pb-28 text-gray-900 z-20 opacity-0"
         style={{ transform: "translateY(30px)" }}
       >
         <p className="font-medium text-white text-[3.8cqi] whitespace-pre-line mb-6">
