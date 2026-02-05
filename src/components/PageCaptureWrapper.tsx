@@ -45,6 +45,7 @@ export default function PageCaptureWrapper({
       disableWatermark,
       disableWatermarkLogo,
       isBrightText,
+      pageName,
     });
   };
 

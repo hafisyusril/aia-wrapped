@@ -225,8 +225,8 @@ export default function HeartRateCard({
         <motion.img
           src="/heart-rate/red-heart.svg"
           alt="Red Heart"
-          className="absolute bottom-10 right-10 w-37.5 z-10"
-          animate={{ scale: [0.5, 0.8, 0.5] }}
+          className="absolute bottom-10 right-10 w-31 z-10"
+          animate={{ scale: [0.4, 0.7, 0.4] }}
           transition={{
             duration: {
               "low-heat": 1.5,

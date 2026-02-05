@@ -8,6 +8,7 @@ type CaptureOptions = {
   disableWatermark?: boolean;
   disableWatermarkLogo?: boolean;
   isBrightText?: boolean;
+  pageName?: string;
 };
 
 export async function captureWithWatermark({
@@ -137,6 +138,7 @@ export async function captureWithWatermarkV2({
   disableWatermark = false,
   disableWatermarkLogo = false,
   isBrightText = false,
+  pageName,
 }: CaptureOptions) {
   const imageDataUrl = await htmlToImageUsingSatori(element);
 
@@ -157,8 +159,8 @@ export async function captureWithWatermarkV2({
 
     // === LOGO ===
     if (!disableWatermarkLogo) {
-      const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
-      const watermarkWidth = Math.max(110, Math.min(baseSize, 240));
+      const baseSize = Math.min(canvas.width, canvas.height) * 0.3;
+      const watermarkWidth = Math.max(140, Math.min(baseSize, 320));
 
       const watermark = new Image();
       watermark.src = "/aia-new-white.svg";
@@ -169,8 +171,10 @@ export async function captureWithWatermarkV2({
 
       const watermarkHeight = watermarkWidth / ratio;
 
-      const offsetX = 16;
-      const offsetY = 12;
+      const offsetX = 40;
+      // Kondisi offsetY: 16 untuk Reward Info & Heart Rate, 56 untuk yang lain
+      const offsetY =
+        pageName === "Weekly Challenge" || pageName === "Heart Rate" ? 16 : 56;
 
       ctx.globalAlpha = 0.9;
       ctx.drawImage(
