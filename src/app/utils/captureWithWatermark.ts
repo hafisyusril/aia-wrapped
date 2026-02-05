@@ -172,9 +172,9 @@ export async function captureWithWatermarkV2({
       const watermarkHeight = watermarkWidth / ratio;
 
       const offsetX = 40;
-      // Kondisi offsetY: 16 untuk Reward Info & Heart Rate, 56 untuk yang lain
+      // Kondisi offsetY: 16 untuk Weekly Challenge & Heart Rate, 76 untuk yang lain
       const offsetY =
-        pageName === "Weekly Challenge" || pageName === "Heart Rate" ? 16 : 56;
+        pageName === "Weekly Challenge" || pageName === "Heart Rate" ? 16 : 76;
 
       ctx.globalAlpha = 0.9;
       ctx.drawImage(
@@ -187,15 +187,18 @@ export async function captureWithWatermarkV2({
       ctx.globalAlpha = 1;
     }
 
-    // === TEXT ===
+    // === TEXT OJK Statement ===
     const textLine1 = "aia.id/aiavitality";
     const textLine2 =
       "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
 
-    const textPaddingX = padding;
-    const textPaddingY = padding;
+    const textOffsetX = 40;
+    const textOffsetY = 20;  // 
 
-    ctx.textAlign = "left";
+    const textPaddingX = canvas.width - padding - textOffsetX;
+    const textPaddingY = padding + textOffsetY;
+
+    ctx.textAlign = "right";
     ctx.textBaseline = "alphabetic";
     ctx.fillStyle = isBrightText ? "#FFFFFF" : "#000000";
 
