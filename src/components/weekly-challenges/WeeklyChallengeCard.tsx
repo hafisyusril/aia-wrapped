@@ -132,7 +132,7 @@ export default function WeeklyChallengeCard({
     mx-auto
     min-h-dvh
     grid
-    grid-rows-[35%_65%]
+    grid-rows-[40%_65%]
     overflow-hidden
     font-sans
     ${headerBackground}

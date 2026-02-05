@@ -172,9 +172,7 @@ export async function captureWithWatermarkV2({
       const watermarkHeight = watermarkWidth / ratio;
 
       const offsetX = 40;
-      // Kondisi offsetY: 16 untuk Weekly Challenge & Heart Rate, 76 untuk yang lain
-      const offsetY =
-        pageName === "Weekly Challenge" ? 16 : 76;
+      const offsetY = 76
 
       ctx.globalAlpha = 0.9;
       ctx.drawImage(

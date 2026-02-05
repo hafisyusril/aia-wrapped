@@ -108,14 +108,16 @@ export default function RewardInfoCard({
         className="absolute inset-x-0 bottom-0 h-1/2 bg-[#DEDEDE]"
       />
       <div className="flex flex-1 flex-col relative">
-        <img
-          data-animate="logo"
-          src="/crowning/aia_vitality.svg"
-          alt="AIA Vitality Wrapped"
-          width={60}
-          height={60}
-          className="object-contain w-20 sm:w-40 md:w-48 my-14"
-        />
+        <div>
+          <img
+            data-animate="logo"
+            src="/crowning/aia_vitality.svg"
+            alt="AIA Vitality Wrapped"
+            width={60}
+            height={60}
+            className="h-10 w-auto my-14"
+          />
+        </div>
         <p data-animate="text" className="mb-3 text-[4.3cqi]">
           Before you start scrolling...
           <br />

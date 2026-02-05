@@ -286,7 +286,6 @@ export default function Home() {
         <PageCaptureWrapper
           fileName="crowning.png"
           pageName="Crowning"
-          disableWatermarkLogo
         >
           {({ pageName, onShare, isReady }) => (
             <CrowningCard

@@ -138,14 +138,14 @@ export default function CrowningCard({
     >
       <div
         data-animate="header"
-        className="px-6 pt-8 pb-4 flex items-center justify-between opacity-0 -translate-y-1/2"
+        className="px-6 pt-14 pb-4 flex items-center justify-between opacity-0 -translate-y-1/2"
       >
         <img
           src="/crowning/aia_vitality.svg"
           alt="AIA Vitality Wrapped"
           width={60}
           height={60}
-          className="object-contain w-32 md:w-48"
+          className="h-10 w-auto"
         />
 
         {/* PASANG isBrightBg={true} karena bg utama section putih */}

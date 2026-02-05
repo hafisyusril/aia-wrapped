@@ -85,7 +85,7 @@ export default function EndCard({
       {/* ===== LOGO ===== */}
       <div
         data-anim="logo"
-        className="absolute top-8 left-7.5 z-30 opacity-0"
+        className="absolute top-14 left-7.5 z-30 opacity-0"
         style={{ transform: "translateY(-20px)" }}
       >
         <Image
@@ -94,6 +94,7 @@ export default function EndCard({
           width={135}
           height={50}
           priority
+          className="h-10 w-auto"
         />
       </div>
 
