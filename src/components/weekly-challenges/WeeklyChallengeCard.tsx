@@ -163,15 +163,15 @@ export default function WeeklyChallengeCard({
       )}
 
       {/* 3. CONTENT TOP */}
-      <div className="relative z-30 px-6 pb-8 flex flex-col  justify-end">
+      <div className="relative z-30 px-6 pb-6 flex flex-col  justify-end">
         <div className="text-white">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             <motion.p
               variants={textVariant}
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
               custom={0.5}
-              className="text-[3.8cqi] font-everest font-medium"
+              className="text-[4.8cqi] font-everest font-medium"
             >
               Total Rewards Earned:
             </motion.p>
@@ -193,7 +193,7 @@ export default function WeeklyChallengeCard({
             />
           </div>
 
-          <div className="flex items-end space-x-2 mt-6">
+          <div className="flex items-end space-x-2 mt-2">
             <div className="flex items-end space-x-1">
               <span className="text-[10.3cqi] font-extrabold leading-none font-source">
                 {currency}
@@ -218,7 +218,7 @@ export default function WeeklyChallengeCard({
             initial="hidden"
             animate={shouldAnimate ? "visible" : "hidden"}
             custom={1.5}
-            className="text-[4.8cqi] font-medium whitespace-pre-line mt-2"
+            className="text-[4.8cqi] font-medium whitespace-pre-line leading-tight mt-2"
           >
             {title}
           </motion.p>
