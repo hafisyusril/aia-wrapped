@@ -100,7 +100,7 @@ export default function VitalityRankCard({
       />
 
         {/* TOP CONTENT (35%) */}
-        <div className="relative z-10 flex items-end justify-between px-6">
+        <div className="relative z-10 flex items-end justify-between px-8">
           {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
           <motion.div
             initial={{ x: -100, opacity: 0 }}
@@ -154,7 +154,7 @@ export default function VitalityRankCard({
         </div>
 
         {/* BOTTOM CONTENT (65%) */}
-        <div className="relative z-10 flex flex-col gap-10 px-6 pt-12">
+        <div className="relative z-10 flex flex-col gap-10 px-8 pt-12">
           {[
             { label: "Overall Member Rank", val: generalRank },
             { label: "Gender-Based Rank", val: genderRank },

@@ -170,8 +170,8 @@ export async function captureWithWatermarkV2({
 
     const watermarkHeight = watermarkWidth / ratio;
 
-    const offsetX = 40;
-    const offsetY = 76
+    const offsetX = 46;
+    const offsetY = 84
 
     ctx.globalAlpha = 0.9;
     ctx.drawImage(
