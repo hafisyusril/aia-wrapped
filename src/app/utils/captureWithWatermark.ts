@@ -162,7 +162,9 @@ export async function captureWithWatermarkV2({
     const watermarkWidth = Math.max(140, Math.min(baseSize, 320));
 
     const watermark = new Image();
-    watermark.src = colorWatermarkLogo ? "/aia-new-red.svg" : "/aia-new-white.svg";
+    watermark.src = colorWatermarkLogo
+      ? "/aia-new-red.svg"
+      : "/aia-new-white.svg";
     await new Promise((res) => (watermark.onload = res));
 
     let ratio = watermark.width / watermark.height;
@@ -171,7 +173,7 @@ export async function captureWithWatermarkV2({
     const watermarkHeight = watermarkWidth / ratio;
 
     const offsetX = 46;
-    const offsetY = 84
+    const offsetY = 84;
 
     ctx.globalAlpha = 0.9;
     ctx.drawImage(
@@ -189,7 +191,7 @@ export async function captureWithWatermarkV2({
       "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
 
     const textOffsetX = 40;
-    const textOffsetY = 20;  // 
+    const textOffsetY = pageName === "Crowning" ? 200 : 20; // Khusus Page crowning dibuat lebih tinggi
 
     const textPaddingX = canvas.width - padding - textOffsetX;
     const textPaddingY = padding + textOffsetY;
