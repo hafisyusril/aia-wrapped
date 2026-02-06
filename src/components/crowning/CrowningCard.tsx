@@ -134,7 +134,7 @@ export default function CrowningCard({
   return (
     <div
       ref={scope}
-      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-dvh bg-gray-100 font-sans flex flex-col"
+      className="@container w-full relative overflow-hidden max-w-[430px] mx-auto min-h-dvh bg-[linear-gradient(to_bottom,#f3f4f6_35%,#ffffff_35%)] font-sans flex flex-col"
     >
       <div
         data-animate="header"
