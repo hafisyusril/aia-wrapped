@@ -119,7 +119,7 @@ export default function RewardInfoCard({
           />
         </div>
         <p data-animate="text" className="mb-3 text-[4.3cqi]">
-          Before you start scrolling...
+          Before you continue scrolling...
           <br />
           <br />
           Don&apos;t forget to share your favorite
