@@ -170,7 +170,7 @@ export default function VitalityRankCard({
               </p>
               <div className="flex items-center text-white text-[18.7cqi]">
                 <span className="leading-none font-thin">#</span>
-                <span className="leading-none font-black">
+                <span className="leading-none font-bold">
                   {isInView ? <RankCounter target={item.val} /> : "0"}
                 </span>
               </div>
