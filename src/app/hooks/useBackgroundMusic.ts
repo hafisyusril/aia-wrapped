@@ -11,9 +11,32 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     audio.volume = volume;
     audioRef.current = audio;
 
+    const handleMute = () => {
+      if (audioRef.current) audioRef.current.volume = 0;
+    };
+
+    const handleUnmute = () => {
+      if (audioRef.current) audioRef.current.volume = volume;
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        handleMute();
+      } else {
+        handleUnmute();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handleMute);
+    window.addEventListener("pageshow", handleUnmute);
+
     return () => {
       audio.pause();
       audioRef.current = null;
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pagehide", handleMute);
+      window.removeEventListener("pageshow", handleUnmute);
     };
   }, [src, volume]);
 

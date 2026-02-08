@@ -106,7 +106,7 @@ export default function VitalityRankCard({
             initial={{ x: -100, opacity: 0 }}
             animate={textTopControls}
           >
-            <h1 className="text-[7.5cqi] font-bold leading-tight pb-[18px] text-white font-source">
+            <h1 className="text-[7.2cqi] font-bold leading-none pb-4.5 text-white font-source">
               AIA Vitality
               <br />
               Member Rank
