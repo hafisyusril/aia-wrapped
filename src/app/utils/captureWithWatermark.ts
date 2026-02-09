@@ -191,7 +191,7 @@ export async function captureWithWatermarkV2({
       "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
 
     const textOffsetX = 40;
-    const textOffsetY = pageName === "Crowning" ? 100 : 20; // Khusus Page crowning dibuat lebih tinggi pageName === "Crowning" ?
+    const textOffsetY = 20; // Khusus Page crowning dibuat lebih tinggi pageName === "Crowning" ?
 
     const textPaddingX = canvas.width - padding - textOffsetX;
     const textPaddingY = padding + textOffsetY;
