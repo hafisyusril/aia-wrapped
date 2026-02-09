@@ -54,7 +54,7 @@ export default function Home() {
   const encodedId = params?.slug as string | undefined;
 
   const { play, stop } = useBackgroundMusic("/music/aia-vitality.m4a", 0.35);
-  
+
   useEffect(() => {
     play();
 
