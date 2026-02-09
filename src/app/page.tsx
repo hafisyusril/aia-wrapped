@@ -55,6 +55,14 @@ export default function Home() {
 
   const { play, stop } = useBackgroundMusic("/music/aia-vitality.m4a", 0.35);
 
+  useEffect(() => {
+    play();
+
+    return () => {
+      stop();
+    };
+  }, [play, stop]);
+
   const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<HTMLDivElement[]>([]);
@@ -160,7 +168,11 @@ export default function Home() {
             pageName="VHC Status Completed"
           >
             {({ onShare, isReady }) => (
-              <VHCStatusCard status="checked" onShare={onShare} isReady={isReady} />
+              <VHCStatusCard
+                status="checked"
+                onShare={onShare}
+                isReady={isReady}
+              />
             )}
           </PageCaptureWrapper>
         ),
@@ -170,7 +182,9 @@ export default function Home() {
       name: "Steps turtle",
       content: (
         <PageCaptureWrapper fileName="steps-card.png" pageName="Steps turtle">
-          {({ onShare, isReady }) => <StepsCard steps={data.steps} onShare={onShare} isReady={isReady} />}
+          {({ onShare, isReady }) => (
+            <StepsCard steps={data.steps} onShare={onShare} isReady={isReady} />
+          )}
         </PageCaptureWrapper>
       ),
     },
@@ -200,7 +214,11 @@ export default function Home() {
       content: (
         <PageCaptureWrapper fileName="gym-visit-card.png" pageName="Gym Visit">
           {({ onShare, isReady }) => (
-            <GymVisitCard counter={data.gymVisit} onShare={onShare} isReady={isReady} />
+            <GymVisitCard
+              counter={data.gymVisit}
+              onShare={onShare}
+              isReady={isReady}
+            />
           )}
         </PageCaptureWrapper>
       ),
@@ -274,7 +292,11 @@ export default function Home() {
             isBrightText
           >
             {({ onShare, isReady }) => (
-              <VHCStatusCard status="unchecked" onShare={onShare} isReady={isReady} />
+              <VHCStatusCard
+                status="unchecked"
+                onShare={onShare}
+                isReady={isReady}
+              />
             )}
           </PageCaptureWrapper>
         ),

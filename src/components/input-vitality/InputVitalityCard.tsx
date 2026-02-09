@@ -9,16 +9,25 @@ import { useMusic } from "@/src/contexts/MusicContext";
 import { encodeVitalityId } from "@/src/app/utils/vitalityUrl";
 import ErrorLoginModal from "./ErrorLoginModal";
 import { addCookie } from "@/src/app/utils/cookie";
+import {
+  getVitalityIdHistory,
+  saveVitalityId,
+} from "@/src/app/utils/vitalityIdHistory";
 
 export default function InputVitalityCard() {
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [history, setHistory] = useState<string[]>([]);
 
   const router = useRouter();
   const { setVitalityId, isLoading, error: apiError } = useUserFlow();
   const { playMusic } = useMusic();
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setHistory(getVitalityIdHistory());
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -33,6 +42,7 @@ export default function InputVitalityCard() {
     try {
       await setVitalityId(value);
       addCookie("aia-vitality-id", value, 15);
+      saveVitalityId(value);
 
       const encoded = encodeVitalityId(value);
       router.replace(`/?v=${encoded}`);
@@ -73,6 +83,7 @@ export default function InputVitalityCard() {
             className="flex flex-col gap-2"
           >
             <input
+              list="vitality-history"
               type="text"
               value={value}
               onChange={(e) => setValue(e.target.value)}
@@ -91,6 +102,12 @@ export default function InputVitalityCard() {
                 ${error || apiError ? "border-red-500" : "border-gray-300"}
               `}
             />
+
+            <datalist id="vitality-history">
+              {history.map((id) => (
+                <option key={id} value={id} />
+              ))}
+            </datalist>
 
             {(error || apiError) && (
               <p className="text-xs text-red-500">{error || apiError}</p>
