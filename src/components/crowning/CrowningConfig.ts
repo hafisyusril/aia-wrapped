@@ -42,12 +42,12 @@ export const crowningConfig: CrowningLevel[] = [
     themeColor: "text-[#07C0FF]", // light blue
     illustrations: [
       {
-        src: "/crowning/yoga.svg",
+        src: "/crowning/yoga.png",
         inset: "auto auto 0 24px",
         width: 214,
       },
       {
-        src: "/crowning/radio.svg",
+        src: "/crowning/radio.png",
         inset: "0 40px auto auto",
         width: 190,
       },
@@ -70,12 +70,12 @@ export const crowningConfig: CrowningLevel[] = [
     themeColor: "text-[#FF6A3D]", // orange
     illustrations: [
       {
-        src: "/crowning/treadmill.svg",
+        src: "/crowning/treadmill.png",
         inset: "0 auto auto 76px",
         width: 104,
       },
       {
-        src: "/crowning/run.svg",
+        src: "/crowning/run.png",
         inset: "auto 55px 0 auto",
         width: 163,
       },
@@ -98,12 +98,12 @@ export const crowningConfig: CrowningLevel[] = [
     themeColor: "text-[#7B6CF6]", // purple
     illustrations: [
       {
-        src: "/crowning/barbel-sit.svg",
+        src: "/crowning/barbel-sit.png",
         inset: "0 auto auto 36px",
         width: 242,
       },
       {
-        src: "/crowning/barbel-lift.svg",
+        src: "/crowning/barbel-lift.png",
         inset: "auto 35px 0 auto",
         width: 81,
       },
@@ -125,12 +125,12 @@ export const crowningConfig: CrowningLevel[] = [
     themeColor: "text-[#2563EB]", // blue
     illustrations: [
       {
-        src: "/crowning/wheel-push.svg",
+        src: "/crowning/wheel-push.png",
         inset: "auto auto 0 34px",
         width: 200,
       },
       {
-        src: "/crowning/barbel-lift-red.svg",
+        src: "/crowning/barbel-lift-red.png",
         inset: "auto 39px 0 auto",
         width: 89,
       },
@@ -153,12 +153,12 @@ export const crowningConfig: CrowningLevel[] = [
     themeColor: "text-[#E11D48]", // red
     illustrations: [
       {
-        src: "/crowning/thropy.svg",
+        src: "/crowning/thropy.png",
         inset: "auto auto 0 43px",
         width: 185,
       },
       {
-        src: "/crowning/meditation.svg",
+        src: "/crowning/meditation.png",
         inset: "auto 37px 0 auto",
         width: 143,
       },
