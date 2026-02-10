@@ -53,15 +53,7 @@ export default function Home() {
   const params = useParams();
   const encodedId = params?.slug as string | undefined;
 
-  const { play, stop } = useBackgroundMusic("/music/aia-vitality.m4a", 0.35);
-
-  useEffect(() => {
-    play();
-
-    return () => {
-      stop();
-    };
-  }, [play, stop]);
+  const { play, stop } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
 
   const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
