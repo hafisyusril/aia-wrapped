@@ -93,7 +93,7 @@ export default function SnapSection({
           />
           <p className="text-xl text-black font-normal tracking-wide">
             {" "}
-            {scrollDirection === "down" ? "reverse scroll" : "scroll"}
+            {scrollDirection === "down" ? "Back to Top" : "scroll"}
           </p>
         </motion.div>
       )}
