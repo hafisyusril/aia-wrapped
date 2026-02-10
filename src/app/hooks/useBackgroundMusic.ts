@@ -80,10 +80,8 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     }
   }, []);
 
-
-
   // Resume music setelah refresh (tunggu user interaksi seperti klik dll)
-  useEffect(() => {
+useEffect(() => {
   const intended = localStorage.getItem("bgm-intended") === "true";
   if (!intended) return;
 
@@ -94,23 +92,32 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
       .play()
       .then(() => {
         isPlayingRef.current = true;
+
+        // ✅ HAPUS listener HANYA jika play berhasil
+        events.forEach((event) =>
+          window.removeEventListener(event, resumeOnInteraction)
+        );
       })
       .catch(() => {
+        // ❌ jangan hapus listener kalau gagal
         isPlayingRef.current = false;
       });
-
-    window.removeEventListener("click", resumeOnInteraction);
-    window.removeEventListener("touchstart", resumeOnInteraction);
   };
 
-  window.addEventListener("click", resumeOnInteraction);
-  window.addEventListener("touchstart", resumeOnInteraction);
+  const events = ["click", "touchstart", "keydown"];
+
+  events.forEach((event) =>
+    window.addEventListener(event, resumeOnInteraction)
+  );
 
   return () => {
-    window.removeEventListener("click", resumeOnInteraction);
-    window.removeEventListener("touchstart", resumeOnInteraction);
+    events.forEach((event) =>
+      window.removeEventListener(event, resumeOnInteraction)
+    );
   };
 }, []);
+
+
 
 
   return { play, stop };
