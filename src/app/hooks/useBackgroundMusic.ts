@@ -20,8 +20,9 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     };
 
     const handlePlay = () => {
-      // Only play if the user intended for it to be playing.
-      if (isPlayingRef.current) {
+      // Play if the user intended it to be playing (persisted across reloads)
+      const intended = localStorage.getItem("bgm-intended") === "true";
+      if (isPlayingRef.current || intended) {
         audioRef.current?.play().catch(() => {
           console.warn("Audio play blocked. User interaction may be needed.");
         });
@@ -42,6 +43,31 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     window.addEventListener("blur", handlePause);
     window.addEventListener("focus", handlePlay);
 
+    // If user previously intended background music, try to resume on next user interaction
+    const previouslyIntended = localStorage.getItem("bgm-intended") === "true";
+    const resumeOnInteraction = () => {
+      if (!audioRef.current) return;
+
+      audioRef.current
+        .play()
+        .then(() => {
+          isPlayingRef.current = true;
+          events.forEach((event) =>
+            window.removeEventListener(event, resumeOnInteraction)
+          );
+        })
+        .catch(() => {
+          isPlayingRef.current = false;
+        });
+    };
+
+    const events = ["click", "touchstart", "keydown"];
+    if (previouslyIntended) {
+      events.forEach((event) =>
+        window.addEventListener(event, resumeOnInteraction)
+      );
+    }
+
     return () => {
       audio.pause();
       audioRef.current = null;
@@ -50,6 +76,9 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
       window.removeEventListener("pageshow", handlePlay);
       window.removeEventListener("blur", handlePause);
       window.removeEventListener("focus", handlePlay);
+      events.forEach((event) =>
+        window.removeEventListener(event, resumeOnInteraction)
+      );
     };
   }, [src, volume]);
 
@@ -80,42 +109,8 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     }
   }, []);
 
-  // Resume music setelah refresh (tunggu user interaksi seperti klik dll)
-useEffect(() => {
-  const intended = localStorage.getItem("bgm-intended") === "true";
-  if (!intended) return;
-
-  const resumeOnInteraction = () => {
-    if (!audioRef.current) return;
-
-    audioRef.current
-      .play()
-      .then(() => {
-        isPlayingRef.current = true;
-
-        // ✅ HAPUS listener HANYA jika play berhasil
-        events.forEach((event) =>
-          window.removeEventListener(event, resumeOnInteraction)
-        );
-      })
-      .catch(() => {
-        // ❌ jangan hapus listener kalau gagal
-        isPlayingRef.current = false;
-      });
-  };
-
-  const events = ["click", "touchstart", "keydown"];
-
-  events.forEach((event) =>
-    window.addEventListener(event, resumeOnInteraction)
-  );
-
-  return () => {
-    events.forEach((event) =>
-      window.removeEventListener(event, resumeOnInteraction)
-    );
-  };
-}, []);
+  // Note: autoplay without user interaction is blocked by many browsers.
+  // We attach resume listeners during audio setup above and remove them on cleanup.
 
 
 
