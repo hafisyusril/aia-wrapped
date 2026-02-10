@@ -56,6 +56,8 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
   const play = useCallback(() => {
     if (!audioRef.current) return;
 
+    localStorage.setItem("bgm-intended", "true");
+
     const promise = audioRef.current.play();
     if (promise !== undefined) {
       promise
@@ -77,6 +79,39 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
       isPlayingRef.current = false;
     }
   }, []);
+
+
+
+  // Resume music setelah refresh (tunggu user interaksi seperti klik dll)
+  useEffect(() => {
+  const intended = localStorage.getItem("bgm-intended") === "true";
+  if (!intended) return;
+
+  const resumeOnInteraction = () => {
+    if (!audioRef.current) return;
+
+    audioRef.current
+      .play()
+      .then(() => {
+        isPlayingRef.current = true;
+      })
+      .catch(() => {
+        isPlayingRef.current = false;
+      });
+
+    window.removeEventListener("click", resumeOnInteraction);
+    window.removeEventListener("touchstart", resumeOnInteraction);
+  };
+
+  window.addEventListener("click", resumeOnInteraction);
+  window.addEventListener("touchstart", resumeOnInteraction);
+
+  return () => {
+    window.removeEventListener("click", resumeOnInteraction);
+    window.removeEventListener("touchstart", resumeOnInteraction);
+  };
+}, []);
+
 
   return { play, stop };
 }
