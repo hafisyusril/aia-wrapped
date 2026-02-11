@@ -92,15 +92,6 @@ export default function Home() {
 
   const resolvedActivities = isDummyUser
     ? {
-<<<<<<< Updated upstream
-      steps: true,
-      heartRate: true,
-      gymVisit: true,
-      weeklyChallenge: true,
-      vhc: true,
-      rank: true,
-    }
-=======
         steps: true,
         heartRate: true,
         gymVisit: true,
@@ -109,7 +100,6 @@ export default function Home() {
         rank: true,
         crowning: true,
       }
->>>>>>> Stashed changes
     : userData?.activities;
 
   useEffect(() => {
@@ -193,23 +183,23 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc &&
-    data.vhcStatus === "checked" && {
-      name: "VHC Status Completed",
-      content: (
-        <PageCaptureWrapper
-          fileName="vhc-status.png"
-          pageName="VHC Status Completed"
-        >
-          {({ onShare, isReady }) => (
-            <VHCStatusCard
-              status="checked"
-              onShare={onShare}
-              isReady={isReady}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+      data.vhcStatus === "checked" && {
+        name: "VHC Status Completed",
+        content: (
+          <PageCaptureWrapper
+            fileName="vhc-status.png"
+            pageName="VHC Status Completed"
+          >
+            {({ onShare, isReady }) => (
+              <VHCStatusCard
+                status="checked"
+                onShare={onShare}
+                isReady={isReady}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      },
 
     resolvedActivities?.steps && {
       name: "Steps turtle",
@@ -316,24 +306,24 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc &&
-    data.vhcStatus === "unchecked" && {
-      name: "VHC Status Not Completed",
-      content: (
-        <PageCaptureWrapper
-          fileName="vhc-status.png"
-          pageName="VHC Status Not Completed"
-          isBrightText
-        >
-          {({ onShare, isReady }) => (
-            <VHCStatusCard
-              status="unchecked"
-              onShare={onShare}
-              isReady={isReady}
-            />
-          )}
-        </PageCaptureWrapper>
-      ),
-    },
+      data.vhcStatus === "unchecked" && {
+        name: "VHC Status Not Completed",
+        content: (
+          <PageCaptureWrapper
+            fileName="vhc-status.png"
+            pageName="VHC Status Not Completed"
+            isBrightText
+          >
+            {({ onShare, isReady }) => (
+              <VHCStatusCard
+                status="unchecked"
+                onShare={onShare}
+                isReady={isReady}
+              />
+            )}
+          </PageCaptureWrapper>
+        ),
+      },
 
     resolvedActivities?.crowning && {
       name: "Crowning",
