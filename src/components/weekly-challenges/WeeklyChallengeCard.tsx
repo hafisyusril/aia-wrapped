@@ -114,7 +114,7 @@ export default function WeeklyChallengeCard({
     line.replace(
       "<strong>Tokopedia</strong>",
       favoriteReward
-        ? `<strong>${favoriteReward}</strong>`
+        ? `<strong>${favoriteReward.replace("Grand Lucky", "GrandLucky")}</strong>`
         : "<strong>Loading...</strong>",
     ),
   );
