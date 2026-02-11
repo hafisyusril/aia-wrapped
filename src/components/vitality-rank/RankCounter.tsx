@@ -9,7 +9,7 @@ interface RankCounterProps {
 
 export default function RankCounter({
     target,
-    duration = 1000,
+    duration = 2000,
 }: RankCounterProps) {
     const [count, setCount] = useState(0);
 
@@ -33,5 +33,5 @@ export default function RankCounter({
         return () => cancelAnimationFrame(rafId);
     }, [target, duration]);
 
-    return <>#{count.toLocaleString("id-ID")}</>;
+    return <>{count.toLocaleString("id-ID")}</>;
 }

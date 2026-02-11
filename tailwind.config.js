@@ -7,7 +7,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
         source: ["var(--font-source-sans)", "sans-serif"],
+        code: ["var(--font-source-code-pro)", "monospace"],
+        everest: ["var(--font-aia-everest)", "sans-serif"],
       },
     },
   },

@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     const body = await req.json();
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+    const baseUrl = "https://api.aiavitalitywrapped.id";
 
     const res = await fetch(`${baseUrl}/api/v1/vitality/share`, {
       method: "POST",
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     console.error("Share proxy error:", err);
     return NextResponse.json(
       { error: "Failed to track share" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

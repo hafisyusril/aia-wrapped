@@ -1,31 +1,33 @@
 // src/utils/captureWithWatermark.ts
 import { toPng } from "html-to-image";
+import { htmlToImageUsingSatori } from "./generateImageWithSatori";
 
 type CaptureOptions = {
   element: HTMLElement;
   fileName?: string;
-  disableWatermark?: boolean; // <--- baru
+  disableWatermark?: boolean;
+  colorWatermarkLogo?: boolean;
+  isBrightText?: boolean;
+  pageName?: string;
 };
 
 export async function captureWithWatermark({
   element,
   fileName = "shared-image.png",
-  disableWatermark = false, // <--- default false
+  disableWatermark = false,
+  isBrightText = false,
 }: CaptureOptions) {
   if (!element) return;
 
-  // 1. Capture DOM → PNG
   const baseImage = await toPng(element, {
     cacheBust: true,
     pixelRatio: 2,
   });
 
-  // 2. Canvas
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  // 3. Base image
   const img = new Image();
   img.src = baseImage;
   await new Promise((res) => (img.onload = res));
@@ -37,59 +39,208 @@ export async function captureWithWatermark({
   // ===== WATERMARK =====
   if (!disableWatermark) {
     const padding = 24;
-    const baseSize = Math.min(canvas.width, canvas.height) * 0.14;
-    const watermarkWidth = Math.max(72, Math.min(baseSize, 160));
 
-    const isBright = isBrightBackground(ctx, padding, padding);
+    // === LOGO ===
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.22;
+    const watermarkWidth = Math.max(110, Math.min(baseSize, 240));
 
     const watermark = new Image();
-    watermark.src = isBright
-      ? "/aia_vitality_red.svg"
-      : "/aia_vitality_white.svg";
-
+    watermark.src = "/aia-new-white.svg";
     await new Promise((res) => (watermark.onload = res));
 
-    const ratio = watermark.width / watermark.height;
+    let ratio = watermark.width / watermark.height;
+    if (!ratio || !isFinite(ratio)) ratio = 4;
+
     const watermarkHeight = watermarkWidth / ratio;
 
+    // 👉 offset supaya tidak terlalu pojok
+    const offsetX = 16;
+    const offsetY = 12;
+
     ctx.globalAlpha = 0.9;
-    ctx.drawImage(watermark, padding, padding, watermarkWidth, watermarkHeight);
+    ctx.drawImage(
+      watermark,
+      padding + offsetX,
+      padding + offsetY,
+      watermarkWidth,
+      watermarkHeight,
+    );
     ctx.globalAlpha = 1;
+
+    // === TEXT ===
+    const textLine1 = "aia.id/aiavitality";
+    const textLine2 =
+      "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
+
+    const textPaddingX = padding;
+    const textPaddingY = padding;
+
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillStyle = isBrightText ? "#FFFFFF" : "#000000";
+
+    ctx.font = "20px Arial, sans-serif";
+    const metrics2 = (() => {
+      ctx.font = "12px Arial, sans-serif";
+      return ctx.measureText(textLine2);
+    })();
+
+    const textHeight2 =
+      metrics2.actualBoundingBoxAscent + metrics2.actualBoundingBoxDescent;
+
+    const yPosLine2 = canvas.height - textPaddingY;
+    const yPosLine1 = yPosLine2 - textHeight2 - 8;
+
+    ctx.font = "20px Arial, sans-serif";
+    ctx.fillText(textLine1, textPaddingX, yPosLine1);
+
+    ctx.font = "12px Arial, sans-serif";
+    ctx.fillText(textLine2, textPaddingX, yPosLine2);
   }
 
-  // 5. Download
   const finalImage = canvas.toDataURL("image/png");
+
+  const blob = await (await fetch(finalImage)).blob();
+  const imageFile = new File([blob], fileName, { type: blob.type });
+
+  if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+    try {
+      await navigator.share({
+        files: [imageFile],
+        title: "AIA Vitality Wrapped",
+        text: "Check out my summary with AIA Vitality!",
+      });
+      return;
+    } catch {
+      return;
+    }
+  }
 
   const link = document.createElement("a");
   link.href = finalImage;
-  link.download = fileName;
+
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    link.target = "_blank";
+  } else {
+    link.download = fileName;
+  }
 
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
 }
 
-// tetap sama
-function isBrightBackground(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  sampleSize = 20
-) {
-  const imageData = ctx.getImageData(x, y, sampleSize, sampleSize).data;
+/* ========================================================= */
 
-  let totalBrightness = 0;
-  let count = 0;
+export async function captureWithWatermarkV2({
+  element,
+  fileName = "shared-image.png",
+  disableWatermark = false,
+  colorWatermarkLogo = false,
+  isBrightText = false,
+  pageName,
+}: CaptureOptions) {
+  const imageDataUrl = await htmlToImageUsingSatori(element);
 
-  for (let i = 0; i < imageData.length; i += 4) {
-    const r = imageData[i];
-    const g = imageData[i + 1];
-    const b = imageData[i + 2];
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    totalBrightness += brightness;
-    count++;
+  const img = new Image();
+  img.src = imageDataUrl;
+  await new Promise((res) => (img.onload = res));
+
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.drawImage(img, 0, 0);
+
+  if (!disableWatermark) {
+    const padding = 24;
+
+    // === LOGO ===
+    const baseSize = Math.min(canvas.width, canvas.height) * 0.3;
+    const watermarkWidth = Math.max(140, Math.min(baseSize, 320));
+
+    const watermark = new Image();
+    watermark.src = colorWatermarkLogo
+      ? "/aia-new-red.svg"
+      : "/aia-new-white.svg";
+    await new Promise((res) => (watermark.onload = res));
+
+    let ratio = watermark.width / watermark.height;
+    if (!ratio || !isFinite(ratio)) ratio = 4;
+
+    const watermarkHeight = watermarkWidth / ratio;
+
+    const offsetX = 46;
+    const offsetY = 84;
+
+    ctx.globalAlpha = 0.9;
+    ctx.drawImage(
+      watermark,
+      padding + offsetX,
+      padding + offsetY,
+      watermarkWidth,
+      watermarkHeight,
+    );
+    ctx.globalAlpha = 1;
+
+    // === TEXT OJK Statement ===
+    const textLine1 = "aia.id/aiavitality";
+    const textLine2 =
+      "PT AIA Financial berizin dan diawasi oleh Otoritas Jasa Keuangan";
+
+    const textOffsetX = 40;
+    const textOffsetY = 20; // Khusus Page crowning dibuat lebih tinggi pageName === "Crowning" ?
+
+    const textPaddingX = canvas.width - padding - textOffsetX;
+    const textPaddingY = padding + textOffsetY;
+
+    ctx.textAlign = "right";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillStyle = isBrightText ? "#FFFFFF" : "#000000";
+
+    ctx.font = "7px Arial, sans-serif";
+    const metrics2 = ctx.measureText(textLine2);
+    const textHeight2 =
+      metrics2.actualBoundingBoxAscent + metrics2.actualBoundingBoxDescent;
+
+    const yPosLine2 = canvas.height - textPaddingY;
+    const yPosLine1 = yPosLine2 - textHeight2 - 2;
+
+    ctx.font = "12px Arial, sans-serif";
+    ctx.fillText(textLine1, textPaddingX, yPosLine1);
+
+    ctx.font = "7px Arial, sans-serif";
+    ctx.fillText(textLine2, textPaddingX, yPosLine2);
   }
 
-  return totalBrightness / count > 200;
+  const finalImage = canvas.toDataURL("image/png");
+
+  const blob = await (await fetch(finalImage)).blob();
+  const imageFile = new File([blob], fileName, { type: blob.type });
+
+  if (navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+    try {
+      await navigator.share({
+        files: [imageFile],
+        title: "AIA Vitality Wrapped",
+        text: "Check out my summary with AIA Vitality!",
+      });
+      return;
+    } catch {}
+  }
+
+  const link = document.createElement("a");
+  link.href = finalImage;
+
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    link.target = "_blank";
+  } else {
+    link.download = fileName;
+  }
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }

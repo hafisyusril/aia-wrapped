@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useAnimate, useInView } from "framer-motion";
 
 type EndCardProps = {
   leftIllustration?: ReactNode;
@@ -12,109 +13,132 @@ export default function EndCard({
   leftIllustration,
   rightIllustration,
 }: EndCardProps) {
+  const [scope, animate] = useAnimate();
+  const isInView = useInView(scope, { amount: 0.5, once: true });
+
+  useEffect(() => {
+    const config = { duration: 0.8, ease: "easeOut" } as const;
+
+    const enterAnimation = async () => {
+      // 1. Munculkan Logo
+      animate("[data-anim='logo']", { opacity: 1, y: 0 }, config);
+
+      // 2. Munculkan Top Content
+      await animate(
+        "[data-anim='top']",
+        { opacity: 1, x: 0 },
+        { ...config, delay: 0.2 },
+      );
+
+      // 3. Munculkan Bottom Content
+      await animate("[data-anim='bottom']", { opacity: 1, y: 0 }, config);
+
+      // 4. Terakhir Illustration (Pop up)
+      await animate(
+        "[data-anim='illustration']",
+        { opacity: 1, scale: 1, y: 0 },
+        { type: "spring", stiffness: 100, damping: 15 },
+      );
+
+      // 5. ANIMASI TAMBAHAN: FLOATING
+      // Kita jalankan tanpa 'await' supaya tidak memblokir kode lain jika ada
+      animate(
+        "[data-anim='illustration']",
+        { y: [0, -25, 0], x: [0, -25, 0] }, // Bergerak naik turun 15px
+        {
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        },
+      );
+    };
+
+    const exitAnimation = () => {
+      // Saat exit, kita hentikan semua animasi pada selector tersebut
+      animate("[data-anim='logo']", { opacity: 0, y: -20 }, { duration: 0.2 });
+      animate("[data-anim='top']", { opacity: 0, x: -20 }, { duration: 0.2 });
+      animate("[data-anim='bottom']", { opacity: 0, y: 20 }, { duration: 0.2 });
+      animate(
+        "[data-anim='illustration']",
+        { opacity: 0, scale: 0.8, y: 50 },
+        { duration: 0.2 },
+      );
+    };
+
+    if (isInView) {
+      enterAnimation();
+    } else {
+      exitAnimation();
+    }
+  }, [isInView, animate]);
+
   return (
     <div
-      className="
-        relative grid min-h-svh w-full max-w-[430px] mx-auto
-        grid-rows-[35%_65%]
-        overflow-hidden font-sans
-      "
+      ref={scope}
+      className="@container relative grid min-h-dvh w-full max-w-[430px] mx-auto grid-rows-[50%_50%] overflow-hidden font-sans"
       style={{
-        background: "linear-gradient(to bottom, #E60041 35%, #ffffff 35%)",
+        background: "linear-gradient(to bottom, #E60041 50%, #A00032 50%)",
       }}
     >
-      {/* ===== SHARE SAFE AREA ===== */}
-      {/* (optional kalau nanti mau capture) */}
+      {/* ... bagian logo, top, bottom tetep sama ... */}
 
-      {/* ===== LOGO (OUTSIDE CONTENT) ===== */}
-      <div className="absolute top-8 left-7.5 z-30">
+      {/* ===== LOGO ===== */}
+      <div
+        data-anim="logo"
+        className="absolute top-14 left-7.5 z-30 opacity-0"
+        style={{ transform: "translateY(-20px)" }}
+      >
         <Image
           src="/end-card/aia-logo-white.svg"
           alt="AIA Wrapped"
-          width={120}
-          height={32}
+          width={135}
+          height={50}
           priority
+          className="h-10 w-auto"
         />
       </div>
 
-      {/* ===== TOP CONTENT (RED AREA) ===== */}
+      {/* ===== TOP CONTENT ===== */}
       <div
-        className="
-          relative flex flex-col justify-end
-          px-7.5 pb-6 text-white z-20
-        "
+        data-anim="top"
+        className="relative flex flex-col justify-end px-8 pb-6 text-white z-20 opacity-0"
+        style={{ transform: "translateX(-30px)" }}
       >
-        <h1 className="text-4xl font-black leading-none">Thank you</h1>
-
-        <div className="text-base text-white">
-          <p className="leading-snug">
-            for living healthier life with us in 2025.
-          </p>
-          <p className="mt-5 leading-snug">
-            here's to another year of wellness together!
-          </p>
+        <h1
+          className="text-4xl font-bold text-[10.5cqi] font-source leading-none"
+          style={{ fontFamily: "var(--font-source-sans)" }}
+        >
+          Thank you
+        </h1>
+        <div className="text-base font-medium text-[5.8cqi] text-white mt-2">
+          <p className="leading-snug">for living a healthier life</p>
         </div>
       </div>
 
-      {/* ===== BOTTOM CONTENT (WHITE AREA) ===== */}
+      {/* ===== BOTTOM CONTENT ===== */}
       <div
-        className="
-          relative flex flex-col justify-start
-          px-7.5 pt-6 pb-28 text-gray-900 z-20
-        "
+        data-anim="bottom"
+        className="relative flex flex-col justify-start px-8 pt-6 pb-28 text-gray-900 z-20 opacity-0"
+        style={{ transform: "translateY(30px)" }}
       >
-        <p className="font-light mb-6">
-          Share your AIA Vitality Wrapped and get:
+        <p className="font-medium text-white text-[3.8cqi] whitespace-pre-line mb-6">
+          {`Here's to another year\nof wellness together!`}
         </p>
-
-        <div className="flex flex-col items-start gap-3">
-          <div className="inline-flex items-center gap-2 border border-[#E60041] rounded-2xl px-4 py-1 text-sm">
-            <img
-              src="/end-card/sparkle-gold.svg"
-              className="w-5 h-5 shrink-0"
-              alt=""
-            />
-            <span className="leading-none whitespace-nowrap">
-              100 AIA Vitality Points
-            </span>
-          </div>
-
-          <div className="inline-flex items-center gap-2 border border-[#E60041] rounded-2xl px-4 py-1 text-sm">
-            <img
-              src="/end-card/sparkle-gold.svg"
-              className="w-5 h-5 shrink-0"
-              alt=""
-            />
-            <span className="leading-none whitespace-nowrap">
-              2 Kopi Kenangan Vouchers
-            </span>
-          </div>
-        </div>
       </div>
 
       {/* ===== ILLUSTRATIONS ===== */}
-
-      <div className="absolute bottom-0 left-8 z-10 w-50 h-15">
-        <img
-          src="/end-card/ojk-statement.svg"
+      {/* Container tetap nempel di pojok kanan bawah dengan overflow hidden */}
+      <div
+        data-anim="illustration"
+        className="absolute -bottom-10 -right-15 z-10 w-85 h-100  origin-bottom-right overflow-hidden"
+        style={{ transform: "translateY(50px) scale(0.9)" }}
+      >
+        <Image
+          src="/end-card/end-card-illustration.svg"
           alt=""
-          className="w-full h-full object-contain"
-        />
-      </div>
-
-      <div className="absolute bottom-4 right-0 z-10 w-70 h-70 ">
-        {/* Man with ticket */}
-        <img
-          src="/end-card/man-with-ticket.svg"
-          alt=""
-          className="absolute bottom-0 right-2 w-full h-full object-contain z-20"
-        />
-
-        {/* Mobile phone (layer depan) */}
-        <img
-          src="/end-card/mobile-phone.svg"
-          alt=""
-          className="absolute bottom-0 right-0 w-40 h-45 object-contain z-10"
+          fill
+          className="object-contain object-right-bottom z-20 "
+          priority
         />
       </div>
     </div>

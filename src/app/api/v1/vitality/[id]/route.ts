@@ -2,20 +2,21 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     const { id } = await context.params;
 
     if (!id) {
       return NextResponse.json(
         { error: "Missing vitality id" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
+    const baseUrl = "https://api.aiavitalitywrapped.id";
 
     const res = await fetch(`${baseUrl}/api/v1/vitality/${id}`, {
       headers: {
@@ -28,13 +29,13 @@ export async function GET(
       let errorBody: any = null;
       try {
         errorBody = await res.json();
-      } catch { }
+      } catch {}
 
       return NextResponse.json(
         {
           error: errorBody?.error ?? `Backend error: ${res.status}`,
         },
-        { status: res.status }
+        { status: res.status },
       );
     }
 
@@ -44,7 +45,7 @@ export async function GET(
     console.error("Vitality proxy error:", err);
     return NextResponse.json(
       { error: "Failed to fetch vitality data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

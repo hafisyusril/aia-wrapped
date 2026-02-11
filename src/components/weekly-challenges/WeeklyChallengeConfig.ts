@@ -14,17 +14,16 @@ export interface WeeklyChallengeLevel {
 export const weeklyChallengeConfig: WeeklyChallengeLevel[] = [
   {
     variant: "default",
-    background: "bg-[#FBEAD1]",
+    background: "bg-[#FFF8F0]",
     headerBackground: "bg-[#F2B24C]",
-    illustrationSrc: "/weekly-challenge/person_illustration.svg",
-    coinSrc: "/weekly-challenge/coin.svg",
+    illustrationSrc: "/weekly-challenge/person_illustration.png",
+    coinSrc: "/weekly-challenge/coin.png",
     currency: "Rp",
-    title: "rewards redeemed!",
+    title: "Living healthier feels good for\n your body and your wallet.",
     message: [
-      "Living healthier feels good",
-      "for your body and your wallet.",
+      
       "",
-      "Your favorite reward: <strong>Tokopedia</strong>",
+      "Your favorite reward:\n <strong>Tokopedia</strong>",
     ],
   },
 ];

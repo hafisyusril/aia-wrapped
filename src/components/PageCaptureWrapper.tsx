@@ -1,63 +1,59 @@
 "use client";
 
-import { ReactNode, useRef, useState, useCallback } from "react";
-import { captureWithWatermark } from "../app/utils/captureWithWatermark";
-import ShareBottomSheet from "./ShareBottomSheet";
-
-type Platform = "whatsapp" | "facebook" | "instagram" | "tiktok";
+import { ReactNode, useRef } from "react";
+import { captureWithWatermarkV2 } from "../app/utils/captureWithWatermark";
+import { useIsElementLoadingComplete } from "../app/hooks/useIsComponentReady";
 
 type PageCaptureWrapperProps = {
-    children: (props: { onShare: () => void }) => ReactNode;
-    fileName?: string;
-    disableWatermark?: boolean;
+  children: (props: {
     pageName: string;
+    onShare: () => Promise<void>;
+    isReady?: boolean;
+  }) => ReactNode;
+  fileName?: string;
+  disableWatermark?: boolean;
+  colorWatermarkLogo?: boolean;
+  pageName: string;
+  isBrightText?: boolean;
 };
 
 export default function PageCaptureWrapper({
-    children,
-    fileName = "capture.png",
-    disableWatermark = false,
-    pageName,
+  children,
+  fileName = "capture.png",
+  colorWatermarkLogo = false,
+  disableWatermark = false,
+  isBrightText = false,
+  pageName,
 }: PageCaptureWrapperProps) {
-    const captureRef = useRef<HTMLDivElement>(null);
-    const [showSharePopup, setShowSharePopup] = useState(false);
+  const captureRef = useRef<HTMLDivElement>(null);
+  const isReady = useIsElementLoadingComplete(
+    captureRef as React.RefObject<HTMLElement>
+  );
 
-    const handleShare = () => {
-        setShowSharePopup(true);
-    };
+  const handleShare = async () => {
+    if (!captureRef.current) return;
+    // await new Promise((r) => setTimeout(r, 300));
+    // await captureWithWatermark({
+    //   element: captureRef.current,
+    //   fileName,
+    //   disableWatermark,
+    //   isBrightText,
+    // });
+    await captureWithWatermarkV2({
+      element: captureRef.current,
+      fileName,
+      disableWatermark,
+      colorWatermarkLogo,
+      isBrightText,
+      pageName,
+    });
+  };
 
-    const handlePlatformSelect = useCallback(
-        async (platform: Platform) => {
-            console.log("Wrapper received platform:", platform);
-
-            if (!captureRef.current) return;
-
-            setShowSharePopup(false);
-
-            // beri waktu request tracking dikirim
-            await new Promise((r) => setTimeout(r, 300));
-
-            await captureWithWatermark({
-                element: captureRef.current,
-                fileName,
-                disableWatermark,
-            });
-        },
-        [fileName, disableWatermark]
-    );
-
-    return (
-        <div className="relative">
-            <div ref={captureRef} data-capture-root className="transform-none">
-                {children({ onShare: handleShare })}
-            </div>
-
-            <ShareBottomSheet
-                visible={showSharePopup}
-                pageName={pageName}
-                onClose={() => setShowSharePopup(false)}
-                onSelect={handlePlatformSelect}
-            />
-        </div>
-    );
+  return (
+    <div className="relative max-w-[430px] mx-auto">
+      <div ref={captureRef} data-capture-root className="transform-none">
+        {children({ pageName, onShare: handleShare, isReady })}
+      </div>
+    </div>
+  );
 }

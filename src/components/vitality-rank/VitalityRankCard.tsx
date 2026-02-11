@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
 import { useInView } from "@/src/app/hooks/useInView";
 import { getVitalityRankTheme } from "./VitalityRankConfig";
 import RankCounter from "./RankCounter";
@@ -10,103 +11,188 @@ interface VitalityRankCardProps {
   generalRank: number;
   genderRank: number;
   onShare?: () => void;
+  isReady?: boolean;
 }
 
 export default function VitalityRankCard({
   generalRank,
   genderRank,
-  onShare
+  onShare,
+  isReady = true,
 }: VitalityRankCardProps) {
   const theme = getVitalityRankTheme("default");
   const { ref, isInView } = useInView({ threshold: 0.6 });
+  const [isAllowShare, setIsAllowShare] = useState(false)
+
+  // Kontrol dipisah agar manajemen animasi lebih granular
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const bgControls = useAnimation();
+  const textTopControls = useAnimation();
+  const trophyControls = useAnimation();
+  const bottomContentControls = useAnimation();
+
+  useEffect(() => {
+    const runAnimations = async () => {
+      // Syarat: masuk viewport DAN belum pernah animasi sebelumnya
+      if (isInView && !hasAnimated) {
+        setHasAnimated(true); // Kunci agar tidak jalan lagi
+
+        // 1. Animasi Tirai (Background #AE002F naik)
+        await bgControls.start({
+          height: "35%",
+          transition: { duration: 0.8, ease: [0.45, 0, 0.55, 1] },
+        });
+
+        // 2. Teks dari Kiri & Trophy dari Kanan (Berjalan barengan)
+        await Promise.all([
+          textTopControls.start({
+            x: 0,
+            opacity: 1,
+            transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+          }),
+          trophyControls.start({
+            x: 0,
+            opacity: 1,
+            transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+          }),
+        ]);
+
+        // 3. Bottom Content muncul staggered
+        await bottomContentControls.start((i: number) => ({
+          y: 0,
+          opacity: 1,
+          transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" },
+        }));
+      }
+    };
+
+    runAnimations();
+  }, [
+    isInView,
+    bgControls,
+    textTopControls,
+    trophyControls,
+    bottomContentControls,
+  ]);
 
   return (
     <section
-      className={`w-full max-w-[430px] mx-auto min-h-screen font-sans relative overflow-hidden ${theme.backgroundColor}`}
+      ref={ref}
+      className="
+    @container
+    relative
+    grid
+    grid-rows-[35%_65%]
+    w-full
+    max-w-[430px]
+    mx-auto
+    min-h-dvh
+    overflow-hidden
+    font-sans
+    bg-[#EA0F4A]
+  "
     >
-      <motion.img
-        src={theme.ornamentSrc}
-        alt="Vitality Ornament"
-        className="absolute inset-0 h-full object-cover opacity-80 pointer-events-none z-0"
-        initial={{
-          x: -120,
-          y: 120,
-          scale: 0.1,
-          rotate: -15,
-          opacity: 0.5,
-        }}
-        whileInView={{
-          x: 0,
-          y: 0,
-          scale: 1,
-          rotate: 0,
-          opacity: 0.8,
-        }}
-        transition={{
-          duration: 2,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        viewport={{ once: true }}
+      {/* Background Layer Tirai */}
+      <motion.div
+        initial={{ height: "100%" }}
+        animate={bgControls}
+        className="absolute top-0 left-0 w-full bg-[#AE002F] z-0"
       />
 
-      <div
-        className={`
-          absolute inset-y-0 right-0 w-[120px]
-          opacity-60 pointer-events-none z-0
-          ${theme.sideAccentColor}
-        `}
-      />
-
-      <ShareButton onClick={onShare} />
-
-      <div
-        ref={ref}
-        className="relative z-10 flex min-h-screen items-center px-6"
-      >
-        <div className="flex w-full flex-col py-12">
-          <div className="mb-6 flex items-start justify-between">
-            <h1 className="text-4xl font-extrabold leading-tight text-white">
+        {/* TOP CONTENT (35%) */}
+        <div className="relative z-10 flex items-end justify-between px-8">
+          {/* TEKS: Masuk dari Kiri ke Posisi Asli */}
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={textTopControls}
+          >
+            <h1 className="text-[7.2cqi] font-bold leading-none pb-4.5 text-white font-source">
               AIA Vitality
               <br />
               Member Rank
             </h1>
+          </motion.div>
 
-            <img
+          {/* TROPHY: Masuk dari Kanan ke Posisi Asli */}
+          <motion.div
+            className="relative flex items-center justify-center"
+            initial={{ x: 100, opacity: 0 }}
+            animate={trophyControls}
+          >
+            {/* Aura Glowing (Pulsing) */}
+            <motion.div
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="absolute w-[100px] h-[100px] bg-yellow-300 rounded-full blur-[35px] z-0"
+            />
+
+            <motion.img
               src={theme.trophySrc}
               alt="Trophy"
-              width={120}
-              height={200}
-              className="mt-2 mr-8"
+              className="w-[160px] h-auto relative z-10"
+              animate={{
+                filter: [
+                  "drop-shadow(0 0 8px rgba(255, 223, 0, 0.4))",
+                  "drop-shadow(0 0 20px rgba(255, 223, 0, 0.7))",
+                  "drop-shadow(0 0 8px rgba(255, 223, 0, 0.4))",
+                ],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             />
-          </div>
-
-          <div className="mb-16 h-[2px] w-24 bg-white/70" />
-
-          <div className="flex flex-col gap-10">
-            <div>
-              <p className="text-lg font-medium text-white">General Rank</p>
-              <p className="text-6xl font-extrabold text-white">
-                {isInView ? (
-                  <RankCounter key="general-rank" target={generalRank} />
-                ) : (
-                  "#0"
-                )}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-lg font-medium text-white">Gender Rank</p>
-              <p className="text-6xl font-extrabold text-white">
-                {isInView ? (
-                  <RankCounter key="gender-rank" target={genderRank} />
-                ) : (
-                  "#0"
-                )}
-              </p>
-            </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
+
+        {/* BOTTOM CONTENT (65%) */}
+        <div className="relative z-10 flex flex-col gap-10 px-8 pt-12">
+          {[
+            { label: "Overall Member Rank", val: generalRank },
+            { label: "Gender-Based Rank", val: genderRank },
+          ].map((item, i) => (
+            <motion.div
+              key={item.label}
+              custom={i}
+              initial={{ y: -30, opacity: 0 }}
+              animate={bottomContentControls}
+            >
+              <p className="text-[4.8cqi] font-medium text-white/90">
+                {item.label}
+              </p>
+              <div className="flex items-center text-white text-[18.7cqi]">
+                <span className="leading-none font-thin">#</span>
+                <span className="leading-none font-bold">
+                  {isInView ? <RankCounter target={item.val} /> : "0"}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+      <ShareButton
+        onClick={onShare}
+        isReady={isReady}
+        viewport={{
+          amount: 'all',
+          once: true,
+        }}
+        style={{
+          pointerEvents: isAllowShare ? 'auto' : 'none',
+          cursor: isAllowShare ? 'pointer' : 'default'
+        }}
+        onViewportEnter={() => {
+          setTimeout(() => setIsAllowShare(true), 2000)
+        }}
+      />
     </section>
   );
 }

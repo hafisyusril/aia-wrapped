@@ -1,19 +1,37 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { HeartRateLevel } from "../components/heart-rates/heartRateUtils";
+import { CrowningType } from "../components/crowning/CrowningConfig";
+import { addCookie, getCookie, removeCookie } from "../app/utils/cookie";
 
 type FlowStep = "input" | "intro" | "content";
 
 interface UserData {
   vhcStatus: "checked" | "unchecked";
-  steps: number;
-  level: HeartRateLevel;
-  gymVisit: number;
-  weeklyChallenges: number;
-  totalReward: number;
-  generalRank: number;
-  genderRank: number;
+  crowning: CrowningType;
+  steps?: number;
+  level?: HeartRateLevel;
+  gymVisit?: number;
+  weeklyChallenges?: number;
+  totalReward?: number;
+  generalRank?: number;
+  genderRank?: number;
+  activities: {
+    steps: boolean;
+    heartRate: boolean;
+    gymVisit: boolean;
+    weeklyChallenge: boolean;
+    reward: boolean;
+    rank: boolean;
+    vhc: boolean;
+  };
 }
 
 interface UserFlowContextProps {
@@ -28,7 +46,7 @@ interface UserFlowContextProps {
 }
 
 const UserFlowContext = createContext<UserFlowContextProps | undefined>(
-  undefined
+  undefined,
 );
 
 export function UserFlowProvider({ children }: { children: ReactNode }) {
@@ -40,7 +58,7 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedId = localStorage.getItem("aia-vitality-id");
+    const storedId = getCookie("aia-vitality-id");
     if (storedId) {
       setVitalityId(storedId);
     }
@@ -48,7 +66,6 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
   async function setVitalityId(id: string) {
     console.log("Fetching API for ID:", id);
-    setVitalityIdState(id);
     setIsLoading(true);
     setError(null);
 
@@ -57,7 +74,9 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
       if (!response.ok) {
         if (response.status === 404) {
-          throw new Error("Vitality ID not found. Please check your ID and try again.");
+          throw new Error(
+            "Vitality ID not found. Please check your ID and try again.",
+          );
         }
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.error || `API Error: ${response.statusText}`);
@@ -69,26 +88,51 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
       // Map API response to UserData
       const userData: UserData = {
         vhcStatus: apiData.vhc === "Yes" ? "checked" : "unchecked",
-        steps: Number(apiData.steps || 0),
-        level: (apiData.heart_rate ? apiData.heart_rate.toLowerCase() : "light") as HeartRateLevel,
-        gymVisit: Number(apiData.gym_visit || 0),
-        weeklyChallenges: Number(apiData.weekly_challenge_completion || 0),
-        totalReward: Number(apiData.total_rewards_earned || 0),
-        generalRank: Number(apiData.rank || 0),
-        genderRank: Number(apiData.rank_by_gender || 0),
+        steps: apiData.steps ? Number(apiData.steps) : undefined,
+        level: apiData.heart_rate
+          ? (apiData.heart_rate.toLowerCase() as HeartRateLevel)
+          : undefined,
+        gymVisit: apiData.gym_visit ? Number(apiData.gym_visit) : undefined,
+        weeklyChallenges: apiData.weekly_challenge_completion
+          ? Number(apiData.weekly_challenge_completion)
+          : undefined,
+        totalReward: apiData.total_rewards_earned
+          ? Number(apiData.total_rewards_earned)
+          : undefined,
+        generalRank: apiData.rank ? Number(apiData.rank) : undefined,
+        genderRank: apiData.rank_by_gender
+          ? Number(apiData.rank_by_gender)
+          : undefined,
+
+        activities: {
+          steps: !!apiData.steps,
+          heartRate: !!apiData.heart_rate,
+          gymVisit: !!apiData.gym_visit,
+          weeklyChallenge: !!apiData.weekly_challenge_completion,
+          reward: !!apiData.total_rewards_earned,
+          rank: !!apiData.rank,
+          vhc: !!apiData.vhc,
+        },
+        crowning: apiData.crowning,
       };
 
+      setVitalityIdState(id);
       setUserData(userData);
       setIsDummyUser(false);
       setFlowStep("intro");
-      localStorage.setItem("aia-vitality-id", id);
+      addCookie("aia-session-token", apiData.session_token, 15);
     } catch (err: any) {
       console.error("Failed to fetch vitality data:", err);
       // Use the specific error message if available, otherwise a generic fallback
-      setError(err.message || "Unable to retrieve data. Please try again later.");
+      setError(
+        err.message || "Unable to retrieve data. Please try again later.",
+      );
       setUserData(null);
       setIsDummyUser(false);
-      localStorage.removeItem("aia-vitality-id");
+      removeCookie("aia-vitality-id");
+      throw new Error(
+        "Vitality ID not found. Please check your ID and try again.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -96,7 +140,16 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
   return (
     <UserFlowContext.Provider
-      value={{ isDummyUser, userData, flowStep, setVitalityId, vitalityId, isLoading, error, setError }}
+      value={{
+        isDummyUser,
+        userData,
+        flowStep,
+        setVitalityId,
+        vitalityId,
+        isLoading,
+        error,
+        setError,
+      }}
     >
       {children}
     </UserFlowContext.Provider>

@@ -2,11 +2,11 @@
 
 import { ReactNode, useRef, useState } from "react";
 import ShareButton from "./ShareButton";
-import { captureWithWatermark } from "../app/utils/captureWithWatermark";
-import ShareBottomSheet from "./ShareBottomSheet";
+import { motion } from "framer-motion";
 
 type MobileCardFrameProps = {
   background: string;
+  curtainColor?: string; // <--- baru
   topContent: ReactNode;
   bottomContent: ReactNode;
   ornaments?: ReactNode;
@@ -19,6 +19,8 @@ type MobileCardFrameProps = {
   showShareButton?: boolean;
   watermarkSrc?: string;
   fileName?: string;
+  pageName: string;
+  isReady?: boolean; // Add isReady prop for share button
 
   /** optional hook for analytics / override */
   onShare?: () => void;
@@ -26,6 +28,7 @@ type MobileCardFrameProps = {
 
 export default function MobileCardFrame({
   background,
+  curtainColor,
   topContent,
   bottomContent,
   ornaments,
@@ -34,55 +37,18 @@ export default function MobileCardFrame({
   topClassName,
   bottomClassName,
   showShareButton = true,
-  watermarkSrc = "/crowning/aia_vitality.svg",
-  fileName = "shared-image.png",
+  pageName,
   onShare,
+  isReady = true,
 }: MobileCardFrameProps) {
+  const [isAllowShare, setIsAllowShare] = useState(false)
   const captureRef = useRef<HTMLDivElement>(null);
-
-  const [showSharePopup, setShowSharePopup] = useState(false);
-  const [capturedFile, setCapturedFile] = useState<string | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
-
-  // Step 1: user klik share → tampilkan bottom sheet
-  const handleShareClick = () => {
-    setShowSharePopup(true);
-  };
-
-  // Step 2: user pilih platform → capture element, simpan file, tapi jangan download langsung
-  const handlePlatformSelect = async (_platform: string) => {
-    if (!captureRef.current) return;
-
-    // langsung tutup popup
-    setShowSharePopup(false);
-
-    // capture element
-    const fileUrl = await captureWithWatermark({
-      element: captureRef.current,
-      fileName,
-    });
-
-    // opsional callback
-    onShare?.();
-
-    // trigger download
-    const a = document.createElement("a");
-    a.href = fileUrl as any;
-    a.download = fileName;
-    // a.click();
-
-    // selesai → popup sudah tertutup
-  };
-
-
-
-
-
   return (
     <div
       ref={captureRef}
       id="mobile-frame-capture"
       className={`
+        @container
         relative grid min-h-dvh grid-rows-[35%_65%]
         w-full max-w-[430px] mx-auto
         overflow-hidden font-sans
@@ -90,14 +56,41 @@ export default function MobileCardFrame({
       `}
       style={{ background }}
     >
-      {showShareButton && <ShareButton onClick={handleShareClick} />}
+      {/* Layer animasi tirai */}
+      <motion.div
+        className="absolute top-0 left-0 w-full z-0"
+        initial={{ height: "100vh" }}
+        whileInView={{ height: "35%" }}
+        viewport={{ once: true, amount: 0.5 }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        style={{ background: curtainColor ?? "#000" }}
+      />
+
+      {showShareButton && (
+        <ShareButton
+          onClick={onShare}
+          pageName={pageName}
+          isReady={isReady}
+          viewport={{
+            amount: 'all',
+            once: true,
+          }}
+          style={{
+            pointerEvents: isAllowShare ? 'auto' : 'none',
+            cursor: isAllowShare ? 'pointer' : 'default'
+          }}
+          onViewportEnter={() => {
+            setTimeout(() => setIsAllowShare(true), 2000)
+          }}
+        />
+      )}
 
       {ornaments}
 
       <div
         className={`
           relative flex flex-col h-full
-          px-7.5 justify-end pb-5 z-20
+          px-8 justify-end pb-5 z-20
           ${topClassName ?? ""}
         `}
       >
@@ -106,7 +99,7 @@ export default function MobileCardFrame({
 
       <div
         className={`
-          relative px-7.5 pt-2 z-20
+          relative px-8 pt-2 z-20
           ${bottomClassName ?? ""}
         `}
       >
@@ -114,11 +107,6 @@ export default function MobileCardFrame({
       </div>
 
       {illustration}
-      <ShareBottomSheet
-        visible={showSharePopup}
-        onClose={() => setShowSharePopup(false)}
-        onSelect={handlePlatformSelect}
-      />
     </div>
   );
 }

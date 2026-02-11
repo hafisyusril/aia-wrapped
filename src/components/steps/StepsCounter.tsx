@@ -5,13 +5,17 @@ import { useEffect, useState } from "react";
 interface AnimatedCounterProps {
   target: number;
   duration?: number;
+  delay?: number; // Nilai dalam milidetik
   className?: string;
+  style?: React.CSSProperties; 
 }
 
 export default function AnimatedCounter({
   target,
   duration = 1000,
+  delay = 0,
   className,
+  style,
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const [mounted, setMounted] = useState(false);
@@ -23,29 +27,41 @@ export default function AnimatedCounter({
   useEffect(() => {
     if (!mounted) return;
 
-    let start = 0;
-    const startTime = performance.now();
+    let animationFrameId: number;
+    
+    // Gunakan setTimeout untuk menangani delay
+    const timeoutId = setTimeout(() => {
+      const startTime = performance.now();
 
-    const animate = (time: number) => {
-      const progress = Math.min((time - startTime) / duration, 1);
-      const value = Math.floor(progress * target);
+      const animate = (time: number) => {
+        const progress = Math.min((time - startTime) / duration, 1);
+        
+        // Menggunakan easing (opsional) agar lebih mulus
+        const value = Math.floor(progress * target);
 
-      setCount(value);
+        setCount(value);
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(animate);
+        }
+      };
+
+      animationFrameId = requestAnimationFrame(animate);
+    }, delay);
+
+    // Cleanup agar tidak terjadi memory leak atau tabrakan animasi
+    return () => {
+      clearTimeout(timeoutId);
+      cancelAnimationFrame(animationFrameId);
     };
-
-    requestAnimationFrame(animate);
-  }, [mounted, target, duration]);
+  }, [mounted, target, duration, delay]);
 
   if (!mounted) {
     return <span className={className}>0</span>;
   }
 
   return (
-    <span className={className}>
+    <span className={className} style={style}>
       {count.toLocaleString("id-ID")}
     </span>
   );
