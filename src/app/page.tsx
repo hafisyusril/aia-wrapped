@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 
 import { useUserFlow } from "../contexts/UserFlowContext";
@@ -23,6 +23,7 @@ import VitalityRankCard from "../components/vitality-rank/VitalityRankCard";
 import VHCStatusCard from "../components/vhc/VHCStatusCard";
 import CrowningCard from "../components/crowning/CrowningCard";
 import EndCard from "../components/end-card/EndCard";
+import RefreshSplashCard from "../components/RefreshSplashCard";
 import { addCookie, getCookie } from "./utils/cookie";
 
 const DUMMY_DATA = {
@@ -53,7 +54,13 @@ export default function Home() {
   const params = useParams();
   const encodedId = params?.slug as string | undefined;
 
-  const { play, stop } = useBackgroundMusic("/music/aia-vitality.mp3", 0.35);
+  const isLocked = !vitalityId && flowStep === "input";
+
+  const { play, stop } = useBackgroundMusic(
+    "/music/aia-vitality.mp3",
+    0.35,
+    !isLocked,
+  );
 
   const containerRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
@@ -85,13 +92,13 @@ export default function Home() {
 
   const resolvedActivities = isDummyUser
     ? {
-        steps: true,
-        heartRate: true,
-        gymVisit: true,
-        weeklyChallenge: true,
-        vhc: true,
-        rank: true,
-      }
+      steps: true,
+      heartRate: true,
+      gymVisit: true,
+      weeklyChallenge: true,
+      vhc: true,
+      rank: true,
+    }
     : userData?.activities;
 
   useEffect(() => {
@@ -111,7 +118,30 @@ export default function Home() {
     }
   }, [flowStep]);
 
-  const isLocked = !vitalityId && flowStep === "input";
+  const [showRefreshSplash, setShowRefreshSplash] = useState(false);
+
+  useEffect(() => {
+    // Check if we are restoring from a session (refresh)
+    const hasCookie = !!getCookie("aia-vitality-id") || !!vitalityId;
+    if (hasCookie) {
+      // If cookie exists on mount, it's a refresh/return visit
+      // However, we need to be careful not to trigger this on initial login flow
+      // The initial login flow sets the cookie AFTER user interaction.
+      // This useEffect runs ON MOUNT.
+      // So if cookie exists NOW, it was there before load => Refresh.
+
+      // We check getCookie directly because vitalityId might not be set yet by context
+      if (getCookie("aia-vitality-id")) {
+        // setShowRefreshSplash(true);
+      }
+    }
+  }, []);
+
+  const handleSplashPlayAgain = () => {
+    setShowRefreshSplash(false);
+    // Ensure we start at the top
+    introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (isLocked) {
     return (
@@ -152,23 +182,23 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc &&
-      data.vhcStatus === "checked" && {
-        name: "VHC Status Completed",
-        content: (
-          <PageCaptureWrapper
-            fileName="vhc-status.png"
-            pageName="VHC Status Completed"
-          >
-            {({ onShare, isReady }) => (
-              <VHCStatusCard
-                status="checked"
-                onShare={onShare}
-                isReady={isReady}
-              />
-            )}
-          </PageCaptureWrapper>
-        ),
-      },
+    data.vhcStatus === "checked" && {
+      name: "VHC Status Completed",
+      content: (
+        <PageCaptureWrapper
+          fileName="vhc-status.png"
+          pageName="VHC Status Completed"
+        >
+          {({ onShare, isReady }) => (
+            <VHCStatusCard
+              status="checked"
+              onShare={onShare}
+              isReady={isReady}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     resolvedActivities?.steps && {
       name: "Steps turtle",
@@ -275,24 +305,24 @@ export default function Home() {
     },
 
     resolvedActivities?.vhc &&
-      data.vhcStatus === "unchecked" && {
-        name: "VHC Status Not Completed",
-        content: (
-          <PageCaptureWrapper
-            fileName="vhc-status.png"
-            pageName="VHC Status Not Completed"
-            isBrightText
-          >
-            {({ onShare, isReady }) => (
-              <VHCStatusCard
-                status="unchecked"
-                onShare={onShare}
-                isReady={isReady}
-              />
-            )}
-          </PageCaptureWrapper>
-        ),
-      },
+    data.vhcStatus === "unchecked" && {
+      name: "VHC Status Not Completed",
+      content: (
+        <PageCaptureWrapper
+          fileName="vhc-status.png"
+          pageName="VHC Status Not Completed"
+          isBrightText
+        >
+          {({ onShare, isReady }) => (
+            <VHCStatusCard
+              status="unchecked"
+              onShare={onShare}
+              isReady={isReady}
+            />
+          )}
+        </PageCaptureWrapper>
+      ),
+    },
 
     {
       name: "Crowning",
@@ -327,6 +357,12 @@ export default function Home() {
 
   return (
     <MusicProvider playMusic={play}>
+      {showRefreshSplash && (
+        <RefreshSplashCard
+          onPlayAgain={handleSplashPlayAgain}
+          isLoading={!vitalityId && flowStep === "input"} // Loading if context hasn't resolved yet
+        />
+      )}
       <main
         ref={containerRef}
         className="h-svh overflow-y-scroll snap-y snap-mandatory relative"
