@@ -85,7 +85,9 @@ export default function Home() {
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
       : (userData?.vhcStatus ?? "unchecked"),
-    crowning: isDummyUser ? DUMMY_DATA.crowning : (userData?.crowning ?? null),
+    crowning: isDummyUser
+      ? DUMMY_DATA.crowning
+      : (userData?.crowning ?? "starter"),
   };
 
   const resolvedActivities = isDummyUser
@@ -131,7 +133,7 @@ export default function Home() {
 
       // We check getCookie directly because vitalityId might not be set yet by context
       if (getCookie("aia-vitality-id")) {
-        setShowRefreshSplash(true);
+        // setShowRefreshSplash(true);
       }
     }
   }, []);
@@ -140,8 +142,6 @@ export default function Home() {
     setShowRefreshSplash(false);
     // Ensure we start at the top
     introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-
-    play();
   };
 
   if (isLocked) {
