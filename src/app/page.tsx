@@ -85,9 +85,7 @@ export default function Home() {
     vhcStatus: isDummyUser
       ? DUMMY_DATA.vhcStatus
       : (userData?.vhcStatus ?? "unchecked"),
-    crowning: isDummyUser
-      ? DUMMY_DATA.crowning
-      : (userData?.crowning ?? "starter"),
+    crowning: isDummyUser ? DUMMY_DATA.crowning : (userData?.crowning ?? null),
   };
 
   const resolvedActivities = isDummyUser
