@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
 import { FiRefreshCcw } from "react-icons/fi";
 
 interface RefreshSplashCardProps {
@@ -14,27 +13,12 @@ export default function RefreshSplashCard({
   onPlayAgain,
   isLoading = false,
 }: RefreshSplashCardProps) {
-  const [isExiting, setIsExiting] = useState(false);
-
-  const handlePlay = () => {
-    setIsExiting(true);
-    setTimeout(() => {
-      onPlayAgain();
-    }, 500); // Match exit animation duration
-  };
-
-  if (!isExiting && isLoading) {
-    // Optionally show a loading state before the button is interactive?
-    // For now, we just disable the button.
-  }
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.5 } }}
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white ${isExiting ? "pointer-events-none" : ""
-        }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-white`}
     >
       <div className="flex flex-col items-center gap-6">
         <motion.div
@@ -66,9 +50,9 @@ export default function RefreshSplashCard({
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          onClick={handlePlay}
-          disabled={isLoading || isExiting}
-          className="mt-12 flex items-center gap-2 text-[#D31145] text-lg font-medium hover:opacity-80 transition-opacity disabled:opacity-50"
+          onClick={onPlayAgain}
+          disabled={isLoading}
+          className="mt-12 flex items-center gap-2 text-[#D31145] text-lg font-medium hover:opacity-80 transition-opacity disabled:opacity-50 cursor-pointer"
         >
           <FiRefreshCcw
             className={`w-5 h-5 ${isLoading ? "animate-spin" : ""}`}

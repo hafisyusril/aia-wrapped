@@ -133,12 +133,13 @@ export default function Home() {
 
       // We check getCookie directly because vitalityId might not be set yet by context
       if (getCookie("aia-vitality-id")) {
-        // setShowRefreshSplash(true);
+        setShowRefreshSplash(true);
       }
     }
   }, []);
 
   const handleSplashPlayAgain = () => {
+    play();
     setShowRefreshSplash(false);
     // Ensure we start at the top
     introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
