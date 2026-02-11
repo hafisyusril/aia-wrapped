@@ -2,11 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-export function useBackgroundMusic(
-  src: string,
-  volume = 0.4,
-  enabled = true,
-) {
+export function useBackgroundMusic(src: string, volume = 0.4, enabled = true) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
 
@@ -65,30 +61,8 @@ export function useBackgroundMusic(
     window.addEventListener("blur", handlePause);
     window.addEventListener("focus", handlePlay);
 
-    // If user previously intended background music, try to resume on next user interaction
-    const previouslyIntended = localStorage.getItem("bgm-intended") === "true";
-    const resumeOnInteraction = () => {
-      if (!audioRef.current || !enabledRef.current) return;
-
-      audioRef.current
-        .play()
-        .then(() => {
-          isPlayingRef.current = true;
-          events.forEach((event) =>
-            window.removeEventListener(event, resumeOnInteraction)
-          );
-        })
-        .catch(() => {
-          isPlayingRef.current = false;
-        });
-    };
-
-    const events = ["click", "touchstart", "keydown"];
-    if (previouslyIntended) {
-      events.forEach((event) =>
-        window.addEventListener(event, resumeOnInteraction)
-      );
-    }
+    // Removed automatic event listeners for resuming music on refresh
+    // These will now be handled by the UI overlay when needed
 
     return () => {
       audio.pause();
@@ -98,9 +72,6 @@ export function useBackgroundMusic(
       window.removeEventListener("pageshow", handlePlay);
       window.removeEventListener("blur", handlePause);
       window.removeEventListener("focus", handlePlay);
-      events.forEach((event) =>
-        window.removeEventListener(event, resumeOnInteraction)
-      );
     };
   }, [src, volume]);
 
@@ -133,9 +104,6 @@ export function useBackgroundMusic(
 
   // Note: autoplay without user interaction is blocked by many browsers.
   // We attach resume listeners during audio setup above and remove them on cleanup.
-
-
-
 
   return { play, stop };
 }
