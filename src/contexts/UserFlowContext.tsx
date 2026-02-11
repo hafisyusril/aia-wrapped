@@ -31,6 +31,7 @@ interface UserData {
     reward: boolean;
     rank: boolean;
     vhc: boolean;
+    crowning: boolean;
   };
 }
 
@@ -106,12 +107,14 @@ export function UserFlowProvider({ children }: { children: ReactNode }) {
 
         activities: {
           steps: !!apiData.steps,
-          heartRate: !!apiData.heart_rate,
+          heartRate:
+            !!apiData.heart_rate && !apiData?.heart_rate?.includes?.("No WO"),
           gymVisit: !!apiData.gym_visit,
           weeklyChallenge: !!apiData.weekly_challenge_completion,
           reward: !!apiData.total_rewards_earned,
           rank: !!apiData.rank,
           vhc: !!apiData.vhc,
+          crowning: !!apiData.crowning,
         },
         crowning: apiData.crowning,
       };

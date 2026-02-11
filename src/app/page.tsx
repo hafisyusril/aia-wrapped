@@ -92,6 +92,7 @@ export default function Home() {
 
   const resolvedActivities = isDummyUser
     ? {
+<<<<<<< Updated upstream
       steps: true,
       heartRate: true,
       gymVisit: true,
@@ -99,6 +100,16 @@ export default function Home() {
       vhc: true,
       rank: true,
     }
+=======
+        steps: true,
+        heartRate: true,
+        gymVisit: true,
+        weeklyChallenge: true,
+        vhc: true,
+        rank: true,
+        crowning: true,
+      }
+>>>>>>> Stashed changes
     : userData?.activities;
 
   useEffect(() => {
@@ -324,7 +335,7 @@ export default function Home() {
       ),
     },
 
-    {
+    resolvedActivities?.crowning && {
       name: "Crowning",
       content: (
         <PageCaptureWrapper
