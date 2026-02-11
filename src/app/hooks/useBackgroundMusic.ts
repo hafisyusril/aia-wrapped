@@ -2,9 +2,30 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-export function useBackgroundMusic(src: string, volume = 0.4) {
+export function useBackgroundMusic(
+  src: string,
+  volume = 0.4,
+  enabled = true,
+) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const isPlayingRef = useRef(false);
+
+  const enabledRef = useRef(enabled);
+
+  useEffect(() => {
+    enabledRef.current = enabled;
+    if (!enabled && audioRef.current) {
+      audioRef.current.pause();
+    } else if (enabled && audioRef.current) {
+      // If re-enabled and was intended to play, try to play
+      const intended = localStorage.getItem("bgm-intended") === "true";
+      if (intended) {
+        audioRef.current.play().catch(() => {
+          // Auto-play might be blocked, wait for interaction
+        });
+      }
+    }
+  }, [enabled]);
 
   useEffect(() => {
     // On iOS, audio can only be initiated by a user gesture.
@@ -20,6 +41,7 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     };
 
     const handlePlay = () => {
+      if (!enabledRef.current) return;
       // Play if the user intended it to be playing (persisted across reloads)
       const intended = localStorage.getItem("bgm-intended") === "true";
       if (isPlayingRef.current || intended) {
@@ -46,7 +68,7 @@ export function useBackgroundMusic(src: string, volume = 0.4) {
     // If user previously intended background music, try to resume on next user interaction
     const previouslyIntended = localStorage.getItem("bgm-intended") === "true";
     const resumeOnInteraction = () => {
-      if (!audioRef.current) return;
+      if (!audioRef.current || !enabledRef.current) return;
 
       audioRef.current
         .play()
