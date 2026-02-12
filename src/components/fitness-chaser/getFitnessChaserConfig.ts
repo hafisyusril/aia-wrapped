@@ -6,14 +6,18 @@ import { FITNESS_CHASER_CONFIG, FitnessChaserConfig } from "./FitnessChaserConfi
 
 export function getFitnessChaserConfig(
   totalChallenges: number
-): FitnessChaserConfig {
-  if (totalChallenges <= 20) {
-    return FITNESS_CHASER_CONFIG.WARMING_UP;
+): FitnessChaserConfig | null {
+  if (totalChallenges >= 37) {
+    return FITNESS_CHASER_CONFIG.BOUNTY_HUNTER;
   }
 
-  if (totalChallenges <= 40) {
+  if (totalChallenges >= 25) {
     return FITNESS_CHASER_CONFIG.CONSISTENT;
   }
 
-  return FITNESS_CHASER_CONFIG.BOUNTY_HUNTER;
+  if (totalChallenges >= 1) {
+    return FITNESS_CHASER_CONFIG.WARMING_UP;
+  }
+
+  return null
 }
