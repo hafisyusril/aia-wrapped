@@ -138,10 +138,12 @@ export default function Home() {
     }
   }, []);
 
+  const [introKey, setIntroKey] = useState(0);
+
   const handleSplashPlayAgain = () => {
     play();
     setShowRefreshSplash(false);
-    // Ensure we start at the top
+    setIntroKey((prev) => prev + 1);
     introRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -172,7 +174,7 @@ export default function Home() {
     {
       name: "Intro",
       content: (
-        <div ref={introRef}>
+        <div ref={introRef} key={introKey}>
           <IntroCard containerRef={containerRef} />
         </div>
       ),

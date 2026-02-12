@@ -19,15 +19,17 @@ export default function FitnessChaserCard({
   isReady = true,
 }: FitnessChaserCardProps) {
   const { ref, isInView } = useInView({ threshold: 0.6 });
-  const config = getFitnessChaserConfig(totalChallenges);
+  const config = getFitnessChaserConfig(totalChallenges)!;
 
   return (
     <div ref={ref}>
       <MobileCardFrame
-        background={config.background}
+        background={config?.background}
         fileName="fitness-chaser.png"
         pageName={"fitness"}
-        curtainColor={config.background.match(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"}
+        curtainColor={
+          config?.background?.match?.(/#[0-9A-Fa-f]{6}/)?.[0] ?? "#000"
+        }
         onShare={onShare}
         isReady={isReady}
         ornaments={
@@ -65,7 +67,7 @@ export default function FitnessChaserCard({
         }
         illustration={
           <div className="absolute bottom-10 -right-3.75 w-75 h-65 z-10">
-            <WomanRedSvg progress={config.progress} />
+            <WomanRedSvg progress={config?.progress} />
           </div>
         }
         topContent={
@@ -73,7 +75,7 @@ export default function FitnessChaserCard({
             className="font-bold text-white text-[12.6cqi] font-source whitespace-pre-line leading-none"
             style={{ fontFamily: "var(--font-source-sans)" }}
           >
-            {config.title}
+            {config?.title}
           </h1>
         }
         bottomContent={
@@ -101,7 +103,7 @@ export default function FitnessChaserCard({
               Your superpower = consistency!
             </p>  */}
             <p className="mt-2 text-[3.8cqi] text-black font-medium whitespace-pre-line leading-tight">
-              {config.description}
+              {config?.description}
             </p>
           </>
         }
