@@ -24,7 +24,7 @@ export default function SnapSection({
   enableAnimation = true,
   onVisible,
   scrollDirection = "up",
-  persistScrollHint
+  persistScrollHint,
 }: SnapSectionProps) {
   const [showHint, setShowHint] = useState(false);
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -42,11 +42,10 @@ export default function SnapSection({
     setShowHint(true);
 
     if (!persistScrollHint) {
-  hideTimerRef.current = setTimeout(() => {
-    setShowHint(false);
-  }, 3000);
-}
-
+      hideTimerRef.current = setTimeout(() => {
+        setShowHint(false);
+      }, 3000);
+    }
   };
 
   useEffect(() => {
@@ -77,11 +76,19 @@ export default function SnapSection({
       {children}
 
       {enableAnimation && showScrollUp && onScrollUp && (
-        <motion.div
+        <motion.button
           onClick={onScrollUp}
           initial={{ opacity: 0, y: 8 }}
-          animate={showHint ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          animate={{ opacity: [1, 0.2, 1], y: 0 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeOut",
+            opacity: {
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
+          }}
           className="pointer-events-auto absolute bottom-[3%] left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 cursor-pointer"
         >
           <img
@@ -95,7 +102,7 @@ export default function SnapSection({
             {" "}
             {scrollDirection === "down" ? "Back to Top" : "scroll"}
           </p>
-        </motion.div>
+        </motion.button>
       )}
     </motion.section>
   );
