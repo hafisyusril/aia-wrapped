@@ -24,35 +24,39 @@ export default function SnapSection({
   enableAnimation = true,
   onVisible,
   scrollDirection = "up",
-  persistScrollHint
+  persistScrollHint,
 }: SnapSectionProps) {
   const [showHint, setShowHint] = useState(false);
   const hideTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const loopTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleViewportEnter = () => {
     onVisible?.();
 
     if (!showScrollUp) return;
 
-    // reset timer jika masuk lagi
-    if (hideTimerRef.current) {
-      clearTimeout(hideTimerRef.current);
+    // clear interval lama (kalau masuk lagi)
+    if (loopTimerRef.current) {
+      clearInterval(loopTimerRef.current);
     }
 
     setShowHint(true);
 
     if (!persistScrollHint) {
-  hideTimerRef.current = setTimeout(() => {
-    setShowHint(false);
-  }, 3000);
-}
+      loopTimerRef.current = setInterval(() => {
+        setShowHint(true);
 
+        setTimeout(() => {
+          setShowHint(false);
+        }, 2000); // durasi tampil
+      }, 4000); // total 1 cycle (show + hide)
+    }
   };
 
   useEffect(() => {
     return () => {
-      if (hideTimerRef.current) {
-        clearTimeout(hideTimerRef.current);
+      if (loopTimerRef.current) {
+        clearInterval(loopTimerRef.current);
       }
     };
   }, []);
