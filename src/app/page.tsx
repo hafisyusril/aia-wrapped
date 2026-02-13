@@ -178,7 +178,7 @@ export default function Home() {
           <IntroCard containerRef={containerRef} />
         </div>
       ),
-      scrollHint: "none",
+      // scrollHint: "none",
     },
 
     {
