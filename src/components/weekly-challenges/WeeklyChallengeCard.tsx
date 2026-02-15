@@ -15,6 +15,12 @@ interface WeeklyChallengeCardProps {
   isReady?: boolean;
 }
 
+type RewardStatus =
+  | "Normal (Earn & Redeem)"
+  | "Apple Watch Challenge"
+  | "Never Redeem"
+  | null;
+
 interface WeeklyChallengeApiResponse {
   message: string;
   data: {
@@ -71,6 +77,7 @@ export default function WeeklyChallengeCard({
   const [hasAnimated, setHasAnimated] = useState(false);
   const [favoriteReward, setFavoriteReward] = useState<string | null>(null);
   const [isAllowShare, setIsAllowShare] = useState(false)
+  const [rewardStatus, setRewardStatus] = useState<RewardStatus>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -89,6 +96,7 @@ export default function WeeklyChallengeCard({
         const res = await fetch(`/api/v1/vitality/${vitalityId}`);
         const data: WeeklyChallengeApiResponse = await res.json();
         setFavoriteReward(data.data.favorite_rewards);
+        setRewardStatus(data.data.rewards_status);
       } catch (error) {
         console.error("Failed to fetch weekly challenge:", error);
       }
@@ -237,18 +245,38 @@ export default function WeeklyChallengeCard({
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
         <div className="relative z-50 text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
-          {dynamicMessage.map((line, index) => (
+          {rewardStatus === "Apple Watch Challenge" ||
+          rewardStatus === "Never Redeem" ? (
             <motion.p
-              key={index}
               variants={textVariant}
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
-              custom={1.7 + index * 0.2}
-              dangerouslySetInnerHTML={{
-                __html: line ? `${line}<br />` : "<br />",
-              }}
-            />
-          ))}
+              className="mt-5"
+              custom={2}
+            >
+              {rewardStatus === "Apple Watch Challenge" ? (
+                <>
+                  Extra rewards from special campaigns aren&apos;t shown here,
+                  but your Apple Watch Challenge rewards counts. Keep going!
+                </>
+              ) : (
+                <>No rewards redeemed just yet.<br />Let&apos;s go for it next time!</>
+              )}
+            </motion.p>
+          ) : (
+            dynamicMessage.map((line, index) => (
+              <motion.p
+                key={index}
+                variants={textVariant}
+                initial="hidden"
+                animate={shouldAnimate ? "visible" : "hidden"}
+                custom={1.7 + index * 0.2}
+                dangerouslySetInnerHTML={{
+                  __html: line ? `${line}<br />` : "<br />",
+                }}
+              />
+            ))
+          )}
         </div>
 
         <motion.div
