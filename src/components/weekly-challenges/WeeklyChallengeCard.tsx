@@ -76,7 +76,7 @@ export default function WeeklyChallengeCard({
   const [mounted, setMounted] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [favoriteReward, setFavoriteReward] = useState<string | null>(null);
-  const [isAllowShare, setIsAllowShare] = useState(false)
+  const [isAllowShare, setIsAllowShare] = useState(false);
   const [rewardStatus, setRewardStatus] = useState<RewardStatus>(null);
 
   useEffect(() => {
@@ -188,15 +188,15 @@ export default function WeeklyChallengeCard({
               onClick={onShare}
               isReady={isReady}
               viewport={{
-                amount: 'all',
+                amount: "all",
                 once: true,
               }}
               style={{
-                pointerEvents: isAllowShare ? 'auto' : 'none',
-                cursor: isAllowShare ? 'pointer' : 'default'
+                pointerEvents: isAllowShare ? "auto" : "none",
+                cursor: isAllowShare ? "pointer" : "default",
               }}
               onViewportEnter={() => {
-                setTimeout(() => setIsAllowShare(true), 2000)
+                setTimeout(() => setIsAllowShare(true), 2000);
               }}
             />
           </div>
@@ -247,7 +247,7 @@ export default function WeeklyChallengeCard({
         <div className="relative z-50 text-black text-[4.8cqi] font-medium leading-relaxed whitespace-pre-line">
           {rewardStatus === "Apple Watch Challenge" ||
           rewardStatus === "Never Redeem" ? (
-            <motion.p
+            <motion.div
               variants={textVariant}
               initial="hidden"
               animate={shouldAnimate ? "visible" : "hidden"}
@@ -255,14 +255,17 @@ export default function WeeklyChallengeCard({
               custom={2}
             >
               {rewardStatus === "Apple Watch Challenge" ? (
-                <>
+                <p className="text-sm">
                   Extra rewards from special campaigns aren&apos;t shown here,
                   but your Apple Watch Challenge rewards counts. Keep going!
-                </>
+                </p>
               ) : (
-                <>No rewards redeemed just yet.<br />Let&apos;s go for it next time!</>
+                <>
+                  <p>No rewards redeemed just yet.</p>
+                  <p>Let&apos;s go for it next time!</p>
+                </>
               )}
-            </motion.p>
+            </motion.div>
           ) : (
             dynamicMessage.map((line, index) => (
               <motion.p
